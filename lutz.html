@@ -260,7 +260,7 @@
     .learning-card p { font-size: var(--text-body-sm); line-height: 118%; letter-spacing: -0.6px; color: #444; }
 
     /* ── FOOTER ── */
-    footer { background: var(--dark); padding: 36px var(--pad-desktop); display: flex; align-items: center; justify-content: center; gap: 24px; border-radius: 24px 24px 0 0; margin-top: 80px; }
+    footer { background: var(--dark); padding: 36px var(--pad-desktop); display: flex; align-items: center; justify-content: center; gap: 24px; border-radius: 24px 24px 0 0; }
     footer a { color: #fff; text-decoration: none; font-size: 12px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; opacity: 0.7; transition: opacity 0.2s; }
     footer a:hover { opacity: 1; }
     footer .sep { color: rgba(255,255,255,0.3); }
@@ -439,7 +439,7 @@
   <div style="display: flex; background: #fff; align-items: flex-start;">
 
     <!-- Left half: white, with page padding -->
-    <div style="width: 50%; padding: 80px 72px 80px 112px; display:flex; flex-direction:column; gap: 32px; box-sizing: border-box;">
+    <div style="width: 50%; padding: 80px 72px 80px var(--pad-desktop); display:flex; flex-direction:column; gap: 32px; box-sizing: border-box;">
       <div>
         <span class="section-label">Revenue</span>
         <h2 class="section-title">Optimized the <span style="color:#F06554;">Reservations Flow</span>, landing 15% more purchases in reserved products</h2>
@@ -479,56 +479,123 @@
 
   </div>
 
-  <!-- Stats -->
-  <div class="section">
-    <div class="stats">
-      <div class="stat-card">
-        <div class="stat-number">21<span>%</span></div>
-        <div class="stat-label">increase in Add to Cart conversions</div>
+  <!-- Measurement Section -->
+  <div style="background: #F2F2F2; padding: 96px 0;">
+  <div class="section-inner">
+    <div class="two-col" style="align-items: start; gap: 80px;">
+
+      <!-- Left: two text blocks stacked -->
+      <div style="display:flex; flex-direction:column; gap: 56px;">
+
+        <div>
+          <span class="section-label">Usability and Data</span>
+          <h2 class="section-title">A lot of testing</h2>
+          <p class="body-text-sm" style="margin-top: 16px;">To ensure our designs truly worked, we teamed up with the Customer Experience (CX) team and Data Analysts. Together, we run a mix of:</p>
+          <ul style="margin-top: 16px; display:flex; flex-direction:column; gap: 8px; padding-left: 4px; list-style: none;">
+            <li class="body-text-sm"><strong>Moderated user tests</strong> every 1.5 months</li>
+            <li class="body-text-sm"><strong>Surveys</strong> to capture user opinions and trends.</li>
+            <li class="body-text-sm"><strong>Unmoderated tests</strong> for quick feedback loops.</li>
+            <li class="body-text-sm"><strong>Analytics and custom dashboards</strong> to track feature performance over time.</li>
+          </ul>
+        </div>
+
+        <div>
+          <span class="section-label">Data</span>
+          <h2 class="section-title">How we measure success</h2>
+          <p class="body-text-sm" style="margin-top: 16px;">We used Google's HEART framework to measure how feature changes impacted Happiness, Engagement, Adoption, Retention, and Task success. This data-driven approach kept us grounded in user needs and business goals.</p>
+        </div>
+
       </div>
-      <div class="stat-card">
-        <div class="stat-number">12<span>%</span></div>
-        <div class="stat-label">more reservations after A/B test</div>
+
+      <!-- Right: usertest SVG only -->
+      <div>
+        <img src="assets/lutz-usertest.svg" alt="Usability tests" style="width:100%; display:block; border-radius: 16px;"/>
       </div>
-      <div class="stat-card">
-        <div class="stat-number">15<span>%</span></div>
-        <div class="stat-label">more purchases in reserved products</div>
-      </div>
+
     </div>
   </div>
+  </div>
 
-  <!-- Learnings -->
-  <div class="section">
+  <!-- Learnings Section -->
+  <div style="background: #F2F2F2; padding: 96px 0;">
+  <div class="section-inner">
     <span class="section-label">Agile Collaboration</span>
     <h2 class="section-title">Learnings from the environment</h2>
-    <p class="body-text">I worked within a Scrum Agile structure, which taught me invaluable lessons about teamwork and collaboration.</p>
-    <div class="learnings">
-      <div class="learning-card">
-        <h4>Deep Understanding of the Tech Side</h4>
-        <p>Over time, I learned how back-end systems connect with the environment and worked closely with front-end developers to refine ideas and improve handoffs.</p>
+    <p class="body-text-sm" style="margin-top: 16px; max-width: 600px;">I worked within a Scrum Agile structure, which taught me invaluable lessons about teamwork and collaboration.</p>
+
+    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-top: 48px;">
+
+      <div style="background: #fff; border-radius: 20px; padding: 32px 28px; display:flex; flex-direction:column; justify-content:space-between; min-height: 320px;">
+        <div>
+          <!-- Gear / tech icon -->
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#282828" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="margin-bottom:20px; display:block;">
+            <circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+          </svg>
+          <h4 style="font-size: var(--text-body); font-weight: 700; line-height: 118%; letter-spacing: -0.6px; color: #282828; margin-bottom: 0;">Deep Understanding of the Tech Side</h4>
+        </div>
+        <p class="body-text-sm">Over time, I learned how back-end systems connect with the environment and worked closely with front-end developers to refine ideas and improve handoffs.</p>
       </div>
-      <div class="learning-card">
-        <h4>Navigating Big Company Dynamics</h4>
-        <p>I figured out how to turn ideas into reality in a big company: lots of pitching, clever presentations, and keeping stakeholders happy.</p>
+
+      <div style="background: #fff; border-radius: 20px; padding: 32px 28px; display:flex; flex-direction:column; justify-content:space-between; min-height: 320px;">
+        <div>
+          <!-- Building / company icon -->
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#282828" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="margin-bottom:20px; display:block;">
+            <rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/><line x1="12" y1="12" x2="12" y2="12.01"/><path d="M12 12v4"/>
+          </svg>
+          <h4 style="font-size: var(--text-body); font-weight: 700; line-height: 118%; letter-spacing: -0.6px; color: #282828; margin-bottom: 0;">Navigating Big Company Dynamics</h4>
+        </div>
+        <p class="body-text-sm">I figured out how to turn ideas into reality in a big company: lots of pitching, clever presentations, chatting up the right people, and keeping stakeholders happy.</p>
       </div>
-      <div class="learning-card">
-        <h4>Facilitating and Owning the Product</h4>
-        <p>Led workshops to align stakeholders and balance big-picture goals with user needs alongside the Product Owner.</p>
+
+      <div style="background: #fff; border-radius: 20px; padding: 32px 28px; display:flex; flex-direction:column; justify-content:space-between; min-height: 320px;">
+        <div>
+          <!-- Target / ownership icon -->
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#282828" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="margin-bottom:20px; display:block;">
+            <circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/>
+          </svg>
+          <h4 style="font-size: var(--text-body); font-weight: 700; line-height: 118%; letter-spacing: -0.6px; color: #282828; margin-bottom: 0;">Facilitating and Owning the Product</h4>
+        </div>
+        <p class="body-text-sm">Led workshops to align stakeholders and balance big-picture goals with user needs alongside the Product Owner.</p>
       </div>
+
     </div>
   </div>
-
-  <!-- Closing -->
-  <div style="padding: 0 80px 80px">
-    <img src="assets/lutz-closing.png" alt="Closing visual" style="border-radius:24px; width:100%; max-height:420px; object-fit:cover; display:block"/>
   </div>
 
-  <footer>
+  <!-- Closing image with parallax -->
+  <div style="position: relative; height: 560px; overflow: hidden;">
+    <img src="assets/lutz-end.svg" alt="Closing visual" id="parallax-img" style="
+      position: absolute;
+      top: -80px;
+      left: 0;
+      width: 100%;
+      height: calc(100% + 160px);
+      object-fit: cover;
+      display: block;
+      will-change: transform;
+    "/>
+  </div>
+
+  <!-- Footer overlaps image -->
+  <footer style="margin-top: -48px; position: relative;">
     <a href="https://linkedin.com" target="_blank">LinkedIn</a>
     <span class="sep">|</span>
     <a href="#">CV</a>
     <span class="sep">|</span>
     <a href="index.html">More projects</a>
   </footer>
+
+  <script>
+    const img = document.getElementById('parallax-img');
+    window.addEventListener('scroll', () => {
+      const section = img.parentElement;
+      const rect = section.getBoundingClientRect();
+      const viewH = window.innerHeight;
+      if (rect.bottom < 0 || rect.top > viewH) return;
+      const progress = (viewH - rect.top) / (viewH + rect.height);
+      const offset = (progress - 0.5) * 120;
+      img.style.transform = `translateY(${offset}px)`;
+    }, { passive: true });
+  </script>
 </body>
 </html>

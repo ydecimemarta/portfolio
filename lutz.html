@@ -304,6 +304,12 @@
       /* ── ROLE SECTION — cards without images, icon + text only ── */
       .mobile-only { display: block !important; }
       .role-section { padding: 64px 0; }
+      .role-desktop { display: none !important; }
+      .role-mobile { display: flex; flex-direction: column; gap: 0; }
+      .role-mobile-item { padding: 20px 0; border-bottom: 1px solid #ECDFCD; }
+      .role-mobile-item:first-child { border-top: 1px solid #ECDFCD; }
+      .role-mobile-item h4 { font-size: 18px; font-weight: 700; letter-spacing: -0.4px; color: #282828; margin-bottom: 6px; }
+      .role-mobile-item p { font-size: 15px; line-height: 1.55; color: #555; letter-spacing: -0.3px; }
       .role-lead {
         font-size: var(--text-title);
         font-weight: 700;
@@ -312,33 +318,7 @@
         line-height: 128.637%;
         letter-spacing: -0.6px;
       }
-      /* Version toggle buttons */
-      .role-toggle { display: flex; gap: 8px; margin-bottom: 24px; }
-      .role-toggle button {
-        font-family: 'Karla', sans-serif;
-        font-size: 12px; font-weight: 700;
-        letter-spacing: 0.08em; text-transform: uppercase;
-        padding: 6px 14px; border-radius: 100px;
-        border: 1.5px solid #ECDFCD;
-        background: transparent; color: #A2A2A2;
-        cursor: pointer; transition: all 0.2s;
-      }
-      .role-toggle button.active { background: #000; color: #fff; border-color: #000; }
-
-      /* Version A: Medium-style list */
-      .role-version-a { display: flex; flex-direction: column; gap: 0; }
-      .role-version-a .role-col {
-        flex-direction: column; text-align: left; gap: 6px;
-        background: none; border-radius: 0; padding: 20px 0;
-        border-bottom: 1px solid #ECDFCD;
-      }
-      .role-version-a .role-col:first-child { border-top: 1px solid #ECDFCD; }
-      .role-version-a .role-col-img { display: none; }
-      .role-version-a .role-col h4 { font-size: 18px; font-weight: 700; letter-spacing: -0.4px; color: #282828; }
-      .role-version-a .role-col p { font-size: 15px; line-height: 1.55; color: #555; margin-top: 4px; }
-
-      /* Version B: Apple-style image cards */
-      .role-version-b { display: none; flex-direction: column; gap: 16px; }
+      
       .role-version-b .role-col {
         flex-direction: column; text-align: left; gap: 0;
         background: none; border-radius: 20px; padding: 0;
@@ -417,6 +397,10 @@
       50%  { transform: translateY(-6px); }
       100% { transform: translateY(0px); }
     }
+
+    /* ── ROLE DESKTOP/MOBILE ── */
+    .role-desktop { display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; max-width: 860px; margin: 0 auto; }
+    .role-mobile { display: none; }
   </style>
 </head>
 <body>
@@ -478,44 +462,38 @@
     <span class="section-label mobile-only" style="display:none;">My role</span>
     <p class="role-lead">I led the UX and Strategy for the Product Detail Page (PDP) and key stages of the product assessment journey.</p>
     <div class="role-cols">
-      <!-- Mobile version toggle (hidden on desktop) -->
-      <div class="role-toggle" style="display:none;">
-        <button class="active" onclick="switchRole('a')">Article</button>
-        <button onclick="switchRole('b')">Visual</button>
-      </div>
-
-      <!-- Version A: Medium-style -->
-      <div class="role-version-a" id="role-a">
+      <!-- Desktop: 3 columns with images -->
+      <div class="role-desktop">
         <div class="role-col">
+          <div class="role-col-img"><img src="assets/lutz-design2.png" alt="Strategy" /></div>
           <h4>Strategy</h4>
           <p>Defined the roadmap, prioritized initiatives, and set timelines to keep projects moving forward.</p>
         </div>
         <div class="role-col">
+          <div class="role-col-img"><img src="assets/lutz-strategy.png" alt="Design" /></div>
           <h4>Design</h4>
           <p>Researched, tested, and delivered user-centered solutions from concept to implementation.</p>
         </div>
         <div class="role-col">
+          <div class="role-col-img"><img src="assets/lutz-collaboration.svg" alt="Collaboration" /></div>
           <h4>Collaboration</h4>
           <p>Managed stakeholders across teams, ran alignment workshops, and balanced user and business goals.</p>
         </div>
       </div>
 
-      <!-- Version B: Apple-style image cards (mobile only) -->
-      <div class="role-version-b" id="role-b">
-        <div class="role-col">
-          <div class="role-col-img"><img src="assets/lutz-design2.png" alt="Strategy" /></div>
+      <!-- Mobile: article-style list -->
+      <div class="role-mobile">
+        <div class="role-mobile-item">
           <h4>Strategy</h4>
-          <p>Defined the roadmap, prioritized initiatives, and set timelines.</p>
+          <p>Defined the roadmap, prioritized initiatives, and set timelines to keep projects moving forward.</p>
         </div>
-        <div class="role-col">
-          <div class="role-col-img"><img src="assets/lutz-strategy.png" alt="Design" /></div>
+        <div class="role-mobile-item">
           <h4>Design</h4>
-          <p>Researched, tested, and delivered user-centered solutions.</p>
+          <p>Researched, tested, and delivered user-centered solutions from concept to implementation.</p>
         </div>
-        <div class="role-col">
-          <div class="role-col-img"><img src="assets/lutz-collaboration.svg" alt="Collaboration" /></div>
+        <div class="role-mobile-item">
           <h4>Collaboration</h4>
-          <p>Managed stakeholders and balanced user and business goals.</p>
+          <p>Managed stakeholders across teams, ran alignment workshops, and balanced user and business goals.</p>
         </div>
       </div>
     </div>

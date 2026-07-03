@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link rel="icon" type="image/png" href="favicon.png"/>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
+  <script>
+    if (window.innerWidth > 768 && !/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
+      window.location.replace('ellie.html');
+    }
+  </script>
+  <title>Ellie Care — Martina Hirschler</title>
+  <link href="https://fonts.googleapis.com/css2?family=Karla:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --black: #0A0A0A;
+      --warm: #282828;
+      --mid: #6B6B6B;
+      --cream: #F9F0E8;
+      --cards-bg: #F2E6D8;
+    }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Karla', sans-serif;
+      background: var(--cream);
+      color: var(--black);
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    /* ── HERO ── */
+    .hero {
+      position: relative;
+      height: 100svh;
+      overflow: hidden;
+    }
+    .hero-bg {
+      position: absolute; inset: 0;
+      width: 100%; height: 100%;
+      object-fit: cover; object-position: top right;
+    }
+    .hero-overlay {
+      position: absolute; inset: 0;
+      background: rgba(54, 53, 37, 0.44);
+    }
+    .hero-title {
+      position: absolute;
+      top: 53px; left: 0; right: 0;
+      text-align: center;
+      font-size: clamp(32px, 9vw, 52px);
+      font-weight: 800;
+      color: #fff;
+      line-height: 0.88;
+      letter-spacing: -1px;
+      padding: 0 24px;
+      z-index: 1;
+    }
+    .hero-sub {
+      position: absolute;
+      bottom: 53px; left: 0; right: 0;
+      text-align: center;
+      font-size: clamp(18px, 5vw, 28px);
+      font-weight: 700;
+      color: #fff;
+      line-height: 1.1;
+      padding: 0 24px;
+      z-index: 1;
+    }
+  </style>
+</head>
+<body>
+
+  <section class="hero">
+    <img class="hero-bg" src="assets/ellie-hero.jpg" alt="Ellie Care hero"/>
+    <div class="hero-overlay"></div>
+    <h1 class="hero-title">Aging together</h1>
+    <p class="hero-sub">Ellie Care helps older adults<br>integrate more support as they age</p>
+  </section>
+
+  <div style="padding: 56px 24px 64px;">
+    <h2 style="font-size: 24px; font-weight: 700; letter-spacing: -0.6px; line-height: 1.2; color: #282828; margin-bottom: 16px;">Growing older, staying independent</h2>
+    <p style="font-size: 16px; line-height: 1.5; letter-spacing: -0.3px; color: #444;">Aging often leads to challenges such as frailty or cognitive decline, affecting 25% of seniors over 65.</p>
+    <p style="font-size: 16px; line-height: 1.5; letter-spacing: -0.3px; color: #444; margin-top: 14px;">Subtle signs like forgetfulness or falls signal a progressive loss of independence, making the transition difficult for both older adults and their families.</p>
+    <p style="font-size: 16px; line-height: 1.5; letter-spacing: -0.3px; color: #000; font-weight: 700; margin-top: 14px;">Ellie provides a simple and adaptable IoT ecosystem to support these transitions, combining emergency management features, health tracking, and family connectivity.</p>
+
+    <!-- Labels row -->
+    <div style="display: flex; flex-wrap: wrap; gap: 8px; margin-top: 24px;">
+      <span style="font-size:11px; font-weight:700; letter-spacing:0.07em; text-transform:uppercase; padding:5px 13px; border-radius:100px; color:#000; background:#ECDFCD;">Research and analysis</span>
+      <span style="font-size:11px; font-weight:700; letter-spacing:0.07em; text-transform:uppercase; padding:5px 13px; border-radius:100px; color:#000; background:#EEA91A;">Service Design</span>
+      <span style="font-size:11px; font-weight:700; letter-spacing:0.07em; text-transform:uppercase; padding:5px 13px; border-radius:100px; color:#fff; background:#F06554;">Strategy</span>
+      <span style="font-size:11px; font-weight:700; letter-spacing:0.07em; text-transform:uppercase; padding:5px 13px; border-radius:100px; color:#000; background:#FFADA3;">Stakeholder management</span>
+      <span style="font-size:11px; font-weight:700; letter-spacing:0.07em; text-transform:uppercase; padding:5px 13px; border-radius:100px; color:#000; background:#A79BF3;">UX Design</span>
+    </div>
+  </div>
+
+  <div style="background: #BDA38C; padding-top: 56px; overflow: hidden;">
+    <div style="display: flex; justify-content: center; padding: 0 48px;">
+      <img src="assets/ellie-family-note.svg" alt="Family reminder note" style="width: 100%; max-width: 320px; display: block;"/>
+    </div>
+    <div style="margin-top: 32px; width: 116.6%; margin-left: -8.3%;">
+      <img src="assets/ellie-continuum-card.png" alt="Ellie — continuum of care" style="width: 100%; display: block;"/>
+    </div>
+  </div>
+
+</body>
+</html>

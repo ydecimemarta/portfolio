@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link rel="icon" type="image/png" href="favicon.png"/>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <script>
+    if (window.innerWidth <= 768 || /iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
+      window.location.replace('ellie-mobile.html');
+    }
+  </script>
+  <title>Ellie Care — Martina Hirschler</title>
+  <link href="https://fonts.googleapis.com/css2?family=Karla:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    /* ── DESIGN TOKENS ── */
+    :root {
+      --cream:    #F9F0E8;
+      --cards-bg: #F2E6D8;
+      --dark:     #000000;
+      --mid:      #A2A2A2;
+      --divider:  #ECDFCD;
+      --c-product:     #A79BF3;
+      --c-strategy:    #F06554;
+      --c-research:    #ECDFCD;
+      --c-stakeholder: #FFADA3;
+      --c-ux:          #A79BF3;
+      --c-service:     #EEA91A;
+
+      /* Spacing scale (8px base) */
+      --space-1:  8px;
+      --space-2:  16px;
+      --space-3:  24px;
+      --space-4:  32px;
+      --space-5:  40px;
+      --space-6:  48px;
+      --space-8:  64px;
+      --space-10: 80px;
+      --space-12: 96px;
+      --space-16: 128px;
+      --space-18: 144px;
+      --space-21: 168px;
+      --space-20: 160px;
+      --space-35: 280px; /* standard section vertical padding (~277px in design) */
+
+      /* Layout */
+      --max-width: 1200px;
+      --pad-desktop: 112px;
+      --pad-tablet:  48px;
+      --pad-mobile:  20px;
+
+      /* Typography scale */
+      --text-label:   14px;  /* section labels — uppercase */
+      --text-body-sm: 16px;  /* secondary body */
+      --text-body:    20px;  /* primary body */
+      --text-title:   27px;  /* section titles */
+
+      /* Line heights */
+      --lh-tight:  1.2;
+      --lh-normal: 128.637%;
+      --lh-loose:  118%;
+    }
+
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Karla', sans-serif;
+      background: var(--cream);
+      color: var(--dark);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── LAYOUT WRAPPER ── */
+    .container {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding-left: var(--pad-desktop);
+      padding-right: var(--pad-desktop);
+    }
+    .section-inner {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 0 var(--pad-desktop);
+    }
+
+    /* ── TYPOGRAPHY SYSTEM ── */
+    .section-label {
+      font-size: var(--text-label);
+      font-weight: 700;
+      line-height: var(--lh-normal);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--mid);
+      display: block;
+      margin-bottom: 12px;
+    }
+    .section-title {
+      font-size: var(--text-title);
+      font-weight: 700;
+      line-height: var(--lh-normal);
+      color: #282828;
+      margin-bottom: 20px;
+      letter-spacing: -0.6px;
+    }
+    .body-text {
+      font-size: var(--text-body);
+      font-weight: 400;
+      line-height: 118%;
+      letter-spacing: -0.6px;
+      color: #2a2a2a;
+    }
+    .body-text strong { font-weight: 700; color: #000; }
+    .body-text-sm {
+      font-size: var(--text-body-sm);
+      font-weight: 400;
+      line-height: 118%;
+      letter-spacing: -0.6px;
+      color: #444;
+    }
+
+    /* ── TAGS ── */
+    .tag { font-size: 11px; font-weight: 700; letter-spacing: 0.07em; text-transform: uppercase; padding: 5px 13px; border-radius: 100px; color: #000; }
+    .tag-product     { background: var(--c-product); }
+    .tag-strategy    { background: var(--c-strategy); color: #fff; }
+    .tag-research    { background: var(--c-research); }
+    .tag-stakeholder { background: var(--c-stakeholder); }
+    .tag-ux          { background: var(--c-ux); }
+    .tag-service     { background: var(--c-service); }
+
+    /* ── NAV TABS ── */
+    .nav-back, .nav-next {
+      position: fixed;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 100;
+      text-decoration: none;
+      transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+    .nav-back { left: 0; }
+    .nav-next { right: 0; }
+    .nav-back:hover { transform: translateY(-50%) translateX(-3px); }
+    .nav-next:hover { transform: translateY(-50%) translateX(3px); }
+
+    .nav-tab {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 95px;
+      min-height: 71px;
+      padding: 16px 20px 16px 16px;
+      background: #fff;
+      box-shadow: 0px 2px 5.3px 1px rgba(140, 115, 93, 0.17);
+      transition: background 0.2s;
+      white-space: normal;
+      text-align: left;
+    }
+    .nav-back .nav-tab {
+      border-radius: 0 100px 100px 0;
+      padding-left: 18px;
+      padding-right: 24px;
+    }
+    .nav-next .nav-tab {
+      border-radius: 100px 0 0 100px;
+      padding-right: 18px;
+      padding-left: 24px;
+      text-align: left;
+    }
+    .nav-label {
+      font-family: 'Karla', sans-serif;
+      font-size: var(--text-body-sm);
+      font-weight: 700;
+      letter-spacing: -0.6px;
+      line-height: 118%;
+      color: #836D5A;
+      text-transform: none;
+      transition: color 0.25s ease;
+      display: block;
+    }
+    .nav-back:hover .nav-label,
+    .nav-next:hover .nav-label { color: #F06554; }
+    .nav-back:hover .nav-tab,
+    .nav-next:hover .nav-tab { background: #FFF9F1; }
+    .nav-arrow { display: none; }
+
+    /* ── HERO ── */
+    .hero { position: relative; height: 70vh; min-height: 480px; overflow: hidden; }
+    .hero-bg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: top center; display: block; }
+    .hero-overlay { position: absolute; inset: 0; background: rgba(54, 53, 37, 0.44); }
+    .hero-title { position: absolute; top: 53px; left: 0; right: 0; text-align: center; font-size: clamp(36px, 6vw, 72px); font-weight: 800; color: #fff; line-height: 0.84; padding: 0 var(--pad-desktop); z-index: 1; }
+    .hero-sub { position: absolute; bottom: 53px; left: 0; right: 0; text-align: center; font-size: clamp(22px, 3vw, 46px); font-weight: 700; color: #fff; line-height: 1.1; padding: 0 var(--pad-desktop); z-index: 1; }
+
+    /* ── SECTION SPACING ── */
+    /* standard vertical rhythm between sections: text sits --space-35 (280px) from the section edge */
+    .section-pad-y { padding-top: var(--space-35); padding-bottom: var(--space-35); }
+
+    /* ── MOSAIC GALLERY (2-up) ── */
+    .mosaic-2 { display: grid; grid-template-columns: 1fr 1fr; }
+    .mosaic-cell { aspect-ratio: 721 / 629; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+    .mosaic-cell-a { background: #D5C6A5; }
+    .mosaic-cell-a img { width: 80%; height: auto; display: block; }
+    .mosaic-cell-b { background: #BDA38C; }
+    .mosaic-cell-b .note-card-box {
+      background: #EE7250;
+      width: 69.2%;
+      height: 69.8%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+    .mosaic-cell-b .note-card-box img { max-width: 100%; max-height: 100%; display: block; }
+
+    /* ── DIAGRAM (double diamond) ── */
+    .diagram-section { padding: var(--space-18) 0; display: flex; justify-content: center; }
+    .diagram-section img { width: 55%; max-width: 700px; display: block; }
+
+    /* ── FEATURE SPLIT (50/50) ── */
+    .feature-split { display: flex; width: 100%; align-items: stretch; }
+    .feature-split-text {
+      width: 50%;
+      max-width: 600px;
+      box-sizing: border-box;
+      padding: var(--space-16) 60px var(--space-16) var(--pad-desktop);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    .feature-split-media { flex: 1; position: relative; overflow: hidden; }
+    .feature-split-media img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+    .eyebrow {
+      display: inline-block;
+      align-self: flex-start;
+      font-size: var(--text-label);
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #677261;
+      padding-bottom: 2px;
+      border-bottom: 4px solid #EE7250;
+      margin-bottom: 18px;
+    }
+
+    .feature-points { display: flex; flex-direction: column; gap: 22px; margin-top: 28px; }
+    .feature-point { display: flex; align-items: flex-start; gap: 16px; }
+    .feature-icon {
+      flex-shrink: 0;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: #BAA796;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .feature-icon svg { width: 20px; height: 20px; }
+    .feature-point p { padding-top: 8px; }
+
+    /* ── CARE CIRCLE DIAGRAM ── */
+    .care-circle-section { padding: var(--space-4) 0; display: flex; justify-content: center; }
+    .care-circle-section img { width: 33%; display: block; }
+
+    /* ── TWO COLUMN (contained) ── */
+    .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 72px; align-items: center; }
+    .two-col img { width: 100%; display: block; }
+    .method-lines { display: flex; flex-direction: column; gap: 14px; margin-top: 20px; }
+    .underline-yellow { font-weight: 400; text-decoration: underline; text-decoration-color: #F5CF00; text-decoration-thickness: 2px; text-underline-offset: 3px; }
+
+    /* ── INTRO ── */
+    .intro-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: start; }
+    .intro-labels { display: flex; flex-direction: column; align-items: flex-start; gap: 10px; padding-top: 4px; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 1024px) {
+      :root { --pad-desktop: var(--pad-tablet); }
+    }
+  </style>
+</head>
+<body>
+
+  <a class="nav-back" href="lutz.html">
+    <div class="nav-tab"><span class="nav-arrow">↑</span><span class="nav-label">Back home</span></div>
+  </a>
+  <a class="nav-next" href="donofrio.html">
+    <div class="nav-tab"><span class="nav-arrow">↓</span><span class="nav-label">Next project</span></div>
+  </a>
+
+  <section class="hero">
+    <img class="hero-bg" src="assets/ellie-hero.jpg" alt="Ellie Care hero"/>
+    <div class="hero-overlay"></div>
+    <h1 class="hero-title">Aging together</h1>
+    <p class="hero-sub">Ellie Care helps older adults integrate more<br>support as they age</p>
+  </section>
+
+  <div class="section-pad-y">
+  <div class="section-inner">
+  <div class="intro-grid">
+    <div class="intro-labels">
+      <span class="tag tag-research">Research and analysis</span>
+      <span class="tag tag-service">Service Design</span>
+      <span class="tag tag-strategy">Strategy</span>
+      <span class="tag tag-stakeholder">Stakeholder management</span>
+      <span class="tag tag-ux">UX Design</span>
+    </div>
+    <div>
+      <h2 class="section-title">Growing older, staying independent</h2>
+      <div class="body-text">
+        <p>Aging often leads to challenges such as frailty or cognitive decline, affecting 25% of seniors over 65.</p>
+        <p style="margin-top: 20px;">Subtle signs like forgetfulness or falls signal a progressive loss of independence, making the transition difficult for both older adults and their families.</p>
+        <p style="margin-top: 20px;"><strong>Ellie provides a simple and adaptable IoT ecosystem to support these transitions, combining emergency management features, health tracking, and family connectivity.</strong></p>
+      </div>
+    </div>
+  </div>
+  </div>
+  </div>
+
+  <div class="mosaic-2">
+    <div class="mosaic-cell mosaic-cell-a">
+      <img src="assets/ellie-continuum-card.png" alt="Ellie — continuum of care"/>
+    </div>
+    <div class="mosaic-cell mosaic-cell-b">
+      <div class="note-card-box">
+        <img src="assets/ellie-family-note.svg" alt="Family reminder note"/>
+      </div>
+    </div>
+  </div>
+
+  <div class="diagram-section">
+    <img src="assets/ellie-doublediamond.svg" alt="Double diamond framework: Discover, Define, Develop, Deliver"/>
+  </div>
+
+  <div class="feature-split">
+    <div class="feature-split-text">
+      <span class="eyebrow">Discover</span>
+      <h2 class="section-title">Understanding the problem</h2>
+      <div class="feature-points">
+        <div class="feature-point">
+          <div class="feature-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M7 12V5.5a1.5 1.5 0 0 1 3 0V11M10 10.5v-7a1.5 1.5 0 0 1 3 0v7M13 11V5.5a1.5 1.5 0 0 1 3 0V12M16 12V8.5a1.5 1.5 0 0 1 3 0V15a6 6 0 0 1-6 6h-2c-2 0-3-.5-4.5-2.5L4 15.5c-.6-.8-.4-1.8.3-2.3.7-.5 1.7-.4 2.3.3L8 15"/>
+            </svg>
+          </div>
+          <p class="body-text-sm">Older adults are <strong>resistant to seeking or accepting help</strong> until an incident, such as a fall, occurs.</p>
+        </div>
+        <div class="feature-point">
+          <div class="feature-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="9"/>
+              <path d="M9.5 9.2a2.5 2.5 0 0 1 4.9.6c0 1.7-2.4 2.1-2.4 3.7"/>
+              <line x1="12" y1="17" x2="12" y2="17.01"/>
+            </svg>
+          </div>
+          <p class="body-text-sm"><strong>Existing market solutions</strong> like SOS buttons are often unreliable or unintuitive.</p>
+        </div>
+        <div class="feature-point">
+          <div class="feature-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="9" cy="7" r="3"/>
+              <path d="M3.5 19.5c0-3.3 2.5-6 6-6"/>
+              <rect x="14" y="4" width="4" height="7" rx="1.5" transform="rotate(20 16 7.5)"/>
+            </svg>
+          </div>
+          <p class="body-text-sm">Families struggle to <strong>coordinate care</strong> while <strong>respecting the autonomy</strong> of the older adult.</p>
+        </div>
+      </div>
+    </div>
+    <div class="feature-split-media">
+      <img src="assets/ellie-discover-photo.jpg" alt="Older adult at home"/>
+    </div>
+  </div>
+
+  <div class="section-pad-y">
+  <div class="section-inner">
+    <div class="two-col">
+      <div>
+        <h2 class="section-title">Research Methods</h2>
+        <div class="method-lines">
+          <p class="body-text-sm"><span class="underline-yellow">Qualitative</span>: ethnographic research and interviews</p>
+          <p class="body-text-sm"><span class="underline-yellow">Quantitative</span>: surveys for both aging adults and their support networks</p>
+          <p class="body-text-sm"><span class="underline-yellow">Market analysis</span> of existing solutions</p>
+        </div>
+      </div>
+      <div>
+        <img src="assets/ellie-research-cards.png" alt="Research method cards"/>
+      </div>
+    </div>
+  </div>
+  </div>
+
+  <div class="care-circle-section">
+    <img src="assets/ellie-care-circle.png" alt="Care circle diagram"/>
+  </div>
+
+</body>
+</html>

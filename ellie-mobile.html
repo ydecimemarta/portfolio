@@ -38,7 +38,7 @@
     .hero-bg {
       position: absolute; inset: 0;
       width: 100%; height: 100%;
-      object-fit: cover; object-position: top right;
+      object-fit: cover; object-position: center center;
     }
     .hero-overlay {
       position: absolute; inset: 0;
@@ -46,7 +46,7 @@
     }
     .hero-title {
       position: absolute;
-      top: 53px; left: 0; right: 0;
+      top: 26px; left: 0; right: 0;
       text-align: center;
       font-size: clamp(32px, 9vw, 52px);
       font-weight: 800;
@@ -58,15 +58,107 @@
     }
     .hero-sub {
       position: absolute;
-      bottom: 53px; left: 0; right: 0;
+      bottom: 26px; left: 0; right: 0;
       text-align: center;
       font-size: clamp(18px, 5vw, 28px);
-      font-weight: 700;
+      font-weight: 600;
+      letter-spacing: -0.6px;
       color: #fff;
       line-height: 1.1;
       padding: 0 24px;
       z-index: 1;
     }
+
+    /* ── INSIGHTS: side scroll ── */
+    .insights-section { padding: 48px 0; }
+    .insights-section .section-header { padding: 0 24px 0; }
+    .insights-section h2 { font-size: 24px; font-weight: 700; letter-spacing: -0.6px; color: #282828; }
+    .scroll-hint {
+      font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase;
+      color: var(--mid); padding: 14px 24px 0; display: flex; align-items: center; gap: 6px;
+    }
+    .scroll-hint::after { content: '→'; font-size: 14px; }
+    .insights-scroll {
+      display: flex; gap: 12px;
+      overflow-x: auto; scroll-snap-type: x mandatory;
+      -webkit-overflow-scrolling: touch;
+      padding: 16px 24px 4px;
+    }
+    .insights-scroll::-webkit-scrollbar { display: none; }
+    .insight-card {
+      min-width: 75vw; max-width: 75vw;
+      background: #fff; border-radius: 20px;
+      padding: 28px 24px;
+      scroll-snap-align: start; flex-shrink: 0;
+    }
+    .insight-card img { width: 32px; height: 32px; margin-bottom: 16px; display: block; }
+    .insight-card p { font-size: 15px; line-height: 1.5; letter-spacing: -0.2px; color: #444; }
+
+    /* ── EYEBROW ── */
+    .eyebrow {
+      display: inline-block;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #677261;
+      padding-bottom: 2px;
+      border-bottom: 4px solid #EE7250;
+      margin-bottom: 14px;
+    }
+
+    /* ── DISCOVER: photo + points ── */
+    .discover-section { padding-bottom: 8px; }
+    .discover-photo { width: 100%; height: 320px; object-fit: cover; display: block; }
+    .discover-content { padding: 32px 24px 40px; }
+    .discover-content h2 { font-size: 24px; font-weight: 700; letter-spacing: -0.6px; line-height: 1.2; color: #282828; }
+    .feature-points-m { display: flex; flex-direction: column; gap: 20px; margin-top: 22px; }
+    .feature-point-m { display: flex; align-items: flex-start; gap: 14px; }
+    .feature-icon-m {
+      flex-shrink: 0; width: 36px; height: 36px; border-radius: 50%;
+      background: #BAA796; display: flex; align-items: center; justify-content: center;
+    }
+    .feature-icon-m svg { width: 18px; height: 18px; }
+    .feature-point-m p { font-size: 15px; line-height: 1.5; letter-spacing: -0.2px; color: #444; padding-top: 6px; }
+    .feature-point-m p strong { color: #000; font-weight: 700; }
+
+    /* ── RESEARCH METHODS ── */
+    .research-section { padding: 40px 24px; }
+    .research-section h2 { font-size: 24px; font-weight: 700; letter-spacing: -0.6px; line-height: 1.2; color: #282828; margin-bottom: 16px; }
+    .research-lines { display: flex; flex-direction: column; gap: 12px; }
+    .research-lines p { font-size: 15px; line-height: 1.5; letter-spacing: -0.2px; color: #444; }
+    .underline-yellow { font-weight: 400; text-decoration: underline; text-decoration-color: #F5CF00; text-decoration-thickness: 2px; text-underline-offset: 3px; }
+    .research-img-wrap { display: flex; justify-content: center; padding: 8px 24px 40px; }
+    .research-img-wrap img { width: 85%; max-width: 380px; display: block; }
+
+    /* ── CARE CIRCLE ── */
+    .care-circle-m { display: flex; justify-content: center; padding: 0 24px 40px; }
+    .care-circle-m img { width: 58%; max-width: 260px; display: block; }
+
+    /* ── FOOTER ── */
+    footer {
+      background: #000;
+      height: 180px;
+      box-sizing: border-box;
+      padding: 0 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 20px;
+      border-radius: 20px 20px 0 0;
+    }
+    footer a {
+      color: #fff;
+      text-decoration: none;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      opacity: 0.65;
+      transition: opacity 0.2s;
+    }
+    footer a:hover { opacity: 1; }
+    footer .sep { color: rgba(255, 255, 255, 0.25); }
   </style>
 </head>
 <body>
@@ -74,23 +166,23 @@
   <section class="hero">
     <img class="hero-bg" src="assets/ellie-hero.jpg" alt="Ellie Care hero"/>
     <div class="hero-overlay"></div>
-    <h1 class="hero-title">Aging together</h1>
-    <p class="hero-sub">Ellie Care helps older adults<br>integrate more support as they age</p>
+    <h1 class="hero-title" data-i18n="hero-title">Aging together</h1>
+    <p class="hero-sub" data-i18n="hero-sub">Ellie Care helps older adults<br>integrate more support as they age</p>
   </section>
 
   <div style="padding: 56px 24px 64px;">
-    <h2 style="font-size: 24px; font-weight: 700; letter-spacing: -0.6px; line-height: 1.2; color: #282828; margin-bottom: 16px;">Growing older, staying independent</h2>
-    <p style="font-size: 16px; line-height: 1.5; letter-spacing: -0.3px; color: #444;">Aging often leads to challenges such as frailty or cognitive decline, affecting 25% of seniors over 65.</p>
-    <p style="font-size: 16px; line-height: 1.5; letter-spacing: -0.3px; color: #444; margin-top: 14px;">Subtle signs like forgetfulness or falls signal a progressive loss of independence, making the transition difficult for both older adults and their families.</p>
-    <p style="font-size: 16px; line-height: 1.5; letter-spacing: -0.3px; color: #000; font-weight: 700; margin-top: 14px;">Ellie provides a simple and adaptable IoT ecosystem to support these transitions, combining emergency management features, health tracking, and family connectivity.</p>
+    <h2 style="font-size: 24px; font-weight: 700; letter-spacing: -0.6px; line-height: 1.2; color: #282828; margin-bottom: 16px;" data-i18n="intro-title">Growing older, staying independent</h2>
+    <p style="font-size: 16px; line-height: 1.5; letter-spacing: -0.3px; color: #444;" data-i18n="intro-p1">Aging often leads to challenges such as frailty or cognitive decline, affecting 25% of seniors over 65.</p>
+    <p style="font-size: 16px; line-height: 1.5; letter-spacing: -0.3px; color: #444; margin-top: 14px;" data-i18n="intro-p2">Subtle signs like forgetfulness or falls signal a progressive loss of independence, making the transition difficult for both older adults and their families.</p>
+    <p style="font-size: 16px; line-height: 1.5; letter-spacing: -0.3px; color: #000; font-weight: 700; margin-top: 14px;" data-i18n="intro-p3">Ellie provides a simple and adaptable IoT ecosystem to support these transitions, combining emergency management features, health tracking, and family connectivity.</p>
 
     <!-- Labels row -->
     <div style="display: flex; flex-wrap: wrap; gap: 8px; margin-top: 24px;">
-      <span style="font-size:11px; font-weight:700; letter-spacing:0.07em; text-transform:uppercase; padding:5px 13px; border-radius:100px; color:#000; background:#ECDFCD;">Research and analysis</span>
-      <span style="font-size:11px; font-weight:700; letter-spacing:0.07em; text-transform:uppercase; padding:5px 13px; border-radius:100px; color:#000; background:#EEA91A;">Service Design</span>
-      <span style="font-size:11px; font-weight:700; letter-spacing:0.07em; text-transform:uppercase; padding:5px 13px; border-radius:100px; color:#fff; background:#F06554;">Strategy</span>
-      <span style="font-size:11px; font-weight:700; letter-spacing:0.07em; text-transform:uppercase; padding:5px 13px; border-radius:100px; color:#000; background:#FFADA3;">Stakeholder management</span>
-      <span style="font-size:11px; font-weight:700; letter-spacing:0.07em; text-transform:uppercase; padding:5px 13px; border-radius:100px; color:#000; background:#A79BF3;">UX Design</span>
+      <span style="font-size:11px; font-weight:700; letter-spacing:0.07em; text-transform:uppercase; padding:5px 13px; border-radius:100px; color:#000; background:#ECDFCD;" data-i18n="tag-research">Research and analysis</span>
+      <span style="font-size:11px; font-weight:700; letter-spacing:0.07em; text-transform:uppercase; padding:5px 13px; border-radius:100px; color:#000; background:#EEA91A;" data-i18n="tag-service">Service Design</span>
+      <span style="font-size:11px; font-weight:700; letter-spacing:0.07em; text-transform:uppercase; padding:5px 13px; border-radius:100px; color:#fff; background:#F06554;" data-i18n="tag-strategy">Strategy</span>
+      <span style="font-size:11px; font-weight:700; letter-spacing:0.07em; text-transform:uppercase; padding:5px 13px; border-radius:100px; color:#000; background:#FFADA3;" data-i18n="tag-stakeholder">Stakeholder management</span>
+      <span style="font-size:11px; font-weight:700; letter-spacing:0.07em; text-transform:uppercase; padding:5px 13px; border-radius:100px; color:#000; background:#A79BF3;" data-i18n="tag-ux">UX Design</span>
     </div>
   </div>
 
@@ -102,6 +194,150 @@
       <img src="assets/ellie-continuum-card.png" alt="Ellie — continuum of care" style="width: 100%; display: block;"/>
     </div>
   </div>
+
+  <div class="discover-section">
+    <img class="discover-photo" src="assets/ellie-discover-photo.jpg" alt="Older adult at home"/>
+    <div class="discover-content">
+      <span class="eyebrow">Discover</span>
+      <h2 data-i18n="discover-title">Understanding the problem</h2>
+      <div class="feature-points-m">
+        <div class="feature-point-m">
+          <div class="feature-icon-m">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M7 12V5.5a1.5 1.5 0 0 1 3 0V11M10 10.5v-7a1.5 1.5 0 0 1 3 0v7M13 11V5.5a1.5 1.5 0 0 1 3 0V12M16 12V8.5a1.5 1.5 0 0 1 3 0V15a6 6 0 0 1-6 6h-2c-2 0-3-.5-4.5-2.5L4 15.5c-.6-.8-.4-1.8.3-2.3.7-.5 1.7-.4 2.3.3L8 15"/>
+            </svg>
+          </div>
+          <p data-i18n="discover-p1">Older adults are <strong>resistant to seeking or accepting help</strong> until an incident, such as a fall, occurs.</p>
+        </div>
+        <div class="feature-point-m">
+          <div class="feature-icon-m">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="9"/>
+              <path d="M9.5 9.2a2.5 2.5 0 0 1 4.9.6c0 1.7-2.4 2.1-2.4 3.7"/>
+              <line x1="12" y1="17" x2="12" y2="17.01"/>
+            </svg>
+          </div>
+          <p data-i18n="discover-p2"><strong>Existing market solutions</strong> like SOS buttons are often unreliable or unintuitive.</p>
+        </div>
+        <div class="feature-point-m">
+          <div class="feature-icon-m">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="9" cy="7" r="3"/>
+              <path d="M3.5 19.5c0-3.3 2.5-6 6-6"/>
+              <rect x="14" y="4" width="4" height="7" rx="1.5" transform="rotate(20 16 7.5)"/>
+            </svg>
+          </div>
+          <p data-i18n="discover-p3">Families struggle to <strong>coordinate care</strong> while <strong>respecting the autonomy</strong> of the older adult.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="research-section">
+    <h2 data-i18n="research-title">Research methods</h2>
+    <div class="research-lines">
+      <p data-i18n="research-l1"><span class="underline-yellow">Qualitative</span>: ethnographic research and interviews</p>
+      <p data-i18n="research-l2"><span class="underline-yellow">Quantitative</span>: surveys for both aging adults and their support networks</p>
+      <p data-i18n="research-l3"><span class="underline-yellow">Market analysis</span> of existing solutions</p>
+    </div>
+  </div>
+  <div class="research-img-wrap">
+    <img src="assets/ellie-research-cards.png" alt="Research method cards"/>
+  </div>
+
+  <div class="care-circle-m">
+    <img src="assets/ellie-care-circle.png" alt="Care circle diagram"/>
+  </div>
+
+  <div class="insights-section">
+    <div class="section-header">
+      <span class="eyebrow" style="border-bottom-color: #D5C6A5;">Define</span>
+      <h2 data-i18n="insights-title">From insights</h2>
+    </div>
+    <p class="scroll-hint" data-i18n="scroll-hint">Swipe to read</p>
+    <div class="insights-scroll">
+      <div class="insight-card">
+        <img src="assets/ellie-insight-watch.svg" alt=""/>
+        <p data-i18n="insight-1">Older adults prefer familiar and non-intrusive devices.</p>
+      </div>
+      <div class="insight-card">
+        <img src="assets/ellie-insight-people.svg" alt=""/>
+        <p data-i18n="insight-2">Caregivers need tools to collaborate, and coordinate help during emergencies.</p>
+      </div>
+      <div class="insight-card">
+        <img src="assets/ellie-insight-chart.svg" alt=""/>
+        <p data-i18n="insight-3">We need solutions that adapt as health conditions evolve.</p>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <a href="https://linkedin.com" target="_blank">LinkedIn</a>
+    <span class="sep">|</span>
+    <a href="#">CV</a>
+    <span class="sep">|</span>
+    <a href="index.html" data-i18n="footer-more">More projects</a>
+  </footer>
+
+  <script>
+    window.I18N = {
+      en: {
+        'hero-title': 'Aging together',
+        'hero-sub': 'Ellie Care helps older adults<br>integrate more support as they age',
+        'intro-title': 'Growing older, staying independent',
+        'intro-p1': 'Aging often leads to challenges such as frailty or cognitive decline, affecting 25% of seniors over 65.',
+        'intro-p2': 'Subtle signs like forgetfulness or falls signal a progressive loss of independence, making the transition difficult for both older adults and their families.',
+        'intro-p3': 'Ellie provides a simple and adaptable IoT ecosystem to support these transitions, combining emergency management features, health tracking, and family connectivity.',
+        'tag-research': 'Research and analysis',
+        'tag-service': 'Service Design',
+        'tag-strategy': 'Strategy',
+        'tag-stakeholder': 'Stakeholder management',
+        'tag-ux': 'UX Design',
+        'discover-title': 'Understanding the problem',
+        'discover-p1': 'Older adults are <strong>resistant to seeking or accepting help</strong> until an incident, such as a fall, occurs.',
+        'discover-p2': '<strong>Existing market solutions</strong> like SOS buttons are often unreliable or unintuitive.',
+        'discover-p3': 'Families struggle to <strong>coordinate care</strong> while <strong>respecting the autonomy</strong> of the older adult.',
+        'research-title': 'Research methods',
+        'research-l1': '<span class="underline-yellow">Qualitative</span>: ethnographic research and interviews',
+        'research-l2': '<span class="underline-yellow">Quantitative</span>: surveys for both aging adults and their support networks',
+        'research-l3': '<span class="underline-yellow">Market analysis</span> of existing solutions',
+        'insights-title': 'From insights',
+        'scroll-hint': 'Swipe to read',
+        'insight-1': 'Older adults prefer familiar and non-intrusive devices.',
+        'insight-2': 'Caregivers need tools to collaborate, and coordinate help during emergencies.',
+        'insight-3': 'We need solutions that adapt as health conditions evolve.',
+        'footer-more': 'More projects'
+      },
+      es: {
+        'hero-title': 'Envejecer acompañados',
+        'hero-sub': 'Ellie Care ayuda a adultos mayores<br>a integrar apoyo a medida que envejecen',
+        'intro-title': 'Envejecer sin perder independencia',
+        'intro-p1': 'Envejecer suele traer desafíos como fragilidad o deterioro cognitivo, que afectan al 25% de los adultos mayores de 65 años.',
+        'intro-p2': 'Señales sutiles como olvidos o caídas anticipan una pérdida progresiva de independencia, algo que hace difícil la transición tanto para los adultos mayores como para sus familias.',
+        'intro-p3': 'Ellie ofrece un ecosistema IoT simple y adaptable para acompañar estas transiciones, combinando gestión de emergencias, monitoreo de salud y conectividad familiar.',
+        'tag-research': 'Investigación y análisis',
+        'tag-service': 'Service Design',
+        'tag-strategy': 'Estrategia',
+        'tag-stakeholder': 'Gestión de stakeholders',
+        'tag-ux': 'UX Design',
+        'discover-title': 'Entendiendo el problema',
+        'discover-p1': 'Los adultos mayores <strong>se resisten a buscar o aceptar ayuda</strong> hasta que ocurre un incidente, como una caída.',
+        'discover-p2': '<strong>Las soluciones que existen en el mercado</strong>, como los botones SOS, suelen ser poco confiables o poco intuitivas.',
+        'discover-p3': 'A las familias les cuesta <strong>coordinar los cuidados</strong> sin dejar de <strong>respetar la autonomía</strong> del adulto mayor.',
+        'research-title': 'Métodos de investigación',
+        'research-l1': '<span class="underline-yellow">Cualitativo</span>: investigación etnográfica y entrevistas',
+        'research-l2': '<span class="underline-yellow">Cuantitativo</span>: encuestas a adultos mayores y a sus redes de apoyo',
+        'research-l3': '<span class="underline-yellow">Análisis de mercado</span> de las soluciones existentes',
+        'insights-title': 'De insights',
+        'scroll-hint': 'Deslizá para leer',
+        'insight-1': 'Los adultos mayores prefieren dispositivos familiares y poco intrusivos.',
+        'insight-2': 'Los cuidadores necesitan herramientas para colaborar y coordinar ayuda durante emergencias.',
+        'insight-3': 'Se necesitan soluciones que se adapten a medida que la salud evoluciona.',
+        'footer-more': 'Más proyectos'
+      }
+    };
+  </script>
+  <script src="i18n.js"></script>
 
 </body>
 </html>

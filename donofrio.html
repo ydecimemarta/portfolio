@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link rel="icon" type="image/png" href="favicon.png"/>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <script>
+    if (window.innerWidth <= 768 || /iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
+      window.location.replace('donofrio-mobile.html');
+    }
+  </script>
+  <title>D'Onofrio: Más Cerca de Ti — Martina Hirschler</title>
+  <link href="https://fonts.googleapis.com/css2?family=Karla:wght@300;400;500;600;700;800&family=Scope+One&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    /* ── DESIGN TOKENS ── */
+    :root {
+      --cream:    #FFFFFF;
+      --cards-bg: #F2E6D8;
+      --dark:     #000000;
+      --mid:      #A2A2A2;
+      --divider:  #ECDFCD;
+      --c-product:     #A79BF3;
+      --c-strategy:    #F06554;
+      --c-research:    #ECDFCD;
+      --c-stakeholder: #FFADA3;
+      --c-ux:          #A79BF3;
+      --c-service:     #EEA91A;
+      --don-blue:      #3F84B6;
+
+      --space-1:  8px;
+      --space-2:  16px;
+      --space-3:  24px;
+      --space-4:  32px;
+      --space-5:  40px;
+      --space-6:  48px;
+      --space-8:  64px;
+      --space-10: 80px;
+      --space-12: 96px;
+      --space-16: 128px;
+      --space-18: 144px;
+      --space-21: 168px;
+      --space-20: 160px;
+      --space-35: 200px;
+
+      --max-width: 1200px;
+      --pad-desktop: 112px;
+      --pad-tablet:  48px;
+      --pad-mobile:  20px;
+      --content-inset: calc((100vw - min(100vw, var(--max-width))) / 2 + var(--pad-desktop));
+      --fs-content-width: calc(min(100vw, var(--max-width)) - 2 * var(--pad-desktop));
+      --fs-col-width: calc((var(--fs-content-width) - 60px) / 2);
+
+      --text-label:   14px;
+      --text-body-sm: 16px;
+      --text-body:    20px;
+      --text-title:   27px;
+
+      --lh-tight:  1.2;
+      --lh-normal: 128.637%;
+      --lh-loose:  118%;
+    }
+
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Karla', sans-serif;
+      background: var(--cream);
+      color: var(--dark);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .container { max-width: var(--max-width); margin: 0 auto; padding-left: var(--pad-desktop); padding-right: var(--pad-desktop); }
+    .section-inner { max-width: var(--max-width); margin: 0 auto; padding: 0 var(--pad-desktop); }
+
+    .section-label { font-size: var(--text-label); font-weight: 700; line-height: var(--lh-normal); text-transform: uppercase; letter-spacing: 0.08em; color: var(--mid); display: block; margin-bottom: 12px; }
+    .section-title { font-size: var(--text-title); font-weight: 700; line-height: var(--lh-normal); color: #282828; margin-bottom: 20px; letter-spacing: -0.6px; }
+    .body-text { font-size: var(--text-body); font-weight: 400; line-height: 118%; letter-spacing: -0.6px; color: #2a2a2a; }
+    .body-text strong { font-weight: 700; color: #000; }
+    .body-text-sm { font-size: var(--text-body-sm); font-weight: 400; line-height: 118%; letter-spacing: -0.6px; color: #444; }
+
+    .tag { font-size: 11px; font-weight: 700; letter-spacing: 0.07em; text-transform: uppercase; padding: 5px 13px; border-radius: 100px; color: #000; }
+    .tag-product     { background: var(--c-product); }
+    .tag-strategy    { background: var(--c-strategy); color: #fff; }
+    .tag-research    { background: var(--c-research); }
+    .tag-stakeholder { background: var(--c-stakeholder); }
+    .tag-ux          { background: var(--c-ux); }
+    .tag-service     { background: var(--c-service); }
+
+    /* ── NAV TABS ── */
+    .nav-back, .nav-next { position: fixed; top: 50%; transform: translateY(-50%); z-index: 100; text-decoration: none; transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1); }
+    .nav-back { left: 0; }
+    .nav-next { right: 0; }
+    .nav-back:hover { transform: translateY(-50%) translateX(-3px); }
+    .nav-next:hover { transform: translateY(-50%) translateX(3px); }
+    .nav-tab { display: flex; align-items: center; justify-content: center; width: 95px; min-height: 71px; padding: 16px 20px 16px 16px; background: #fff; box-shadow: 0px 2px 5.3px 1px rgba(140, 115, 93, 0.17); transition: background 0.2s; white-space: normal; text-align: left; }
+    .nav-back .nav-tab { border-radius: 0 100px 100px 0; padding-left: 18px; padding-right: 24px; }
+    .nav-next .nav-tab { border-radius: 100px 0 0 100px; padding-right: 18px; padding-left: 24px; text-align: left; }
+    .nav-label { font-family: 'Karla', sans-serif; font-size: var(--text-body-sm); font-weight: 700; letter-spacing: -0.6px; line-height: 118%; color: #836D5A; text-transform: none; transition: color 0.25s ease; display: block; }
+    .nav-back:hover .nav-label, .nav-next:hover .nav-label { color: #F06554; }
+    .nav-back:hover .nav-tab, .nav-next:hover .nav-tab { background: #FFF9F1; }
+    .nav-arrow { display: none; }
+
+    /* ── HERO ── */
+    .hero { position: relative; height: 85vh; min-height: 480px; overflow: hidden; }
+    .hero-bg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center center; display: block; }
+    .hero-overlay { position: absolute; inset: 0; background: rgba(30, 40, 54, 0.4); }
+    .hero-title { position: absolute; top: 26px; left: 0; right: 0; text-align: center; font-size: clamp(36px, 6vw, 72px); font-weight: 800; color: #fff; line-height: 0.84; letter-spacing: -3px; padding: 0 var(--pad-desktop); z-index: 1; }
+    .hero-sub { position: absolute; bottom: 26px; left: 0; right: 0; text-align: center; font-size: clamp(20px, 2.2vw, 32px); font-weight: 600; letter-spacing: -0.6px; color: #fff; line-height: 1.1; padding: 0 var(--pad-desktop); z-index: 1; }
+
+    .section-pad-y { padding-top: var(--space-35); padding-bottom: var(--space-35); }
+
+    /* ── INTRO ── */
+    .intro-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: start; }
+    .intro-labels { display: flex; flex-direction: column; align-items: flex-start; gap: 10px; padding-top: 4px; }
+
+    /* ── MOSAIC GALLERY (2-up, full photos) ── */
+    .mosaic-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+    .mosaic-cell { aspect-ratio: 721 / 629; overflow: hidden; border-radius: 54px; }
+    .mosaic-cell img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+    .eyebrow { display: inline-block; align-self: flex-start; font-size: var(--text-label); font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--mid); padding-bottom: 2px; border-bottom: 4px solid #EE7250; margin-bottom: 18px; }
+
+    /* ── INSIGHT CARD GRID (about the vendors) ── */
+    .insight-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-top: 36px; }
+    .insight-card { background: #fff; border-radius: 20px; padding: 28px 24px; box-shadow: 0px 16px 32px -4px rgba(12, 12, 13, 0.10); }
+    .insight-card img { width: 44px; height: 44px; margin-bottom: 18px; display: block; }
+    .insight-card h4 { font-size: var(--text-body); font-weight: 700; color: #282828; letter-spacing: -0.6px; margin-bottom: 8px; }
+    .insight-card p { font-size: var(--text-body-sm); font-weight: 400; line-height: 118%; letter-spacing: -0.6px; color: #444; }
+
+    /* ── FEATURE SPLIT (contained, 50/50) ── */
+    .feature-split { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; }
+    .feature-split-text { display: flex; flex-direction: column; justify-content: center; }
+    .feature-split-media { border-radius: 24px; aspect-ratio: 1 / 1; display: flex; align-items: center; justify-content: center; }
+    .feature-split-media img { max-width: 100%; max-height: 100%; width: auto; height: auto; object-fit: contain; display: block; }
+    .feature-split-media-lg { transform: scale(1.3); transform-origin: left center; }
+
+    /* ── BORDERED PROFILE LIST (reused from role-mobile-item pattern) ── */
+    .profile-list { display: flex; flex-direction: column; margin-top: 28px; }
+    .profile-item { padding: 12px 0; }
+    .profile-item h4 { font-size: var(--text-body); font-weight: 700; letter-spacing: -0.6px; color: #282828; margin-bottom: 6px; }
+    .profile-item p { font-size: var(--text-body-sm); line-height: 118%; letter-spacing: -0.6px; color: #444; }
+
+    /* ── BAND + LEAD STATEMENT (goal quote) ── */
+    .band { position: relative; background: #58A2DA; min-height: 110vh; box-sizing: border-box; display: flex; align-items: center; overflow: hidden; }
+    .band-texture { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; mix-blend-mode: color-burn; opacity: 0.5; pointer-events: none; }
+    .band-illustration { position: absolute; left: var(--content-inset); top: 50%; transform: translateY(-50%); width: 440px; aspect-ratio: 49 / 44; object-fit: cover; object-position: center; z-index: 1; }
+    .band .section-inner { position: relative; z-index: 2; width: 100%; }
+    .band-lead { font-size: var(--text-title); font-weight: 400; line-height: 118%; letter-spacing: -0.6px; text-align: center; color: #fff; max-width: 760px; margin: 0 auto; }
+    .band-lead strong { font-weight: 700; }
+    .band-lead span { text-decoration: underline; text-decoration-color: #F5CF00; text-decoration-thickness: 3px; text-underline-offset: 4px; }
+
+    /* ── MOBILE APP SPLIT ── */
+    .mobileapp-split { display: flex; width: 100%; align-items: stretch; padding-left: var(--content-inset); box-sizing: border-box; }
+    .mobileapp-text { width: var(--fs-col-width); flex-shrink: 0; box-sizing: border-box; padding: var(--space-16) 0; display: flex; flex-direction: column; justify-content: center; }
+    .mobileapp-media { flex: 1; margin-left: 60px; box-sizing: border-box; position: relative; overflow: hidden; }
+    .mobileapp-media img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .mobileapp-text .section-title { margin-bottom: 6px; }
+    .mobileapp-subtitle { font-size: var(--text-body-sm); color: #6B6B6B; margin-bottom: 24px; }
+
+    /* ── USER PHOTOS (posters row, full-bleed) ── */
+    .user-photos { display: flex; gap: 0; }
+    .user-photo { flex: 1; overflow: hidden; aspect-ratio: 480 / 757; }
+    .user-photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+    footer { background: #000; height: 180px; box-sizing: border-box; padding: 0 var(--pad-desktop); display: flex; align-items: center; justify-content: center; gap: 24px; border-radius: 24px 24px 0 0; }
+    footer a { color: #fff; text-decoration: none; font-size: 12px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; opacity: 0.7; transition: opacity 0.2s; }
+    footer a:hover { opacity: 1; }
+    footer .sep { color: rgba(255, 255, 255, 0.3); }
+
+    @media (max-width: 1024px) {
+      :root { --pad-desktop: var(--pad-tablet); }
+    }
+  </style>
+</head>
+<body>
+
+  <a class="nav-back" href="index.html">
+    <div class="nav-tab"><span class="nav-arrow">↑</span><span class="nav-label" data-i18n="nav-back">Home</span></div>
+  </a>
+  <a class="nav-next" href="coalapay.html">
+    <div class="nav-tab"><span class="nav-arrow">↓</span><span class="nav-label" data-i18n="nav-next">Next project</span></div>
+  </a>
+
+  <section class="hero">
+    <img class="hero-bg" src="assets/donofrio-hero.jpg" alt="D'Onofrio ice cream vendor cart on a street in Lima"/>
+    <div class="hero-overlay"></div>
+    <h1 class="hero-title" data-i18n="hero-title">Technology for Inclusion</h1>
+    <p class="hero-sub" data-i18n="hero-sub">Empowering ice cream vendors<br>through effortless tech</p>
+  </section>
+
+  <div class="section-pad-y">
+  <div class="section-inner">
+  <div class="intro-grid">
+    <div class="intro-labels">
+      <span class="tag tag-service" data-i18n="tag-service">Service Design</span>
+      <span class="tag tag-research" data-i18n="tag-research">Research and analysis</span>
+      <span class="tag tag-strategy" data-i18n="tag-strategy">Strategy</span>
+      <span class="tag tag-stakeholder" data-i18n="tag-stakeholder">Stakeholder management</span>
+    </div>
+    <div>
+      <div class="body-text">
+        <p data-i18n="intro-p1">In the bustling streets of Lima, where the sun beats hard, thousands of ice-cream vendors toil tirelessly day in and day out.</p>
+        <p style="margin-top: 20px;" data-i18n="intro-p2">D'Onofrio ice cream is part of the city's folklore — everyone eats it. But these vendors face a tough reality: their customers can sometimes struggle to find them. And since they're self-employed, this adds to an already challenging economic situation.</p>
+        <p style="margin-top: 20px;" data-i18n="intro-p3"><strong>Walking for hours under the scorching sun and the chaos of the city, they're just trying to make ends meet.</strong></p>
+      </div>
+    </div>
+  </div>
+  </div>
+  </div>
+
+  <div class="section-inner">
+  <div class="mosaic-2">
+    <div class="mosaic-cell">
+      <img src="assets/donofrio-hands.jpg" alt="Vendor's hands preparing ice cream in a cooler"/>
+    </div>
+    <div class="mosaic-cell">
+      <img src="assets/donofrio-doorway.jpg" alt="D'Onofrio storefront painted in yellow and blue"/>
+    </div>
+  </div>
+  </div>
+
+  <div style="padding-top: var(--space-35);">
+  <div class="band">
+    <img class="band-texture" src="assets/donofrio-goal-texture.jpg" alt=""/>
+    <img class="band-illustration" src="assets/donofrio-goal-illustration.svg" alt="Illustration of a vendor on a route, marked by a location pin"/>
+  <div class="section-inner">
+    <p class="band-lead" data-i18n="quote-text">Our goal was clear:<br><strong>to <span>empower street vendors</span> with tech that let them be found.</strong><br>And let customers find them on a map.</p>
+  </div>
+  </div>
+  </div>
+
+  <div style="padding-top: var(--space-35); padding-bottom: 20px;">
+  <div class="section-inner">
+    <span class="eyebrow" data-i18n="about-title">About the vendors</span>
+    <p class="body-text" style="max-width: 680px; margin-top: -6px; margin-bottom: 8px;" data-i18n="about-subtitle">We talked to them to understand their day-to-day, how they work, and their conditions.</p>
+    <div class="insight-grid">
+      <div class="insight-card">
+        <img src="assets/donofrio-icon-roots.svg" alt=""/>
+        <h4 data-i18n="about-1-h">Everyone knows the ice-cream man in their neighborhood</h4>
+        <p data-i18n="about-1-p">They've been a recognized presence in their neighborhood for years.</p>
+      </div>
+      <div class="insight-card">
+        <img src="assets/donofrio-icon-income.svg" alt=""/>
+        <h4 data-i18n="about-2-h">Low incomes</h4>
+        <p data-i18n="about-2-p">They're self-employed. They work long hours and earn little.</p>
+      </div>
+      <div class="insight-card">
+        <img src="assets/donofrio-icon-tradition.svg" alt=""/>
+        <h4 data-i18n="about-3-h">"I've done it this way my whole life"</h4>
+        <p data-i18n="about-3-p">They sell the same way they have for generations, with little interest in changing that.</p>
+      </div>
+    </div>
+  </div>
+  </div>
+
+  <div style="padding-top: var(--space-35); padding-bottom: 100px;">
+  <div class="section-inner">
+  <div class="feature-split">
+    <div class="feature-split-text">
+      <h2 class="section-title" data-i18n="survival-title">Focused on making ends meet, not on innovating</h2>
+      <p class="body-text-sm" style="max-width: 480px; margin-top: -12px; margin-bottom: 8px;" data-i18n="survival-subtitle">When we floated the idea, we explored how they'd react to a change.</p>
+      <div class="profile-list">
+        <div class="profile-item">
+          <h4 data-i18n="profile1-h">Prefer tradition over change</h4>
+          <p data-i18n="profile1-p">The less their routine changes, the better — if it already works.</p>
+        </div>
+        <div class="profile-item">
+          <h4 data-i18n="profile2-h">Don't see the benefit yet</h4>
+          <p data-i18n="profile2-p">At first, they don't see much value in the initiative.</p>
+        </div>
+        <div class="profile-item">
+          <h4 data-i18n="profile3-h">Know the basics when it comes to tech</h4>
+          <p data-i18n="profile3-p">They have limited experience using technology or apps.</p>
+        </div>
+      </div>
+    </div>
+    <div class="feature-split-media feature-split-media-lg">
+      <img src="assets/donofrio-vendors.png" alt="Portraits of vendors Mariela, Octavio and Luis"/>
+    </div>
+  </div>
+  </div>
+  </div>
+
+  <div style="padding-top: 40px; padding-bottom: 40px;">
+  <div class="section-inner">
+    <div class="feature-split">
+      <div class="feature-split-media">
+        <img src="assets/donofrio-pilot-phone.jpg" alt="Vendor holding a mobile phone with a tracking app"/>
+      </div>
+      <div class="feature-split-text">
+        <span class="eyebrow" style="border-bottom-color: var(--c-strategy);" data-i18n="firstattempt-eyebrow">First solution</span>
+        <h2 class="section-title" data-i18n="firstattempt-title">Our first pilot failed.</h2>
+        <p class="body-text" data-i18n="firstattempt-p">In a first attempt, we asked vendors to carry mobile phones with an app we built to track their location.<br>But after the pilot, we found out this asked too much of them — they'd forget to turn the app on, and used the phone to download games instead.</p>
+      </div>
+    </div>
+  </div>
+  </div>
+
+  <div style="padding-top: 40px; padding-bottom: var(--space-35);">
+  <div class="section-inner">
+    <div class="feature-split">
+      <div class="feature-split-text">
+        <span class="eyebrow" style="border-bottom-color: var(--don-blue);" data-i18n="output-eyebrow">Output</span>
+        <h2 class="section-title" data-i18n="output-title">We ended up finding a solution that required zero effort</h2>
+        <p class="body-text" data-i18n="output-p">We attached a small Sigfox locator to each cart. It's a low-power, low-cost technology that regularly sends location coordinates to our system.<br>This way, customers could find their favorite vendor through a simple app, while vendors benefited from a solution that <strong>fit seamlessly into their daily routine — they didn't have to do a single thing.</strong></p>
+      </div>
+      <div class="feature-split-media">
+        <img src="assets/donofrio-sigfox-device.jpg" alt="Sigfox localization device"/>
+      </div>
+    </div>
+  </div>
+  </div>
+
+  <div style="padding-top: 100px; padding-bottom: 40px;">
+  <div class="section-inner">
+    <div class="feature-split">
+      <div class="feature-split-text">
+        <span class="eyebrow" style="border-bottom-color: var(--c-strategy);" data-i18n="myrole-eyebrow">My role</span>
+        <h2 class="section-title" data-i18n="myrole-title">I immersed myself in their daily lives and ensured a successful implementation</h2>
+        <p class="body-text-sm" data-i18n="myrole-p">Walking the streets of Lima, I gathered insights into local challenges while coordinating with the team in San Francisco and doing on-site research. Together, we ensured the smooth implementation and monitoring of the localization technology, supported by Pilot44's technical experiments.</p>
+      </div>
+      <div class="feature-split-media">
+        <img src="assets/donofrio-myrole.jpg" alt="Vendor checking a route printout on the street"/>
+      </div>
+    </div>
+  </div>
+  </div>
+
+  <div style="padding-top: 40px; padding-bottom: 0;">
+    <div class="mobileapp-split">
+      <div class="mobileapp-text">
+        <span class="eyebrow" data-i18n="consumer-eyebrow">Consumer output</span>
+        <h2 class="section-title" data-i18n="consumer-title">I built an app and an awareness campaign for customers</h2>
+        <p class="body-text" data-i18n="consumer-p1">We built an app with a simple map and a discount system. Now, whenever they craved ice cream, they could track vendors' location in real time.</p>
+        <p class="body-text" style="margin-top: 20px;" data-i18n="consumer-p2">But that's not all — we knew that technology alone wasn't enough. We needed to raise awareness and drive engagement, so we launched a comprehensive campaign, spreading the word far and wide.</p>
+      </div>
+      <div class="mobileapp-media">
+        <img src="assets/donofrio-app.png" alt="Consumer app showing a vendor's live location on a map"/>
+      </div>
+    </div>
+  </div>
+
+  <div class="user-photos">
+    <div class="user-photo"><img src="assets/donofrio-poster-red.png" alt="Awareness campaign poster, red"/></div>
+    <div class="user-photo"><img src="assets/donofrio-poster-yellow.png" alt="Awareness campaign poster, yellow"/></div>
+    <div class="user-photo"><img src="assets/donofrio-poster-blue.png" alt="Awareness campaign poster, blue"/></div>
+  </div>
+
+  <div style="padding-top: 94px; padding-bottom: var(--space-35);">
+  <div class="section-inner">
+    <div class="feature-split">
+      <div class="feature-split-text">
+        <span class="eyebrow" style="border-bottom-color: var(--don-blue);" data-i18n="conclusion-eyebrow">Conclusion</span>
+        <h2 class="section-title" data-i18n="conclusion-title">Una derrota no es caída</h2>
+        <p class="body-text" data-i18n="conclusion-p1">As we wrapped up the pilot, we couldn't help but smile at the bumps we hit trying to fit new technology into the vendors' lives.</p>
+        <p class="body-text" style="margin-top: 12px;"><strong data-i18n="conclusion-p2">The lesson: changing routines that are years in the making is hard. The less effort it takes, the more effective it is.</strong></p>
+        <p class="body-text" style="margin-top: 12px;" data-i18n="conclusion-p3">In the end, customers were thrilled to easily find their favorite vendors, and the vendors were happy too, thanks to a fully passive technology that let them be found without changing a single thing about their routine.</p>
+      </div>
+      <div class="feature-split-media">
+        <img src="assets/donofrio-closing.jpg" alt="Vendor checking his phone at the end of the day"/>
+      </div>
+    </div>
+  </div>
+  </div>
+
+  <footer>
+    <a href="https://linkedin.com" target="_blank">LinkedIn</a>
+    <span class="sep">|</span>
+    <a href="#">CV</a>
+    <span class="sep">|</span>
+    <a href="index.html" data-i18n="footer-more">More projects</a>
+  </footer>
+
+  <script>
+    window.I18N = {
+      en: {
+        'nav-back': 'Home',
+        'nav-next': 'Next project',
+        'hero-title': 'Technology for Inclusion',
+        'hero-sub': 'Empowering ice cream vendors<br>through effortless tech',
+        'tag-service': 'Service Design',
+        'tag-research': 'Research and analysis',
+        'tag-strategy': 'Strategy',
+        'tag-stakeholder': 'Stakeholder management',
+        'intro-p1': 'In the bustling streets of Lima, where the sun beats hard, thousands of ice-cream vendors toil tirelessly day in and day out.',
+        'intro-p2': "D'Onofrio ice cream is part of the city's folklore — everyone eats it. But these vendors face a tough reality: their customers can sometimes struggle to find them. And since they're self-employed, this adds to an already challenging economic situation.",
+        'intro-p3': "<strong>Walking for hours under the scorching sun and the chaos of the city, they're just trying to make ends meet.</strong>",
+        'about-title': 'About the vendors',
+        'about-subtitle': 'We talked to them to understand their day-to-day, how they work, and their conditions.',
+        'about-1-h': 'Everyone knows the ice-cream man in their neighborhood',
+        'about-1-p': "They've been a recognized presence in their neighborhood for years.",
+        'about-2-h': 'Low incomes',
+        'about-2-p': "They're self-employed. They work long hours and earn little.",
+        'about-3-h': '"I\'ve done it this way my whole life"',
+        'about-3-p': 'They sell the same way they have for generations, with little interest in changing that.',
+        'survival-title': 'Focused on making ends meet, not on innovating',
+        'survival-subtitle': "When we shared the idea with them, we explored how they'd react to a change.",
+        'profile1-h': 'Prefer tradition over change',
+        'profile1-p': 'The less their routine changes, the better — if it already works.',
+        'profile2-h': "Don't see the benefit yet",
+        'profile2-p': "At first, they don't see much value in the initiative.",
+        'profile3-h': 'Know the basics when it comes to tech',
+        'profile3-p': 'They have limited experience using technology or apps.',
+        'quote-text': 'Our goal was clear:<br><strong>to <span>empower street vendors</span> with tech that let them be found.</strong><br>And let customers find them on a map.',
+        'firstattempt-eyebrow': 'First solution',
+        'firstattempt-title': 'Our first pilot failed.',
+        'firstattempt-p': "In a first attempt, we asked vendors to carry mobile phones with an app we built to track their location.<br>But after the pilot, we found out this asked too much of them — they'd forget to turn the app on, and used the phone to download games instead.",
+        'output-eyebrow': 'Output',
+        'output-title': 'We ended up finding a solution that required zero effort',
+        'output-p': "We attached a small Sigfox locator to each cart. It's a low-power, low-cost technology that regularly sends location coordinates to our system.<br>This way, customers could find their favorite vendor through a simple app, while vendors benefited from a solution that <strong>fit seamlessly into their daily routine — they didn't have to do a single thing.</strong>",
+        'myrole-eyebrow': 'My role',
+        'myrole-title': 'I immersed myself in their daily lives and ensured a successful implementation',
+        'myrole-p': "Walking the streets of Lima, I gathered insights into local challenges while coordinating with the team in San Francisco and doing on-site research. Together, we ensured the smooth implementation and monitoring of the localization technology, supported by Pilot44's technical experiments.",
+        'consumer-eyebrow': 'Consumer output',
+        'consumer-title': 'I built an app and an awareness campaign for customers',
+        'consumer-p1': "We built an app with a simple map and a discount system. Now, whenever they craved ice cream, they could track vendors' location in real time.",
+        'consumer-p2': "But that's not all — we knew that technology alone wasn't enough. We needed to raise awareness and drive engagement, so we launched a comprehensive campaign, spreading the word far and wide.",
+        'conclusion-eyebrow': 'Conclusion',
+        'conclusion-title': 'Una derrota no es caída',
+        'conclusion-p1': "As we wrapped up the pilot, we couldn't help but smile at the bumps we hit trying to fit new technology into the vendors' lives.",
+        'conclusion-p2': "The lesson: changing routines that are years in the making is hard. The less effort it takes, the more effective it is.",
+        'conclusion-p3': 'In the end, customers were thrilled to easily find their favorite vendors, and the vendors were happy too, thanks to a fully passive technology that let them be found without changing a single thing about their routine.',
+        'footer-more': 'More projects'
+      },
+      es: {
+        'nav-back': 'Home',
+        'nav-next': 'Siguiente proyecto',
+        'hero-title': 'Tecnología para la inclusión',
+        'hero-sub': 'Ayudando a heladeros ambulantes a ser encontrados',
+        'tag-service': 'Service Design',
+        'tag-research': 'Investigación y análisis',
+        'tag-strategy': 'Estrategia',
+        'tag-stakeholder': 'Gestión de stakeholders',
+        'intro-p1': 'En las calles de Lima, bajo un sol que pega fuerte, miles de heladeros ambulantes trabajan sin descanso, día tras día.',
+        'intro-p2': "Los helados D'onofrio son parte del folklore de la ciudad y todo el mundo los consume. Pero estos vendedores enfrentan una realidad difícil: sus clientes a veces no logran encontrarlos. Y como son autónomos, esto agrava una situación económica que ya de por sí es complicada.",
+        'intro-p3': '<strong>Caminan durante horas bajo el sol abrasador y el caos de la ciudad tratando de llegar a fin de mes.</strong>',
+        'about-title': 'Sobre los vendedores',
+        'about-subtitle': 'Hablamos con ellos para entender cómo es su día a día, sus formas de trabajar y sus condiciones.',
+        'about-1-h': 'Todos conocen al heladero de su barrio',
+        'about-1-p': 'Son reconocidos en su barrio desde hace años.',
+        'about-2-h': 'Ingresos bajos',
+        'about-2-p': 'Son autónomos. Trabajan largas jornadas y ganan poco.',
+        'about-3-h': '"Así lo hice toda mi vida"',
+        'about-3-p': 'Venden de la misma manera desde hace generaciones y no tienen particular interés en innovar.',
+        'survival-title': 'Enfocados en llegar a fin de mes, no en innovar',
+        'survival-subtitle': 'Cuando les comentamos la iniciativa, exploramos cómo enfrentarían un cambio.',
+        'profile1-h': 'Prefieren la tradición al cambio',
+        'profile1-p': 'Cuanto menos pueden cambiar la rutina que les funciona, mejor.',
+        'profile2-h': 'No terminan de ver el beneficio',
+        'profile2-p': 'En principio, no encuentran mucho valor en la iniciativa.',
+        'profile3-h': 'En cuanto a tecnología, conocen lo básico',
+        'profile3-p': 'Tienen experiencia limitada usando tecnología y apps.',
+        'quote-text': 'Nuestro objetivo era claro:<br><strong>darle a los <span>vendedores ambulantes</span> tecnología que los hiciera fáciles de encontrar.</strong><br>Y permitir a clientes encontrarlos en un mapa.',
+        'firstattempt-eyebrow': 'Primera solución',
+        'firstattempt-title': 'Nuestro primer piloto falló.',
+        'firstattempt-p': 'En un primer intento les pedimos a los vendedores que llevaran consigo teléfonos móviles con una app que desarrollamos para rastrear su ubicación.<br>Pero tras el piloto descubrimos que esto les exigía demasiado esfuerzo. Terminaban olvidándose de activar la app y usando el móvil para descargar juegos.',
+        'output-eyebrow': 'Solución',
+        'output-title': 'Terminamos dando con una solución que requería cero esfuerzo',
+        'output-p': 'En cada carrito adherimos un mini dispositivo de localización con Sigfox. Es una tecnología de bajo consumo y bajo costo, que envía regularmente coordenadas de ubicación a nuestro sistema.<br>De esta manera los clientes podían encontrar a su heladero favorito desde una app simple, mientras que los vendedores se beneficiaban de una solución que <strong>se integraba sin fricciones a su rutina diaria. No tenían que hacer absolutamente nada.</strong>',
+        'myrole-eyebrow': 'Mi rol',
+        'myrole-title': 'Me sumergí en su día a día y garanticé una implementación exitosa',
+        'myrole-p': 'Recorrí las calles de Lima recolectando insights sobre los desafíos locales, mientras coordinaba con el equipo en San Francisco e investigaba en terreno. Juntos, aseguramos una implementación fluida y el monitoreo de la tecnología de localización, apoyados en los experimentos técnicos de Pilot44.',
+        'consumer-eyebrow': 'Del lado del consumidor',
+        'consumer-title': 'Creé una app y una campaña de difusión para los clientes',
+        'consumer-p1': 'Creamos una app con un simple mapa y sistema de descuentos. Ahora cada vez que les apetecía un helado, podían rastrear la ubicación de los vendedores en tiempo real.',
+        'consumer-p2': 'Pero eso no fue todo: sabíamos que la tecnología sola no alcanzaba. Necesitábamos generar conciencia e impulsar el uso, así que lanzamos una campaña integral que llevó el mensaje a todos lados.',
+        'conclusion-eyebrow': 'Conclusión',
+        'conclusion-title': 'Una derrota no es caída',
+        'conclusion-p1': 'Al cerrar el piloto, no pudimos evitar sonreír ante los tropiezos que tuvimos al intentar encajar tecnología nueva en la vida de los vendedores.',
+        'conclusion-p2': 'El aprendizaje: intentar cambiar rutinas arraigadas hace años es difícil. Cuanto menos esfuerzo, más efectivo.',
+        'conclusion-p3': 'Finalmente los clientes quedaron encantados de poder encontrar fácil a sus heladeros favoritos, y los heladeros fueron felices gracias a una tecnología totalmente pasiva que les permitió ser encontrados cambiando absolutamente nada de sus rutinas.',
+        'footer-more': 'Más proyectos'
+      }
+    };
+  </script>
+  <script src="i18n.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <link rel="icon" type="image/png" href="favicon.png"/>
+  <script>
+    if (window.innerWidth <= 768 || /iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
+      window.location.replace('lutz-delivery-mobile.html');
+    }
+  </script>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>El problema no era la entrega — Martina Hirschler</title>
+  <link href="https://fonts.googleapis.com/css2?family=Karla:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --cream:    #FFFFFF;
+      --cards-bg: #EFEFEF;
+      --dark:     #000000;
+      --mid:      #A2A2A2;
+      --divider:  #E0E0E0;
+      --c-product:     #A79BF3;
+      --c-strategy:    #F06554;
+      --c-research:    #ECDFCD;
+      --c-stakeholder: #FFADA3;
+      --c-service:     #B8E4D8;
+      --c-omni:        #FFE4A0;
+      --max-width: 1200px;
+      --pad-desktop: 112px;
+      --pad-tablet:  48px;
+      --text-label:   14px;
+      --text-body-sm: 16px;
+      --text-body:    20px;
+      --text-title:   27px;
+      --lh-normal: 128.637%;
+      --lh-loose:  118%;
+    }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Karla', sans-serif; background: var(--cream); color: var(--dark); -webkit-font-smoothing: antialiased; }
+    .container { max-width: var(--max-width); margin: 0 auto; padding-left: var(--pad-desktop); padding-right: var(--pad-desktop); }
+    .section-label { font-size: var(--text-label); font-weight: 700; line-height: var(--lh-normal); text-transform: uppercase; letter-spacing: 0.08em; color: var(--mid); display: block; margin-bottom: 12px; }
+    .section-title { font-size: var(--text-title); font-weight: 700; line-height: var(--lh-normal); color: #282828; margin-bottom: 20px; letter-spacing: -0.6px; }
+    .body-text { font-size: var(--text-body); font-weight: 400; line-height: 118%; letter-spacing: -0.6px; color: #2a2a2a; }
+    .body-text strong { font-weight: 700; color: #000; }
+    .body-text-sm { font-size: var(--text-body-sm); font-weight: 400; line-height: 118%; letter-spacing: -0.6px; color: #444; }
+    .body-text-sm strong { font-weight: 700; color: #282828; }
+
+    /* TAGS */
+    .tag { font-size: 11px; font-weight: 700; letter-spacing: 0.07em; text-transform: uppercase; padding: 5px 13px; border-radius: 100px; color: #000; }
+    .tag-product     { background: var(--c-product); }
+    .tag-strategy    { background: var(--c-strategy); color: #fff; }
+    .tag-research    { background: var(--c-research); }
+    .tag-stakeholder { background: var(--c-stakeholder); }
+    .tag-service     { background: var(--c-service); }
+    .tag-omni        { background: var(--c-omni); }
+
+    /* NAV */
+    .nav-back, .nav-next { position: fixed; top: 50%; transform: translateY(-50%); z-index: 100; text-decoration: none; transition: transform 0.25s cubic-bezier(0.34,1.56,0.64,1); }
+    .nav-back { left: 0; } .nav-next { right: 0; }
+    .nav-back:hover { transform: translateY(-50%) translateX(-3px); }
+    .nav-next:hover  { transform: translateY(-50%) translateX(3px); }
+    .nav-tab { display: flex; align-items: center; justify-content: center; width: 95px; min-height: 71px; padding: 16px 20px; background: #fff; box-shadow: 0px 2px 5.3px 1px rgba(140,115,93,0.17); transition: background 0.2s; white-space: normal; text-align: left; }
+    .nav-back .nav-tab { border-radius: 0 100px 100px 0; padding-left: 18px; padding-right: 24px; }
+    .nav-next .nav-tab  { border-radius: 100px 0 0 100px; padding-right: 18px; padding-left: 24px; }
+    .nav-label { font-size: var(--text-body-sm); font-weight: 700; letter-spacing: -0.6px; line-height: 118%; color: #836D5A; transition: color 0.25s; display: block; }
+    .nav-back:hover .nav-label, .nav-next:hover .nav-label { color: #F06554; }
+    .nav-back:hover .nav-tab,   .nav-next:hover .nav-tab   { background: #FFF9F1; }
+
+    /* HERO — matches lutz.html / ellie.html / donofrio.html */
+    .hero { position: relative; height: 85vh; min-height: 480px; overflow: hidden; }
+    .hero-bg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center; display: block; }
+    .hero-overlay { position: absolute; inset: 0; background: rgba(30,30,30,0.55); }
+    .hero-title { position: absolute; top: 26px; left: 0; right: 0; text-align: center; font-size: clamp(36px,6vw,72px); font-weight: 800; color: #fff; line-height: 0.84; letter-spacing: -3px; padding: 0 var(--pad-desktop); z-index: 1; }
+    .hero-sub   { position: absolute; bottom: 26px; left: 0; right: 0; text-align: center; font-size: clamp(20px,2.2vw,32px); font-weight: 600; letter-spacing: -0.6px; color: #fff; line-height: 1.1; padding: 0 var(--pad-desktop); z-index: 1; }
+
+    /* LAYOUT */
+    .section { padding: 72px 0; }
+    .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 72px; align-items: center; }
+    .two-col.top { align-items: start; }
+    .intro-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: start; }
+    .intro-labels { display: flex; flex-direction: column; align-items: flex-start; gap: 10px; padding-top: 4px; }
+
+    /* ROLE — 3 columns, same pattern as lutz.html role-desktop */
+    .role-section { padding: 88px 0; }
+    .role-lead { font-size: var(--text-title); font-weight: 700; line-height: var(--lh-normal); letter-spacing: -0.6px; color: #282828; max-width: 720px; margin-bottom: 48px; }
+    .role-cols { display: grid; grid-template-columns: repeat(3,1fr); gap: 48px; }
+    .role-col h4 { font-size: var(--text-body); font-weight: 700; line-height: 118%; letter-spacing: -0.6px; color: #282828; margin-bottom: 10px; }
+    .role-col p { font-size: var(--text-body-sm); line-height: 118%; letter-spacing: -0.6px; color: #444; }
+
+    /* FULL WIDTH IMAGE — rounded, with border */
+    .full-img-wrap { border-radius: 24px; border: 1px solid #E4E4E4; overflow: hidden; position: relative; }
+    .full-img-wrap img { width: 100%; display: block; max-height: 520px; object-fit: cover; }
+
+    /* PULLQUOTE */
+    .pullquote { border-left: 3px solid #282828; padding: 4px 0 4px 24px; margin: 32px 0 0; }
+    .pullquote p { font-size: var(--text-body); font-weight: 700; line-height: 130%; letter-spacing: -0.6px; color: #282828; }
+
+    /* LEARNINGS CARDS */
+    .learnings { display: grid; grid-template-columns: repeat(3,1fr); gap: 20px; margin-top: 36px; }
+    .learning-card { background: var(--cards-bg); border-radius: 20px; padding: 28px 24px; }
+    .learning-card h4 { font-size: var(--text-body); font-weight: 700; margin-bottom: 10px; line-height: 118%; letter-spacing: -0.6px; }
+    .learning-card p { font-size: var(--text-body-sm); line-height: 118%; letter-spacing: -0.6px; color: #444; }
+
+    /* PLACEHOLDER */
+    .placeholder { background: #F2F2F2; border-radius: 16px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; padding: 40px 24px; text-align: center; }
+    .placeholder span { font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #C0C0C0; }
+    .placeholder p { font-size: 13px; color: #C8C8C8; line-height: 1.5; max-width: 240px; }
+
+    /* TRANSLATION */
+    .tr-flow { background: var(--cards-bg); border-radius: 20px; padding: 36px 40px; }
+    .tr-row { display: flex; align-items: baseline; gap: 20px; padding: 13px 0; border-bottom: 1px solid var(--divider); }
+    .tr-row:last-child { border-bottom: none; }
+    .tr-lang { font-size: 16px; font-weight: 700; color: #282828; min-width: 120px; letter-spacing: -0.6px; }
+    .tr-note { font-size: 13px; color: var(--mid); font-style: italic; letter-spacing: -0.3px; }
+    .tr-note.red { color: #F06554; font-style: normal; font-weight: 700; }
+    .tr-arrow { color: var(--divider); font-size: 18px; font-weight: 700; padding: 4px 0; }
+
+    /* BA CARDS */
+    .ba-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 12px; margin-top: 28px; }
+    .ba-card { background: var(--cards-bg); border-radius: 14px; padding: 20px 18px; }
+    .ba-label { font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--mid); display: block; margin-bottom: 10px; }
+    .ba-before { font-size: 14px; font-weight: 700; color: #C8C8C8; text-decoration: line-through; margin-bottom: 6px; letter-spacing: -0.6px; }
+    .ba-after  { font-size: 14px; font-weight: 700; color: #282828; letter-spacing: -0.6px; }
+
+    /* FOOTER */
+    footer { background: #F5F5F5; padding: 36px var(--pad-desktop); display: flex; align-items: center; justify-content: center; gap: 24px; border-radius: 24px 24px 0 0; }
+    footer a { color: #282828; text-decoration: none; font-size: 12px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; opacity: 0.7; transition: opacity 0.2s; }
+    footer a:hover { opacity: 1; }
+    footer .sep { color: #CCC; }
+
+    /* SCROLL REVEAL */
+    .r { opacity: 0; transform: translateY(28px); transition: opacity 0.7s cubic-bezier(0.22,1,0.36,1), transform 0.7s cubic-bezier(0.22,1,0.36,1); }
+    .r.v { opacity: 1; transform: none; }
+    .r.d1 { transition-delay: 0.12s; } .r.d2 { transition-delay: 0.22s; }
+
+    @media (max-width: 1024px) { :root { --pad-desktop: var(--pad-tablet); } }
+  </style>
+</head>
+<body>
+
+  <a class="nav-back" href="index.html"><div class="nav-tab"><span class="nav-label" data-i18n="nav-back">Home</span></div></a>
+  <a class="nav-next" href="ellie.html"><div class="nav-tab"><span class="nav-label" data-i18n="nav-next">Siguiente proyecto</span></div></a>
+
+  <!-- ══ HERO ══ -->
+  <section class="hero">
+    <img class="hero-bg" src="assets/lutzdelivery-store.jpg" alt="Tienda XXXLutz"/>
+    <div class="hero-overlay"></div>
+    <h1 class="hero-title" data-i18n="hero-title">El problema<br>no era la entrega</h1>
+    <p class="hero-sub" data-i18n="hero-sub">Service Design en 16 mercados</p>
+  </section>
+
+  <!-- ══ INTRO ══ -->
+  <div style="padding-top:160px; padding-bottom:96px;">
+  <div class="container">
+  <div class="intro-grid r">
+    <div class="intro-labels">
+      <span class="tag tag-service" data-i18n="tag-service">Service Design</span>
+      <span class="tag tag-omni" data-i18n="tag-omni">Omnicanalidad</span>
+      <span class="tag tag-stakeholder" data-i18n="tag-stakeholder">Gestión de Stakeholders</span>
+      <span class="tag tag-strategy" data-i18n="tag-content-strategy">Estrategia de Contenido</span>
+    </div>
+    <div class="r d1">
+      <h2 class="section-title" data-i18n="intro-title">Comprar un mueble online generaba más preguntas que respuestas</h2>
+      <p class="body-text" data-i18n="intro-body">En XXXLutz, comprar un mueble online disparaba las mismas dudas en 16 mercados: ¿cuándo lo tengo en casa?, ¿lo puedo retirar?, ¿cuánto cuesta el envío? Esas preguntas sin resolver generaban llamados a soporte, usuarios confundidos y empleados de tienda frustrados.</p>
+    </div>
+  </div>
+  </div>
+  </div>
+
+  <!-- ══ FULL WIDTH: store image ══ -->
+  <div class="container r">
+    <div class="full-img-wrap">
+      <img src="assets/lutzdelivery-store.jpg" alt="Tienda XXXLutz"/>
+    </div>
+  </div>
+
+  <!-- ══ MY ROLE ══ -->
+  <div class="role-section">
+  <div class="container">
+    <p class="role-lead r" data-i18n="role-lead">Fui lead designer del proyecto en el equipo Assess durante 6 meses, trabajando con producto e ingeniería en los 16 mercados de XXXLutz.</p>
+    <div class="role-cols r d1">
+      <div class="role-col">
+        <h4 data-i18n="role1-h">Descubrimiento</h4>
+        <p data-i18n="role1-p">Mapeé el servicio de punta a punta: entrega, reserva, Click &amp; Collect y soporte.</p>
+      </div>
+      <div class="role-col">
+        <h4 data-i18n="role2-h">Diseño</h4>
+        <p data-i18n="role2-p">Rediseñé cómo se comunica la disponibilidad y la información de envío en la página de producto.</p>
+      </div>
+      <div class="role-col">
+        <h4 data-i18n="role3-h">Facilitación</h4>
+        <p data-i18n="role3-p">Organicé y lideré un Design Sprint con producto e ingeniería para alinear a todo el equipo.</p>
+      </div>
+    </div>
+  </div>
+  </div>
+
+  <!-- ══ SPRINT PHOTO — full bleed ══ -->
+  <div class="r" style="max-height:480px; overflow:hidden;">
+    <img src="assets/lutzdelivery-sprint.jpg" alt="Equipo trabajando en el Design Sprint" style="width:100%; display:block; object-fit:cover;"/>
+  </div>
+
+  <!-- ══ INSIGHT ══ -->
+  <div style="background-color:#F2F2F2; background-image:radial-gradient(circle,#C8C8C8 1px,transparent 1px); background-size:24px 24px; padding:80px 0;">
+  <div class="container">
+    <div class="two-col r">
+      <div>
+        <span class="section-label" data-i18n="insight-label">Insight</span>
+        <h2 class="section-title" data-i18n="insight-title">Hablábamos en términos de sistema, no de personas</h2>
+        <p class="body-text" data-i18n="insight-p">La información estaba redactada desde la perspectiva del sistema, no la del usuario: técnicamente correcta, pero poco útil para decidir. Comunicábamos en negativo, pedíamos el código postal antes de aportar valor, y la info de entrega quedaba lejos del producto.</p>
+      </div>
+      <div class="r d1" style="margin-right: calc(-1 * var(--pad-desktop)); overflow: visible;">
+        <img src="assets/lutzdelivery-problems.svg" alt="Diagrama de problemas detectados" style="width: 100%; max-width: none; display: block;"/>
+      </div>
+    </div>
+    <div class="ba-grid r d1">
+      <div class="ba-card"><span class="ba-label" data-i18n="ba-before-label">Antes</span><p class="ba-before" data-i18n="ba1-before">"Solo online"</p><p class="ba-after" data-i18n="ba1-after">Disponible para envío a domicilio</p></div>
+      <div class="ba-card"><span class="ba-label" data-i18n="ba-before-label">Antes</span><p class="ba-before" data-i18n="ba2-before">Badge de estado</p><p class="ba-after" data-i18n="ba2-after">Reservá sin costo</p></div>
+      <div class="ba-card"><span class="ba-label" data-i18n="ba-before-label">Antes</span><p class="ba-before" data-i18n="ba3-before">Pedir código postal primero</p><p class="ba-after" data-i18n="ba3-after">Desde €3,50 · por producto</p></div>
+    </div>
+  </div>
+  </div>
+
+  <!-- ══ DISCOVERY: shared language ══ -->
+  <div class="section">
+  <div class="container">
+    <div class="two-col r">
+      <div>
+        <span class="section-label" data-i18n="discovery-label">Discovery</span>
+        <h2 class="section-title" data-i18n="discovery-title">Un glosario compartido y traducciones con IA</h2>
+        <p class="body-text-sm" data-i18n="discovery-p">Cada equipo usaba términos distintos para lo mismo, generando inconsistencias entre mercados. Armé un glosario compartido y, con él, construimos un asistente de traducción y UX writing con IA que mantiene la consistencia en los 15 mercados.</p>
+      </div>
+      <div class="r d1">
+        <div class="tr-flow">
+          <div class="tr-row"><span class="tr-lang" data-i18n="tr-lang-en">Inglés</span><span class="tr-note" data-i18n="tr-note-en">Fuente — escrito por el equipo de producto</span></div>
+          <div class="tr-arrow">↓</div>
+          <div class="tr-row"><span class="tr-lang" data-i18n="tr-lang-de">Alemán</span><span class="tr-note" data-i18n="tr-note-de">Traducción 1</span></div>
+          <div class="tr-arrow">↓</div>
+          <div class="tr-row"><span class="tr-lang" data-i18n="tr-lang-markets">15 mercados</span><span class="tr-note" data-i18n="tr-note-markets">Traducción 2 — fragmentos de distintos sistemas</span></div>
+          <div class="tr-arrow">↓</div>
+          <div class="tr-row"><span class="tr-lang" data-i18n="tr-lang-customer">Usuario</span><span class="tr-note red" data-i18n="tr-note-customer">Lee algo que nadie escribió realmente</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  </div>
+
+  <!-- ══ SOLUTION ══ -->
+  <div style="background:#F2F2F2; padding:96px 0;">
+  <div class="container">
+    <div class="two-col r">
+      <div>
+        <span class="section-label" data-i18n="solution-label">Solución</span>
+        <h2 class="section-title" data-i18n="solution-title">Diseñar para decisiones, no para explicar el sistema</h2>
+        <p class="body-text-sm" data-i18n="solution-p">En vez de preguntarnos cómo explicar el sistema, empezamos a preguntarnos qué decisión estaba tratando de tomar el usuario. Esa idea reordenó reservas, entregas, promociones y disponibilidad en toda la experiencia.</p>
+        <div class="pullquote">
+          <p data-i18n="solution-quote">Ayudar a la gente a comprar muebles sin necesitar un doctorado en logística de muebles.</p>
+        </div>
+      </div>
+      <div class="placeholder" style="min-height:320px; border:2px dashed #D8D8D8; background:transparent;">
+        <span data-i18n="ph-generic">Visual a armar</span>
+        <p data-i18n="ph-solution">Muestra final de UI — disponibilidad, entrega, promociones y reserva.</p>
+      </div>
+    </div>
+  </div>
+  </div>
+
+  <!-- ══ OUTCOME ══ -->
+  <div style="background:#F5F5F5; padding:96px 0;">
+  <div class="container">
+    <span class="section-label r" data-i18n="outcome-label">Resultado</span>
+    <h2 class="section-title r" data-i18n="outcome-title">Implementado en 16 mercados — y rápidamente olvidado, que es el punto</h2>
+    <p class="body-text-sm r" style="margin-top:16px; max-width:640px;" data-i18n="outcome-p">La solución se desplegó en todos los mercados de XXXLutz. Los stakeholders más escépticos terminaron siendo quienes más la impulsaron, y un servicio que se sentía fragmentado empezó a comportarse como una experiencia coherente.</p>
+
+    <div class="learnings r" style="margin-top:48px;">
+      <div class="learning-card">
+        <h4 data-i18n="learn1-h">16 mercados</h4>
+        <p data-i18n="learn1-p">Desplegado en todos los mercados de ecommerce de XXXLutz en la UE.</p>
+      </div>
+      <div class="learning-card">
+        <h4 data-i18n="learn2-h">Un solo Design Sprint</h4>
+        <p data-i18n="learn2-p">Alcanzó para destapar años de excepciones que nadie había mapeado antes.</p>
+      </div>
+      <div class="learning-card">
+        <h4 data-i18n="learn3-h">Service design &gt; ajuste de UX</h4>
+        <p data-i18n="learn3-p">Un problema de wording terminó siendo un rediseño completo del servicio.</p>
+      </div>
+    </div>
+  </div>
+  </div>
+
+  <footer>
+    <a href="https://linkedin.com" target="_blank">LinkedIn</a>
+    <span class="sep">|</span>
+    <a href="#">CV</a>
+    <span class="sep">|</span>
+    <a href="index.html" data-i18n="footer-more">Más proyectos</a>
+  </footer>
+
+  <script>
+    const els = document.querySelectorAll('.r');
+    const io = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('v'); io.unobserve(e.target); } });
+    }, { threshold: 0.08 });
+    els.forEach(el => io.observe(el));
+  </script>
+
+  <script>
+    window.I18N = {
+      en: {
+        'nav-back': 'Home',
+        'nav-next': 'Next project',
+        'hero-title': 'The problem<br>wasn\'t delivery',
+        'hero-sub': 'Service Design across 16 markets',
+        'tag-service': 'Service Design',
+        'tag-omni': 'Omnichannel',
+        'tag-stakeholder': 'Stakeholder Management',
+        'tag-content-strategy': 'Content Strategy',
+        'intro-title': 'Buying furniture online raised more questions than it answered',
+        'intro-body': 'At XXXLutz, buying furniture online triggered the same doubts across 16 markets: when will I get it home? Can I pick it up? How much does delivery cost? Those unanswered questions were generating support calls, confused customers and frustrated store staff.',
+        'role-lead': 'I was lead designer on this project within Team Assess for 6 months, working with product and engineering across XXXLutz\'s 16 markets.',
+        'role1-h': 'Discovery',
+        'role1-p': 'Mapped the service end to end: delivery, reservations, Click &amp; Collect and support.',
+        'role2-h': 'Design',
+        'role2-p': 'Redesigned how availability and delivery information is communicated on the product page.',
+        'role3-h': 'Facilitation',
+        'role3-p': 'Organised and ran a Design Sprint with product and engineering to align the whole team.',
+        'insight-label': 'Insight',
+        'insight-title': 'We were speaking system, not human',
+        'insight-p': 'Information was written from the system\'s perspective, not the customer\'s — technically correct, but not helpful for deciding. We communicated in negatives, asked for a postcode before offering any value, and delivery info sat far from the product.',
+        'ba-before-label': 'Before',
+        'ba1-before': '"Online only"',
+        'ba1-after': 'Available for home delivery',
+        'ba2-before': 'Status badge',
+        'ba2-after': 'Reserve free of charge',
+        'ba3-before': 'Enter postcode first',
+        'ba3-after': 'From €3.50 · by product',
+        'discovery-label': 'Discovery',
+        'discovery-title': 'A shared glossary and AI-assisted translations',
+        'discovery-p': 'Different teams used different terms for the same concepts, creating inconsistencies across markets. I built a shared glossary and, on top of it, we created an AI translation and UX writing assistant that keeps things consistent across 15 markets.',
+        'tr-lang-en': 'English',
+        'tr-note-en': 'Source — written by product team',
+        'tr-lang-de': 'German',
+        'tr-note-de': 'Translation 1',
+        'tr-lang-markets': '15 markets',
+        'tr-note-markets': 'Translation 2 — fragments from different systems',
+        'tr-lang-customer': 'Customer',
+        'tr-note-customer': 'Reads something nobody actually wrote',
+        'solution-label': 'Solution',
+        'solution-title': 'Designing for decisions, not for explaining the system',
+        'solution-p': 'Instead of asking how to explain the system, we started asking what decision the customer was trying to make. That shift reordered reservations, delivery, promotions and availability across the whole experience.',
+        'solution-quote': 'Help people buy furniture without needing a PhD in furniture logistics.',
+        'ph-generic': 'Visual coming soon',
+        'ph-solution': 'Final UI showcase — availability, delivery, promotions and reservation.',
+        'outcome-label': 'Outcome',
+        'outcome-title': 'Rolled out across 16 markets — and quickly forgotten, which is the point',
+        'outcome-p': 'The solution was deployed across all XXXLutz markets. The stakeholders who were most sceptical became the ones pushing for it, and a service that once felt fragmented started to behave like a coherent experience.',
+        'learn1-h': '16 markets',
+        'learn1-p': 'Deployed across all XXXLutz ecommerce markets in the EU.',
+        'learn2-h': 'One design sprint',
+        'learn2-p': 'Was enough to surface years of exceptions nobody had mapped before.',
+        'learn3-h': 'Service design &gt; UX fix',
+        'learn3-p': 'A wording issue turned into a full service redesign.',
+        'footer-more': 'More projects'
+      },
+      es: {
+        'nav-back': 'Home',
+        'nav-next': 'Siguiente proyecto',
+        'hero-title': 'El problema<br>no era la entrega',
+        'hero-sub': 'Service Design en 16 mercados',
+        'tag-service': 'Service Design',
+        'tag-omni': 'Omnicanalidad',
+        'tag-stakeholder': 'Gestión de Stakeholders',
+        'tag-content-strategy': 'Estrategia de Contenido',
+        'intro-title': 'Comprar un mueble online generaba más preguntas que respuestas',
+        'intro-body': 'En XXXLutz, comprar un mueble online disparaba las mismas dudas en 16 mercados: ¿cuándo lo tengo en casa?, ¿lo puedo retirar?, ¿cuánto cuesta el envío? Esas preguntas sin resolver generaban llamados a soporte, usuarios confundidos y empleados de tienda frustrados.',
+        'role-lead': 'Fui lead designer del proyecto en el equipo Assess durante 6 meses, trabajando con producto e ingeniería en los 16 mercados de XXXLutz.',
+        'role1-h': 'Descubrimiento',
+        'role1-p': 'Mapeé el servicio de punta a punta: entrega, reserva, Click &amp; Collect y soporte.',
+        'role2-h': 'Diseño',
+        'role2-p': 'Rediseñé cómo se comunica la disponibilidad y la información de envío en la página de producto.',
+        'role3-h': 'Facilitación',
+        'role3-p': 'Organicé y lideré un Design Sprint con producto e ingeniería para alinear a todo el equipo.',
+        'insight-label': 'Insight',
+        'insight-title': 'Hablábamos en términos de sistema, no de personas',
+        'insight-p': 'La información estaba redactada desde la perspectiva del sistema, no la del usuario: técnicamente correcta, pero poco útil para decidir. Comunicábamos en negativo, pedíamos el código postal antes de aportar valor, y la info de entrega quedaba lejos del producto.',
+        'ba-before-label': 'Antes',
+        'ba1-before': '"Solo online"',
+        'ba1-after': 'Disponible para envío a domicilio',
+        'ba2-before': 'Badge de estado',
+        'ba2-after': 'Reservá sin costo',
+        'ba3-before': 'Pedir código postal primero',
+        'ba3-after': 'Desde €3,50 · por producto',
+        'discovery-label': 'Discovery',
+        'discovery-title': 'Un glosario compartido y traducciones con IA',
+        'discovery-p': 'Cada equipo usaba términos distintos para lo mismo, generando inconsistencias entre mercados. Armé un glosario compartido y, con él, construimos un asistente de traducción y UX writing con IA que mantiene la consistencia en los 15 mercados.',
+        'tr-lang-en': 'Inglés',
+        'tr-note-en': 'Fuente — escrito por el equipo de producto',
+        'tr-lang-de': 'Alemán',
+        'tr-note-de': 'Traducción 1',
+        'tr-lang-markets': '15 mercados',
+        'tr-note-markets': 'Traducción 2 — fragmentos de distintos sistemas',
+        'tr-lang-customer': 'Usuario',
+        'tr-note-customer': 'Lee algo que nadie escribió realmente',
+        'solution-label': 'Solución',
+        'solution-title': 'Diseñar para decisiones, no para explicar el sistema',
+        'solution-p': 'En vez de preguntarnos cómo explicar el sistema, empezamos a preguntarnos qué decisión estaba tratando de tomar el usuario. Esa idea reordenó reservas, entregas, promociones y disponibilidad en toda la experiencia.',
+        'solution-quote': 'Ayudar a la gente a comprar muebles sin necesitar un doctorado en logística de muebles.',
+        'ph-generic': 'Visual a armar',
+        'ph-solution': 'Muestra final de UI — disponibilidad, entrega, promociones y reserva.',
+        'outcome-label': 'Resultado',
+        'outcome-title': 'Implementado en 16 mercados — y rápidamente olvidado, que es el punto',
+        'outcome-p': 'La solución se desplegó en todos los mercados de XXXLutz. Los stakeholders más escépticos terminaron siendo quienes más la impulsaron, y un servicio que se sentía fragmentado empezó a comportarse como una experiencia coherente.',
+        'learn1-h': '16 mercados',
+        'learn1-p': 'Desplegado en todos los mercados de ecommerce de XXXLutz en la UE.',
+        'learn2-h': 'Un solo Design Sprint',
+        'learn2-p': 'Alcanzó para destapar años de excepciones que nadie había mapeado antes.',
+        'learn3-h': 'Service design &gt; ajuste de UX',
+        'learn3-p': 'Un problema de wording terminó siendo un rediseño completo del servicio.',
+        'footer-more': 'Más proyectos'
+      }
+    };
+  </script>
+  <script src="i18n.js"></script>
+</body>
+</html>

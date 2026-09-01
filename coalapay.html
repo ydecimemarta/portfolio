@@ -1,0 +1,638 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link rel="icon" type="image/png" href="favicon.png"/>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Coala Pay — Martina Hirschler</title>
+  <link href="https://fonts.googleapis.com/css2?family=Karla:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    /* ── DESIGN TOKENS ── */
+    :root {
+      --cream:    #EFEFEF;
+      --cards-bg: #F4F3FC;
+      --dark:     #000000;
+      --mid:      #A2A2A2;
+      --divider:  #ECECEC;
+      --c-service:  #EEA91A;
+      --c-product:  #A79BF3;
+      --c-strategy: #F06554;
+      --c-indigo:   #5B4FE8;
+      --c-lime:     #C6F135;
+
+      /* Spacing scale (8px base) */
+      --space-1:  8px;
+      --space-2:  16px;
+      --space-3:  24px;
+      --space-4:  32px;
+      --space-5:  40px;
+      --space-6:  48px;
+      --space-8:  64px;
+      --space-10: 80px;
+      --space-12: 96px;
+      --space-16: 128px;
+      --space-35: 200px;
+
+      /* Layout */
+      --max-width: 1200px;
+      --pad-desktop: 112px;
+      --pad-tablet:  48px;
+      --content-inset: calc((100vw - min(100vw, var(--max-width))) / 2 + var(--pad-desktop));
+
+      /* Typography scale */
+      --text-label:   14px;
+      --text-body-sm: 16px;
+      --text-body:    20px;
+      --text-title:   27px;
+
+      --lh-normal: 128.637%;
+    }
+
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Karla', sans-serif;
+      background: var(--cream);
+      color: var(--dark);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .section-inner {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 0 var(--pad-desktop);
+    }
+
+    /* ── TYPOGRAPHY ── */
+    .section-title {
+      font-size: var(--text-title);
+      font-weight: 700;
+      line-height: var(--lh-normal);
+      color: #282828;
+      margin-bottom: 20px;
+      letter-spacing: -0.6px;
+    }
+    .body-text {
+      font-size: var(--text-body);
+      font-weight: 400;
+      line-height: 118%;
+      letter-spacing: -0.6px;
+      color: #2a2a2a;
+    }
+    .body-text strong { font-weight: 700; color: #000; }
+    .body-text + .body-text { margin-top: 20px; }
+    .body-text p + p { margin-top: 20px; }
+
+    /* ── TAGS ── */
+    .tag { font-size: 11px; font-weight: 700; letter-spacing: 0.07em; text-transform: uppercase; padding: 5px 13px; border-radius: 100px; color: #000; }
+    .tag-service  { background: var(--c-service); }
+    .tag-product  { background: var(--c-product); }
+    .tag-strategy { background: var(--c-strategy); color: #fff; }
+
+    /* ── NAV TABS ── */
+    .nav-back, .nav-next {
+      position: fixed;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 100;
+      text-decoration: none;
+      transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+    .nav-back { left: 0; }
+    .nav-next { right: 0; }
+    .nav-back:hover { transform: translateY(-50%) translateX(-3px); }
+    .nav-next:hover { transform: translateY(-50%) translateX(3px); }
+
+    .nav-tab {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 95px;
+      min-height: 71px;
+      padding: 16px 20px 16px 16px;
+      background: #fff;
+      box-shadow: 0px 2px 5.3px 1px rgba(0, 0, 0, 0.1);
+      transition: background 0.2s;
+      white-space: normal;
+      text-align: left;
+    }
+    .nav-back .nav-tab { border-radius: 0 100px 100px 0; padding-left: 18px; padding-right: 24px; }
+    .nav-next .nav-tab { border-radius: 100px 0 0 100px; padding-right: 18px; padding-left: 24px; text-align: left; }
+    .nav-label {
+      font-family: 'Karla', sans-serif;
+      font-size: var(--text-body-sm);
+      font-weight: 700;
+      letter-spacing: -0.6px;
+      line-height: 118%;
+      color: #6B6B6B;
+      transition: color 0.25s ease;
+      display: block;
+    }
+    .nav-back:hover .nav-label, .nav-next:hover .nav-label { color: var(--c-indigo); }
+    .nav-back:hover .nav-tab, .nav-next:hover .nav-tab { background: #F8F7FF; }
+
+    /* ── 1. HERO ── */
+    .hero { position: relative; height: 85vh; min-height: 480px; overflow: hidden; }
+    .hero-bg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center center; display: block; }
+    .hero-overlay { position: absolute; inset: 0; background: rgba(59, 63, 70, 0.6); }
+    .hero-title { position: absolute; top: 26px; left: 0; right: 0; text-align: center; font-size: clamp(36px, 6vw, 72px); font-weight: 800; color: #fff; line-height: 0.84; letter-spacing: -3px; padding: 0 var(--pad-desktop); z-index: 1; }
+    .hero-sub { position: absolute; bottom: 26px; left: 0; right: 0; text-align: center; font-size: clamp(20px, 2.2vw, 32px); font-weight: 600; letter-spacing: -0.6px; color: #fff; line-height: 1.1; padding: 0 var(--pad-desktop); z-index: 1; }
+
+    /* ── SECTION SPACING ── */
+    .section-pad-y { padding-top: var(--space-35); padding-bottom: var(--space-35); }
+
+    /* ── 2. INTRO SPLIT ── */
+    .intro-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: start; }
+    .intro-labels { display: flex; flex-direction: column; align-items: flex-start; gap: 10px; padding-top: 4px; }
+
+    /* ── EYEBROW ── */
+    .eyebrow {
+      display: inline-block;
+      font-size: var(--text-label);
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--mid);
+      margin-bottom: 18px;
+    }
+    .eyebrow-solo { font-size: 18px; margin-bottom: 0; }
+
+    /* ── PLACEHOLDER IMAGES ── */
+    .placeholder-img {
+      background: #E8E8E8;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+    }
+    .placeholder-label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #999;
+      font-family: 'Karla', sans-serif;
+      padding: 20px;
+    }
+
+    /* ── DUO FULL (two full-width images side by side) ── */
+    .duo-full { display: grid; grid-template-columns: 1fr 1fr; }
+    .duo-full-cell { height: 70vh; overflow: hidden; position: relative; }
+    .duo-full-cell img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .duo-full-cell-left img { object-position: left center; }
+    .duo-full-cell-light { background: #F5F5F5; display: flex; align-items: flex-end; justify-content: center; padding-bottom: 5%; box-sizing: border-box; }
+    .duo-full-cell-light img, .duo-full-cell-light .placeholder-img { width: 100%; height: auto; object-fit: contain; }
+
+    /* ── 6. FEATURE SPLIT (50/50) — the workhorse ── */
+    .feature-split { display: flex; width: 100%; align-items: stretch; }
+    .feature-split-text {
+      width: 50%;
+      box-sizing: border-box;
+      padding: var(--space-16) 60px var(--space-16) var(--content-inset);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    .feature-split-text:last-child { padding: var(--space-16) var(--content-inset) var(--space-16) 60px; }
+    .feature-split-media { width: 50%; box-sizing: border-box; position: relative; overflow: hidden; min-height: 480px; }
+    .feature-split-media .placeholder-img { width: 100%; height: 100%; }
+    .feature-split-media > img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .feature-split-media-icon { background: #F5F5F5; display: flex; align-items: center; justify-content: center; }
+    .feature-split-media-icon img { object-fit: contain; display: block; }
+    .feature-split-media-icon.icon-36 img { width: 36%; height: 36%; }
+    .feature-split-media-icon.icon-60 img { width: 60%; height: 60%; }
+    .feature-split-media-dotted {
+      background-color: #F2F2F2;
+      background-image: radial-gradient(circle, #C8C8C8 1px, transparent 1px);
+      background-size: 24px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 40px;
+    }
+    .feature-split-media-dotted img { max-width: 85%; max-height: 85%; width: auto; height: auto; object-fit: contain; display: block; }
+
+    /* ── 7. OVERLAP DUO ── */
+    .overlap-duo {
+      position: relative;
+      background-color: #F2F2F2;
+      background-image: radial-gradient(circle, #C8C8C8 1px, transparent 1px);
+      background-size: 24px 24px;
+      padding: var(--space-16) var(--pad-desktop);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 620px;
+      overflow: hidden;
+    }
+    .overlap-duo-diagram { height: 488px; width: auto; max-width: 100%; border-radius: 12px; box-shadow: 0 12px 32px rgba(0, 0, 0, 0.14); }
+    .overlap-duo-mockup {
+      position: absolute;
+      right: 12%;
+      bottom: 8%;
+      width: 34%;
+      max-width: 360px;
+      height: auto;
+      border: 10px solid #fff;
+      border-radius: 18px;
+      box-shadow: 0 24px 48px rgba(20, 15, 50, 0.18);
+      display: block;
+    }
+
+    /* ── DATA BAND (wraps a Feature Split) ── */
+    .data-band { background: var(--cards-bg); width: 100%; }
+
+    /* ── RESULTS CARDS (closing section) ── */
+    .results-band { background: #F2F2F2; padding: var(--space-16) 0; }
+    .results-subtitle { margin-top: 16px; max-width: 600px; }
+    .results-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; margin-top: 48px; }
+    .results-card {
+      background: #fff;
+      border-radius: 20px;
+      padding: 32px 28px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      min-height: 260px;
+      box-sizing: border-box;
+    }
+    .results-card svg { margin-bottom: 20px; display: block; }
+    .results-card h4 { font-size: var(--text-body); font-weight: 700; line-height: 118%; letter-spacing: -0.6px; color: #282828; margin-bottom: 10px; }
+    .results-card p { font-size: var(--text-body-sm); line-height: 118%; letter-spacing: -0.6px; color: #444; }
+    .results-closing { margin-top: 40px; font-size: var(--text-body); line-height: 1.3; letter-spacing: -0.6px; color: #2a2a2a; max-width: 760px; }
+
+    footer {
+      background: #000;
+      height: 180px;
+      box-sizing: border-box;
+      padding: 0 var(--pad-desktop);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 24px;
+      border-radius: 24px 24px 0 0;
+    }
+    footer a {
+      color: #fff;
+      text-decoration: none;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      opacity: 0.7;
+      transition: opacity 0.2s;
+    }
+    footer a:hover { opacity: 1; }
+    footer .sep { color: rgba(255, 255, 255, 0.3); }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 1024px) {
+      :root { --pad-desktop: var(--pad-tablet); }
+      .intro-grid { grid-template-columns: 1fr; gap: 32px; }
+      .feature-split { flex-direction: column; }
+      .feature-split-text, .feature-split-media { width: 100%; }
+      .feature-split-text { padding: var(--space-8) var(--pad-tablet); }
+      .feature-split-media { min-height: 320px; }
+      .duo-full { grid-template-columns: 1fr; }
+      .overlap-duo { min-height: 420px; padding: var(--space-8) var(--pad-tablet); }
+      .overlap-duo-mockup { width: 46%; right: 8%; }
+      .results-grid { grid-template-columns: 1fr 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <a class="nav-back" href="index.html">
+    <div class="nav-tab"><span class="nav-label" data-i18n="nav-back">Home</span></div>
+  </a>
+  <a class="nav-next" href="lutz-reservation.html">
+    <div class="nav-tab"><span class="nav-label" data-i18n="nav-next">Next project</span></div>
+  </a>
+
+  <!-- 1. HERO -->
+  <section class="hero">
+    <img class="hero-bg" src="assets/coalapay-hero.jpg" alt="Coala Pay hero"/>
+    <div class="hero-overlay"></div>
+    <h1 class="hero-title" data-i18n="hero-title">Crypto with social impact</h1>
+    <p class="hero-sub" data-i18n="hero-sub">Designing a crypto platform for humanitarian aid</p>
+  </section>
+
+  <!-- 2. INTRO SPLIT -->
+  <div class="section-pad-y">
+  <div class="section-inner">
+  <div class="intro-grid">
+    <div class="intro-labels">
+      <span class="tag tag-service" data-i18n="tag-service">Service Design</span>
+      <span class="tag tag-product" data-i18n="tag-product">Product Design</span>
+      <span class="tag tag-strategy" data-i18n="tag-strategy">Strategy</span>
+    </div>
+    <div>
+      <h2 class="section-title" data-i18n="intro-title">Moving aid funds, faster</h2>
+      <div class="body-text">
+        <p data-i18n="intro-p1">In humanitarian work, donation money is usually available — but getting it to its destination is the slowest and most expensive part.</p>
+        <p data-i18n="intro-p2">Internal NGO processes, legal barriers, and unstable financial systems make transfers take too long, and funds sometimes even lose value before arriving.</p>
+        <p data-i18n="intro-p3"><strong>Coala Pay is a startup for NGOs focused on solving this problem: moving funds faster so aid reaches people when it's needed most.</strong></p>
+      </div>
+    </div>
+  </div>
+  </div>
+  </div>
+
+  <!-- DUO FULL: logo/icon + local NGO photo -->
+  <div class="duo-full">
+    <div class="duo-full-cell duo-full-cell-light">
+      <img src="assets/coalapay-logo-icon.png" alt="Coala Pay logo and icon"/>
+    </div>
+    <div class="duo-full-cell duo-full-cell-left">
+      <img src="assets/coalapay-local-ngo.jpg" alt="Local NGO — international aid made effective"/>
+    </div>
+  </div>
+
+  <div class="feature-split" style="padding-top: var(--space-8); padding-bottom: var(--space-8);">
+    <div class="feature-split-text">
+      <h2 class="section-title" data-i18n="s1-title">It technically works, but... did you think about your users?</h2>
+      <div class="body-text">
+        <p data-i18n="s1-p1">When I met the Coala Pay team, they already had a platform running. Its purpose was to let large international NGOs, like Doctors Without Borders, distribute their funds to local NGOs.</p>
+        <p data-i18n="s1-p2">At first glance it looked complete, but <strong>the organizations were unable to use it without help.</strong> Even after training, <strong>they didn't feel confident creating wallets, sending payments, or converting money into crypto.</strong></p>
+        <p data-i18n="s1-p3"><strong>It was built on assumptions rather than real needs.</strong> Technically it worked, but it wasn't scalable. It was screaming for UX.</p>
+      </div>
+    </div>
+    <div class="feature-split-media">
+      <div class="placeholder-img">
+        <span class="placeholder-label" data-i18n="s1-ph">Screenshot — Original Platform</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="feature-split" style="padding-top: var(--space-2); padding-bottom: var(--space-8);">
+    <div class="feature-split-media feature-split-media-icon icon-36" style="background: transparent;">
+      <img src="assets/coalapay-coalita.png" alt="Coalita mascot with checklist"/>
+    </div>
+    <div class="feature-split-text">
+      <span class="eyebrow" data-i18n="s2-label">Problem</span>
+      <h2 class="section-title" data-i18n="s2-title">Are you sure this is a marketplace?</h2>
+      <div class="body-text">
+        <p data-i18n="s2-p1">The core product was designed as a marketplace where large NGOs could browse projects and choose which one to fund.</p>
+        <p data-i18n="s2-p2">But that's not how things actually worked.</p>
+        <p data-i18n="s2-p3">Relationships were already established offline: the projects and donations were already agreed between both parties beforehand.</p>
+        <p data-i18n="s2-p4">Not every NGO needed to browse possible projects to donate to. At some point, they started literally creating a new <em>marketplace environment</em> per client. That's when it became clear to me: <strong>this wasn't a marketplace.</strong></p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 6. FEATURE SPLIT -->
+  <div class="feature-split">
+    <div class="feature-split-text">
+      <span class="eyebrow" data-i18n="blueprint-label">Service Blueprint</span>
+      <h2 class="section-title" data-i18n="blueprint-title">Understanding the system</h2>
+      <div class="body-text">
+        <p data-i18n="blueprint-p1">I mapped a service blueprint and the platform ecosystem to visualize every actor, existing platform, touchpoint, and dependency across the system. It was massive.</p>
+        <p data-i18n="blueprint-p2">Most of this was happening outside the product, through emails, spreadsheets, and manual coordination. Mapping it end to end made the fragmentation visible and showed clearly where time, effort, and trust were being lost.</p>
+      </div>
+    </div>
+    <div class="feature-split-media feature-split-media-dotted">
+      <img src="assets/coalapay-blueprint-legend.png" alt="Service blueprint icon legend"/>
+    </div>
+  </div>
+
+  <!-- 7. OVERLAP DUO -->
+  <div class="overlap-duo">
+    <img class="overlap-duo-diagram" src="assets/coalapay-service-blueprint.jpg" alt="Service blueprint diagram"/>
+    <img class="overlap-duo-mockup" src="assets/coalapay-cast.jpg" alt="User profiling — the cast"/>
+  </div>
+
+  <div class="feature-split" style="padding-top: var(--space-35); padding-bottom: var(--space-35);">
+    <div class="feature-split-media">
+      <div class="placeholder-img">
+        <span class="placeholder-label" data-i18n="revenue-ph">Screenshot — Payment Flow</span>
+      </div>
+    </div>
+    <div class="feature-split-text">
+      <span class="eyebrow" data-i18n="revenue-label">Revenue</span>
+      <h2 class="section-title" data-i18n="revenue-title">The shift in focus</h2>
+      <div class="body-text">
+        <p data-i18n="revenue-p1">By this point it was clear: this wasn't a marketplace. It was a payment platform, per project.</p>
+        <p data-i18n="revenue-p2">NGOs didn't want to browse projects. They wanted to send money faster, cheaper, and with confidence. Period.</p>
+        <p data-i18n="revenue-p3">So we reframed the product. The focus moved from "browse what to fund" to "send payments within a project."</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 6. FEATURE SPLIT -->
+  <div class="feature-split" style="padding-bottom: var(--space-35);">
+    <div class="feature-split-text">
+      <span class="eyebrow" data-i18n="role-label">My role</span>
+      <h2 class="section-title" data-i18n="role-title">Research, visualize, simplify</h2>
+      <div class="body-text">
+        <p data-i18n="role-p1">I worked on product definition, strategy, and product design.</p>
+        <p data-i18n="role-p2">I collaborated with NGOs, internal teams, and developers to understand the constraints and translate them into a simpler system. This included redefining the product structure, simplifying complex flows, and integrating manual processes into the platform.</p>
+        <p data-i18n="role-p3">The goal? Make the system intuitive for non-technical users and reduce dependency on the internal team.</p>
+      </div>
+    </div>
+    <div class="feature-split-media feature-split-media-icon icon-60" style="background: transparent;">
+      <img src="assets/coalapay-collaboration.png" alt="Collaboration between roles diagram"/>
+    </div>
+  </div>
+
+  <!-- 6. FEATURE SPLIT (Data band) -->
+  <div class="data-band">
+    <div class="feature-split">
+      <div class="feature-split-media">
+        <img src="assets/coalapay-final-design.jpg" alt="Final design — Coala Pay dashboard"/>
+      </div>
+      <div class="feature-split-text">
+        <span class="eyebrow" data-i18n="data-label">Data</span>
+        <h2 class="section-title" data-i18n="data-title">From complexity to clarity</h2>
+        <div class="body-text">
+          <p data-i18n="data-p1">Users (people from the humanitarian world) didn't care about crypto. They just needed transfers to work.</p>
+          <p data-i18n="data-p2">So instead of explaining the technology, we designed around it. We simplified language, guided key actions, and used progressive disclosure to keep things clear by default, while still giving access to detailed information when needed.</p>
+          <p data-i18n="data-p3">At the same time, we brought key processes into the product: due diligence, partner validation, and payment setup. We replaced long email threads and spreadsheets with structured, trackable flows.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CLOSING: RESULTS CARDS (lutz-style learnings section) -->
+  <div class="results-band">
+  <div class="section-inner">
+    <span class="eyebrow" data-i18n="results-label">Results</span>
+    <h2 class="section-title" data-i18n="results-title">What changed, in numbers</h2>
+    <p class="body-text-sm results-subtitle" data-i18n="results-subtitle">These are the concrete results, three months after the redesign.</p>
+
+    <div class="results-grid">
+      <div class="results-card">
+        <div>
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#282828" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="6" width="18" height="13" rx="2"/><path d="M3 10h18"/><circle cx="17" cy="14.2" r="1.2" fill="#282828" stroke="none"/>
+          </svg>
+          <h4 data-i18n="results-c1-h">Clients became more autonomous</h4>
+        </div>
+        <p data-i18n="results-c1-p">They manage their own wallet, approve projects, and handle their own due diligence.</p>
+      </div>
+
+      <div class="results-card">
+        <div>
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#282828" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/>
+          </svg>
+          <h4 data-i18n="results-c2-h">From execution to supervision</h4>
+        </div>
+        <p data-i18n="results-c2-p">More room for continuous improvement, less time firefighting for the Coala Pay team.</p>
+      </div>
+
+      <div class="results-card">
+        <div>
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#282828" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M7 3v14"/><path d="M3 13l4 4 4-4"/><path d="M17 21V7"/><path d="M21 11l-4-4-4 4"/>
+          </svg>
+          <h4 data-i18n="results-c3-h">More transactions, less friction</h4>
+        </div>
+        <p data-i18n="results-c3-p">Weekly volume tripled: from 90 transactions to over 300.</p>
+      </div>
+
+      <div class="results-card">
+        <div>
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#282828" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="6" cy="6" r="2.5"/><circle cx="18" cy="6" r="2.5"/><circle cx="12" cy="18" r="2.5"/><path d="M6 8.5L12 15.5M18 8.5L12 15.5"/>
+          </svg>
+          <h4 data-i18n="results-c4-h">More NGOs, and bigger ones</h4>
+        </div>
+        <p data-i18n="results-c4-p">We went from 5 to 8 international NGOs in just 3 months.</p>
+      </div>
+    </div>
+
+    <p class="results-closing" data-i18n="results-closing">But most importantly, money started moving faster. And in this context, that means help arrives on time.</p>
+  </div>
+  </div>
+
+  <footer>
+    <a href="https://linkedin.com" target="_blank">LinkedIn</a>
+    <span class="sep">|</span>
+    <a href="#">CV</a>
+    <span class="sep">|</span>
+    <a href="index.html" data-i18n="footer-more">More projects</a>
+  </footer>
+
+  <script>
+    window.I18N = {
+      en: {
+        'nav-back': 'Home',
+        'nav-next': 'Next project',
+        'hero-title': 'Crypto with social impact',
+        'hero-sub': 'Designing a crypto platform for humanitarian aid',
+        'tag-service': 'Service Design',
+        'tag-product': 'Product Design',
+        'tag-strategy': 'Strategy',
+        'intro-p1': 'In humanitarian work, donation money is usually available — but getting it to its destination is the slowest and most expensive part.',
+        'intro-p2': 'Internal NGO processes, legal barriers, and unstable financial systems make transfers take too long, and funds sometimes even lose value before arriving.',
+        'intro-title': 'Moving aid funds, faster',
+        'intro-p3': "<strong>Coala Pay is a startup for NGOs focused on solving this problem: moving funds faster so aid reaches people when it's needed most.</strong>",
+        's1-title': 'It technically works, but... did you think about your users?',
+        's1-p1': 'When I met the Coala Pay team, they already had a platform running. Its purpose was to let large international NGOs, like Doctors Without Borders, distribute their funds to local NGOs.',
+        's1-p2': "At first glance it looked complete, but <strong>the organizations were unable to use it without help.</strong> Even after training, <strong>they didn't feel confident creating wallets, sending payments, or converting money into crypto.</strong>",
+        's1-p3': "<strong>It was built on assumptions rather than real needs.</strong> Technically it worked, but it wasn't scalable. It was screaming for UX.",
+        's1-ph': 'Screenshot — Original Platform',
+        's2-label': 'Problem',
+        's2-title': 'Are you sure this is a marketplace?',
+        's2-p1': 'The core product was designed as a marketplace where large NGOs could <strong>browse projects and choose which one to fund.</strong>',
+        's2-p2': "But that's not how things actually worked.",
+        's2-p3': 'Relationships were already established offline: the projects and donations were already agreed between both parties beforehand.',
+        's2-p4': "Not every NGO needed to browse possible projects to donate to. At some point, they started literally creating a new <em>marketplace environment</em> per client. That's when it became clear to me: <strong>the technical architecture was based on a misreading of the users. This wasn't a marketplace.</strong>",
+        'blueprint-label': 'Service Blueprint',
+        'blueprint-title': 'Understanding the system',
+        'blueprint-p1': 'I mapped a service blueprint and the platform ecosystem to visualize every actor, existing platform, touchpoint, and dependency across the system. It was massive.',
+        'blueprint-p2': 'Most of this was happening outside the product, through emails, spreadsheets, and manual coordination. <strong>Mapping it end to end</strong> made the fragmentation visible and showed clearly where time, effort, and trust were being lost.',
+        'revenue-label': 'Strategy',
+        'revenue-title': 'The shift in focus',
+        'revenue-p1': "By this point it was clear: this wasn't a marketplace. It was a payment platform, per project.",
+        'revenue-p2': "NGOs didn't want to browse projects. <strong>They wanted to send money faster, cheaper, and with confidence.</strong> Period.",
+        'revenue-p3': 'So we reframed the product. The focus moved from "browse what to fund" to "send payments within a project."',
+        'revenue-ph': 'Screenshot — Payment Flow',
+        'role-label': 'My role',
+        'role-title': 'Research, visualize, simplify',
+        'role-p1': 'I worked on <strong>product definition, strategy, and product design.</strong>',
+        'role-p2': 'I collaborated with NGOs, internal teams, and developers to understand the constraints and translate them into a simpler system. This included redefining the product structure, simplifying complex flows, and integrating manual processes into the platform.',
+        'role-p3': '<strong>The goal? Make the system intuitive for non-technical users and reduce dependency on the internal team.</strong>',
+        'data-label': 'UX',
+        'data-title': 'From complexity to clarity',
+        'data-p1': "Users (people from the humanitarian world) didn't care about crypto. They just needed transfers to work.",
+        'data-p2': 'So instead of explaining the technology, we designed around it. We simplified language, guided key actions, and used progressive disclosure to keep things clear by default, while still giving access to detailed information when needed.',
+        'data-p3': 'At the same time, we brought key processes into the product: due diligence, partner validation, and payment setup. We replaced long email threads and spreadsheets with structured, trackable flows.',
+        'results-label': 'Results',
+        'results-title': 'What changed, in numbers',
+        'results-subtitle': 'These are the concrete results, three months after the redesign.',
+        'results-c1-h': 'Clients became more autonomous',
+        'results-c1-p': 'They manage their own wallet, approve projects, and handle their own due diligence.',
+        'results-c2-h': 'From execution to supervision',
+        'results-c2-p': 'More room for continuous improvement, less time firefighting for the Coala Pay team.',
+        'results-c3-h': 'More transactions, less friction',
+        'results-c3-p': 'Weekly volume tripled: from 90 transactions to over 300.',
+        'results-c4-h': 'More NGOs, and bigger ones',
+        'results-c4-p': 'We went from 5 to 8 international NGOs in just 3 months.',
+        'results-closing': 'But most importantly, money started moving faster. And in this context, that means help arrives on time.',
+        'footer-more': 'More projects'
+      },
+      es: {
+        'nav-back': 'Home',
+        'nav-next': 'Siguiente proyecto',
+        'hero-title': 'Cripto con impacto social',
+        'hero-sub': 'Diseñando una plataforma cripto para ayuda humanitaria',
+        'tag-service': 'Service Design',
+        'tag-product': 'Product Design',
+        'tag-strategy': 'Estrategia',
+        'intro-p1': 'En el trabajo humanitario el dinero para donaciones suele estar disponible, pero enviarlo a destino es lo más lento y costoso.',
+        'intro-p2': 'Procesos internos de las ONGs, barreras legales y sistemas financieros inestables hacen que las transferencias tarden demasiado, y a veces los fondos hasta pierden valor antes de llegar.',
+        'intro-title': 'Mover fondos de ayuda, más rápido',
+        'intro-p3': '<strong>Coala Pay es una startup para ONGs enfocada en resolver este problema: mover fondos más rápido para que la ayuda llegue a las personas cuando más se necesita.</strong>',
+        's1-title': 'Técnicamente funciona pero… pensaste en tus usuarios?',
+        's1-p1': 'Cuando conocí al equipo de Coala Pay ya tenían una plataforma funcionando. Su rol era que grandes ONGs internacionales como Médicos Sin Fronteras pudieran distribuir sus fondos a ONGs locales.',
+        's1-p2': 'A primera vista parecía completa, pero <strong>las organizaciones eran incapaces de usarla sin asistencia.</strong> Incluso después de una capacitación, <strong>no se sentían seguras creando wallets, enviando pagos o convirtiendo dinero a cripto.</strong>',
+        's1-p3': '<strong>Estaba construida sobre supuestos en vez de necesidades reales.</strong> Técnicamente funcionaba, pero no era escalable. Pedía UX a gritos.',
+        's1-ph': 'Screenshot — Plataforma original',
+        's2-label': 'Problema',
+        's2-title': 'Estás segura que esto es un marketplace?',
+        's2-p1': 'El producto central estaba diseñado como un marketplace donde las grandes ONGs podían <strong>explorar proyectos y elegir cuál financiar.</strong>',
+        's2-p2': 'Pero no era así como funcionaban las cosas en la realidad.',
+        's2-p3': 'Las relaciones ya estaban establecidas offline: los proyectos y donaciones ya estaban acordados entre las dos partes de antemano',
+        's2-p4': 'No todas las ONGs necesitaban navegar posibles proyectos a quienes donar. Entonces empezaron a crear literalmente un nuevo <em>entorno de marketplace</em> por cliente. Ahí quedó claro para mí: <strong>la arquitectura técnica estaba basada en una lectura errónea de los usuarios. Esto no era un marketplace.</strong>',
+        'blueprint-label': 'Service Blueprint',
+        'blueprint-title': 'Entendiendo el sistema',
+        'blueprint-p1': 'Mapeé un service blueprint y el ecosistema de plataformas para visualizar todos los actores, plataformas existentes, puntos de contacto y dependencias del sistema. Era enorme.',
+        'blueprint-p2': 'Gran parte de esto pasaba fuera del producto, a través de emails, planillas y coordinación manual. <strong>Mapearlo de punta a punta</strong> hizo visible la fragmentación y mostró con claridad dónde se perdían tiempo, esfuerzo y confianza.',
+        'revenue-label': 'Estrategia',
+        'revenue-title': 'El cambio de enfoque',
+        'revenue-p1': 'A esta altura estaba claro: Esto no era un marketplace. Era una plataforma de pagos por proyecto.',
+        'revenue-p2': 'Las ONGs no querían explorar proyectos. <strong>Querían enviar dinero más rápido, más barato y con confianza.</strong> Punto.',
+        'revenue-p3': 'Entonces replanteamos el producto. El foco pasó de "explora qué financiar" a "Enviar pagos dentro de un proyecto".',
+        'revenue-ph': 'Screenshot — Flujo de pago',
+        'role-label': 'Mi rol',
+        'role-title': 'Investigar, visualizar, simplificar',
+        'role-p1': 'Trabajé en <strong>definición, estrategia y diseño de producto</strong>',
+        'role-p2': 'Colaboré con ONGs, equipos internos y developers para entender las restricciones y traducirlas en un sistema más simple. Esto incluyó redefinir la estructura del producto, simplificar flujos complejos e integrar procesos manuales a la plataforma.',
+        'role-p3': '<strong>El objetivo? hacer que el sistema fuera intuitivo para usuarios no técnicos y reducir la dependencia del equipo interno.</strong>',
+        'data-label': 'UX',
+        'data-title': 'De la complejidad a la claridad',
+        'data-p1': 'A los usuarios (gente del mundo humanitario) no les importaba la cripto. Solo necesitaban que las transferencias funcionaran.',
+        'data-p2': 'Entonces, en vez de explicar la tecnología, diseñamos alrededor de ella. Simplificamos el lenguaje, guiamos las acciones clave y usamos revelación progresiva para mantener todo claro por defecto, sin dejar de dar acceso a información detallada cuando hacía falta.',
+        'data-p3': 'Al mismo tiempo, incorporamos procesos clave al producto: due diligence, validación de partners y configuración de pagos. Reemplazamos largos hilos de email y planillas con flujos estructurados y trazables.',
+        'results-label': 'Resultados',
+        'results-title': 'Lo que cambió, en números',
+        'results-subtitle': 'Estos son los resultados concretos, tres meses después del rediseño.',
+        'results-c1-h': 'Clientes más autónomos',
+        'results-c1-p': 'Manejan su wallet, aprueban proyectos y resuelven su propia due diligence.',
+        'results-c2-h': 'De la ejecución a la supervisión',
+        'results-c2-p': 'Más lugar para la mejora continua, menos tiempo apagando incendios para el equipo de Coala Pay.',
+        'results-c3-h': 'Más transacciones, sin fricción',
+        'results-c3-p': 'El volumen semanal se triplicó: de 90 transacciones a más de 300.',
+        'results-c4-h': 'Más ONGs, y más grandes',
+        'results-c4-p': 'Pasamos de 5 a 8 ONGs internacionales en solo 3 meses.',
+        'results-closing': 'Pero lo más importante: el dinero empezó a moverse más rápido. Y en este contexto, eso significa que la ayuda llega a tiempo.',
+        'footer-more': 'Más proyectos'
+      }
+    };
+  </script>
+  <script src="i18n.js"></script>
+
+</body>
+</html>

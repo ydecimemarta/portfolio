@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <link rel="icon" type="image/png" href="favicon.png"/>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Portfolio — Martina Hirschler</title>
+  <link href="https://fonts.googleapis.com/css2?family=Karla:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --cream:      #FFF9F1;
+      --cards-bg:   #F9F0E8;
+      --dark:       #000000;
+      --mid:        #A2A2A2;
+      --light-gray: #ECDFCD;
+      --rail-w:     64px;
+
+      --c-product:     #A79BF3; /* violeta */
+      --c-strategy:    #F06554; /* coral */
+      --c-research:    #ECDFCD; /* beige */
+      --c-ux:          #A79BF3; /* violeta */
+      --c-service:     #EEA91A; /* ámbar */
+      --c-visuals:     #D8D2FF; /* lavanda */
+      --c-stakeholder: #ECDFCD; /* beige */
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Karla', sans-serif;
+      background: var(--cream);
+      color: var(--dark);
+      -webkit-font-smoothing: antialiased;
+      min-height: 100vh;
+    }
+
+    /* ── LEFT RAIL — fija, ocupa todo el alto ── */
+    .left-rail {
+      position: fixed;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      width: var(--rail-w);
+      border-right: 1.5px solid var(--dark);
+      background: var(--cream);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding-top: 26px;
+      z-index: 20;
+    }
+
+    /* ── FRAME — todo el contenido, desplazado por el rail ── */
+    .frame {
+      margin-left: var(--rail-w);
+      background: var(--cream);
+      position: relative;
+    }
+
+    /* ── TOPBAR ── */
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 22px 40px;
+      border-bottom: 1.5px solid var(--dark);
+    }
+    .icon-btn {
+      background: none;
+      border: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      padding: 4px;
+    }
+    .logo {
+      font-size: 22px;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+    }
+
+    /* ── language switch — mismo estilo que i18n.js del sitio real ── */
+    .lang-switch {
+      display: flex;
+      gap: 2px;
+      padding: 4px;
+      background: var(--cards-bg);
+      border-radius: 100px;
+    }
+    .lang-switch button {
+      border: none;
+      background: transparent;
+      cursor: pointer;
+      font-family: inherit;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.03em;
+      padding: 6px 14px;
+      border-radius: 100px;
+      color: #8A7A63;
+      transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+    }
+    .lang-switch button.active {
+      background: #fff;
+      color: var(--dark);
+      box-shadow: 0 1px 4px rgba(0,0,0,0.12);
+    }
+
+    /* ── MAIN CONTENT ── */
+    .content { }
+
+    .page-title {
+      font-size: clamp(30px, 4.4vw, 54px);
+      font-weight: 500;
+      letter-spacing: -1px;
+      line-height: 1.15;
+      padding: 40px 40px 18px;
+      max-width: 820px;
+    }
+
+    .hero-text {
+      max-width: 680px;
+      font-size: 16px;
+      font-weight: 500;
+      line-height: 1.55;
+      letter-spacing: -0.1px;
+      padding: 0 40px 32px;
+    }
+    .hero-text .c-exp { color: var(--c-product); font-weight: 700; }
+    .hero-text .c-svc { color: var(--c-strategy); font-weight: 700; }
+    .hero-text .c-str { color: var(--c-service); font-weight: 700; }
+
+    /* líneas de lado a lado, como grilla */
+    .divider { border-top: 1.5px solid var(--dark); }
+
+    /* ── FILTERS ── */
+    .filters {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 10px;
+      padding: 22px 40px;
+    }
+    .filter-label {
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      margin-right: 4px;
+      white-space: nowrap;
+    }
+    .filter-tag {
+      font-family: 'Karla', sans-serif;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+      padding: 7px 15px;
+      border-radius: 100px;
+      color: var(--dark);
+      border: none;
+      cursor: pointer;
+      outline: 2px solid transparent;
+      outline-offset: 2px;
+      transition: outline-color 0.15s, transform 0.15s;
+    }
+    .filter-tag:hover { transform: translateY(-1px); }
+    .filter-tag.active { outline-color: var(--dark); }
+    .filter-tag[data-tag="product"]     { background: var(--c-product); }
+    .filter-tag[data-tag="strategy"]    { background: var(--c-strategy); }
+    .filter-tag[data-tag="research"]    { background: var(--c-research); }
+    .filter-tag[data-tag="service"]     { background: var(--c-service); }
+    .filter-tag[data-tag="visuals"]     { background: var(--c-visuals); }
+    .filter-tag[data-tag="stakeholder"] { background: var(--c-stakeholder); }
+
+    /* ── CARDS GRID — masonry real en cascada (posicionado por JS) ── */
+    .cards-grid {
+      position: relative;
+      box-sizing: content-box;
+      margin: 32px 40px 40px;
+      padding: 24px 24px 40px;
+    }
+    @media (max-width: 560px) {
+      :root { --rail-w: 48px; }
+      .cards-grid { margin: 24px 22px 28px; padding: 18px 18px 28px; }
+      .topbar { padding: 18px 22px; }
+      .page-title { padding: 32px 22px 16px; }
+      .hero-text { padding: 0 22px 24px; }
+      .filters { padding: 18px 22px; }
+      footer { padding: 22px 22px 32px; }
+    }
+
+    /* línea simple — sin decoración de libro, esquinas cuadradas */
+    .pub-card {
+      position: absolute;
+      top: 0;
+      left: 0;
+      background: var(--cream);
+      border: 1.5px solid var(--dark);
+      border-radius: 0;
+      padding: 16px 16px 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      text-decoration: none;
+      color: inherit;
+      transition: transform 0.2s ease, top 0.25s ease, left 0.25s ease;
+      opacity: 0;
+    }
+    .pub-card.is-placed { opacity: 1; }
+    .pub-card:hover { transform: translateY(-3px); }
+
+    /* cards de artículo — sin foto, fondo con el color extraído de la portada del artículo */
+    .pub-card--flat {
+      padding-top: 30px;
+      min-height: 340px;
+    }
+    .pub-card--flat.bg-lutzres   { background: #EE6D3B; } /* color del hero de lutz-reservation.html */
+    .pub-card--flat.bg-lutzc360  { background: #FFF571; } /* color del hero de lutz-customer360.html */
+    .pub-card--flat .card-read { color: rgba(0,0,0,0.6); }
+
+    /* artículos: misma tipografía que los headers de sección de los case studies (.section-title) + subtítulo (el dek real del artículo) */
+    .pub-card--flat h3 {
+      font-size: 27px;
+      font-weight: 700;
+      line-height: 1.286;
+      letter-spacing: -0.6px;
+      color: #282828;
+      -webkit-line-clamp: 3;
+    }
+    .card-subtitle {
+      font-size: 14px;
+      font-weight: 500;
+      line-height: 1.45;
+      color: rgba(0,0,0,0.72);
+    }
+
+    /* espacio extra entre el reading time y las labels, para que la card quede a un tamaño similar a las demás */
+    .pub-card--flat .card-tags {
+      margin-top: auto;
+      padding-top: 20px;
+    }
+
+    /* imagen arriba, sin marco ni outline — más chica, el texto pesa más; proporción varía por card */
+    .card-thumb {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      object-fit: cover;
+      border: none;
+      outline: none;
+      border-radius: 0;
+      display: block;
+    }
+    .card-thumb--tall { aspect-ratio: 4 / 5; }
+
+    .pub-card h3 {
+      font-size: 17px;
+      font-weight: 700;
+      line-height: 1.25;
+      letter-spacing: -0.02em;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    .card-read {
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--mid);
+    }
+
+    .card-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+    .tag {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      padding: 4px 11px;
+      border-radius: 100px;
+      color: var(--dark);
+    }
+    .tag-product     { background: var(--c-product); }
+    .tag-strategy    { background: var(--c-strategy); }
+    .tag-research    { background: var(--c-research); }
+    .tag-ux          { background: var(--c-ux); }
+    .tag-service     { background: var(--c-service); }
+    .tag-visuals     { background: var(--c-visuals); }
+    .tag-stakeholder { background: var(--c-stakeholder); }
+
+    /* ── FOOTER ── */
+    footer {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 26px 40px 40px;
+      font-size: 13px;
+      font-weight: 700;
+    }
+    footer a {
+      color: var(--dark);
+      text-decoration: none;
+    }
+    footer a:hover { text-decoration: underline; }
+    footer .sep { color: var(--mid); }
+  </style>
+</head>
+<body>
+
+  <nav class="left-rail" aria-label="Navegación">
+    <button class="icon-btn" aria-label="Menú">
+      <svg width="20" height="15" viewBox="0 0 20 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M1 1.5H19" stroke="black" stroke-width="1.8" stroke-linecap="round"/>
+        <path d="M1 7.5H19" stroke="black" stroke-width="1.8" stroke-linecap="round"/>
+        <path d="M1 13.5H19" stroke="black" stroke-width="1.8" stroke-linecap="round"/>
+      </svg>
+    </button>
+  </nav>
+
+  <div class="frame">
+
+    <header class="topbar">
+      <div class="logo">Martina</div>
+
+      <div class="lang-switch" role="group" aria-label="Idioma">
+        <button type="button" class="active" data-lang="es">ES</button>
+        <button type="button" data-lang="en">EN</button>
+      </div>
+    </header>
+
+    <main class="content">
+      <h1 class="page-title">People-First Systems Designer</h1>
+
+      <p class="hero-text">
+        Trabajo en la intersección entre sistemas complejos y experiencias humanas.
+        Parto de lo humano para entender cómo integrar tecnología.
+        Diseño <span class="c-exp">experiencias</span>, repienso <span class="c-svc">servicios</span> y facilito <span class="c-str">decisiones</span> de equipo.
+      </p>
+
+      <div class="divider"></div>
+
+      <div class="filters">
+        <span class="filter-label">FILTRAR POR:</span>
+        <button class="filter-tag" data-tag="product">Product Design</button>
+        <button class="filter-tag" data-tag="strategy">Estrategia</button>
+        <button class="filter-tag" data-tag="research">Investigación</button>
+        <button class="filter-tag" data-tag="service">Service Design</button>
+        <button class="filter-tag" data-tag="visuals">Visuales</button>
+        <button class="filter-tag" data-tag="stakeholder">Gestión de Stakeholders</button>
+      </div>
+
+      <div class="divider"></div>
+
+      <div class="cards-grid">
+
+        <a class="pub-card" href="lutz.html" data-tags="product,strategy">
+          <img class="card-thumb card-thumb--tall" src="assets/lutz-hero.png" alt="">
+          <h3>Mejorando la experiencia de compra de muebles online</h3>
+          <p class="card-read">5 min de lectura</p>
+          <div class="card-tags">
+            <span class="tag tag-product">Product Design</span>
+            <span class="tag tag-strategy">Estrategia</span>
+          </div>
+        </a>
+
+        <a class="pub-card pub-card--flat bg-lutzres" href="lutz-reservation.html" data-tags="strategy">
+          <h3>Una palabra, 15% más ventas</h3>
+          <p class="card-subtitle">Cómo una sola palabra en un botón de reserva convirtió la duda en miles de visitas a la tienda.</p>
+          <p class="card-read">2 min de lectura</p>
+          <div class="card-tags">
+            <span class="tag tag-strategy">Estrategia</span>
+          </div>
+        </a>
+
+        <a class="pub-card pub-card--flat bg-lutzc360" href="lutz-customer360.html" data-tags="service,strategy">
+          <h3>La IA sola no iba a arreglar esto</h3>
+          <p class="card-subtitle">Cómo un workshop de Service Design preparó la empresa para la siguiente generación de experiencias personalizadas.</p>
+          <p class="card-read">3 min de lectura</p>
+          <div class="card-tags">
+            <span class="tag tag-service">Service Design</span>
+            <span class="tag tag-strategy">Estrategia</span>
+          </div>
+        </a>
+
+        <a class="pub-card" href="lutz-delivery.html" data-tags="service,strategy,stakeholder">
+          <img class="card-thumb" src="assets/lutzdelivery-store.jpg" alt="">
+          <h3>El problema no era la entrega</h3>
+          <p class="card-read">3 min de lectura</p>
+          <div class="card-tags">
+            <span class="tag tag-service">Service Design</span>
+            <span class="tag tag-strategy">Estrategia</span>
+            <span class="tag tag-stakeholder">Gestión de Stakeholders</span>
+          </div>
+        </a>
+
+        <a class="pub-card" href="ellie.html" data-tags="research,strategy,service,product">
+          <img class="card-thumb card-thumb--tall" src="assets/home-ellie.png" alt="">
+          <h3>Acompañando a adultos mayores con IOT</h3>
+          <p class="card-read">4 min de lectura</p>
+          <div class="card-tags">
+            <span class="tag tag-research">Investigación</span>
+            <span class="tag tag-strategy">Estrategia</span>
+            <span class="tag tag-service">Service Design</span>
+            <span class="tag tag-ux">UX</span>
+          </div>
+        </a>
+
+        <a class="pub-card" href="donofrio.html" data-tags="service,strategy,research">
+          <img class="card-thumb" src="assets/home-donofrio.png" alt="">
+          <h3>Empoderando a heladeros ambulantes con tecnología simple</h3>
+          <p class="card-read">3 min de lectura</p>
+          <div class="card-tags">
+            <span class="tag tag-service">Service Design</span>
+            <span class="tag tag-strategy">Estrategia</span>
+            <span class="tag tag-research">Investigación</span>
+          </div>
+        </a>
+
+        <a class="pub-card" href="coalapay.html" data-tags="service,product,strategy">
+          <img class="card-thumb card-thumb--tall" src="assets/coalapay-hero.jpg" alt="">
+          <h3>Cripto con impacto social</h3>
+          <p class="card-read">3 min de lectura</p>
+          <div class="card-tags">
+            <span class="tag tag-service">Service Design</span>
+            <span class="tag tag-product">Product Design</span>
+            <span class="tag tag-strategy">Estrategia</span>
+          </div>
+        </a>
+
+        <a class="pub-card" href="pepupo.html" data-tags="visuals,product,research">
+          <img class="card-thumb" src="assets/home-pepupo.png" alt="">
+          <h3>Rompiendo estereotipos de género a través del juego</h3>
+          <p class="card-read">4 min de lectura</p>
+          <div class="card-tags">
+            <span class="tag tag-visuals">Visuales</span>
+            <span class="tag tag-ux">UX</span>
+            <span class="tag tag-research">Investigación</span>
+          </div>
+        </a>
+
+      </div>
+    </main>
+
+    <footer>
+      <a href="https://linkedin.com" target="_blank">LinkedIn</a>
+      <span class="sep">|</span>
+      <a href="#">CV</a>
+      <span class="sep">|</span>
+      <a href="#">Más proyectos</a>
+    </footer>
+
+  </div>
+
+  <script>
+    (function () {
+      var grid = document.querySelector('.cards-grid');
+      var allCards = Array.prototype.slice.call(grid.querySelectorAll('.pub-card'));
+      var GAP = 28;
+
+      function columnCount() {
+        var w = grid.clientWidth;
+        if (w > 860) return 3;
+        if (w > 560) return 2;
+        return 1;
+      }
+
+      function layout() {
+        var cols = columnCount();
+        var colWidth = (grid.clientWidth - GAP * (cols - 1)) / cols;
+        var colHeights = new Array(cols).fill(0);
+        var visible = allCards.filter(function (c) { return c.style.display !== 'none'; });
+
+        visible.forEach(function (card) {
+          card.style.width = colWidth + 'px';
+          var minCol = 0;
+          for (var i = 1; i < cols; i++) {
+            if (colHeights[i] < colHeights[minCol]) minCol = i;
+          }
+          card.style.left = (minCol * (colWidth + GAP)) + 'px';
+          card.style.top = colHeights[minCol] + 'px';
+          colHeights[minCol] += card.offsetHeight + GAP;
+          card.classList.add('is-placed');
+        });
+
+        grid.style.height = (colHeights.length ? Math.max.apply(null, colHeights) - GAP : 0) + 'px';
+      }
+
+      var resizeTimer;
+      window.addEventListener('resize', function () {
+        clearTimeout(resizeTimer);
+        resizeTimer = setTimeout(layout, 120);
+      });
+      window.addEventListener('load', layout);
+      layout();
+
+      var filterBtns = document.querySelectorAll('.filter-tag');
+      var active = new Set();
+
+      filterBtns.forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          var t = btn.getAttribute('data-tag');
+          if (active.has(t)) { active.delete(t); btn.classList.remove('active'); }
+          else { active.add(t); btn.classList.add('active'); }
+
+          allCards.forEach(function (card) {
+            var tags = card.getAttribute('data-tags').split(',');
+            var show = active.size === 0 || tags.some(function (t) { return active.has(t); });
+            card.style.display = show ? '' : 'none';
+          });
+          layout();
+        });
+      });
+    })();
+  </script>
+</body>
+</html>

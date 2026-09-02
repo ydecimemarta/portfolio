@@ -1,0 +1,886 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link rel="icon" type="image/png" href="favicon.png"/>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Play Without Labels — Martina Hirschler</title>
+  <link href="https://fonts.googleapis.com/css2?family=Karla:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    /* ── DESIGN TOKENS ── */
+    :root {
+      --cream:    #F5F5F5;
+      --cards-bg: #F4F3FC;
+      --dark:     #000000;
+      --mid:      #A2A2A2;
+      --divider:  #ECECEC;
+      /* Label / tag colours — portfolio design system (see index.html) */
+      --c-service:  #EEA91A; /* Service Design — amber   */
+      --c-product:  #A79BF3; /* Product Design — violet   */
+      --c-ux:       #A79BF3; /* UX — same violet as Product */
+      --c-strategy: #F06554; /* Strategy — red-coral (text #fff) */
+      --c-research: #ECDFCD; /* Research — warm beige     */
+      --c-visuals:  #D8D2FF; /* Visuals — light lavender  */
+      --c-indigo:   #5B4FE8;
+      --c-lime:     #C6F135;
+
+      /* Spacing scale (8px base) */
+      --space-1:  8px;
+      --space-2:  16px;
+      --space-3:  24px;
+      --space-4:  32px;
+      --space-5:  40px;
+      --space-6:  48px;
+      --space-8:  64px;
+      --space-10: 80px;
+      --space-12: 96px;
+      --space-16: 128px;
+      --space-35: 200px;
+
+      /* Layout */
+      --max-width: 1200px;
+      --pad-desktop: 112px;
+      --pad-tablet:  48px;
+      --content-inset: calc((100vw - min(100vw, var(--max-width))) / 2 + var(--pad-desktop));
+
+      /* Typography scale */
+      --text-label:   14px;
+      --text-body-sm: 16px;
+      --text-body:    20px;
+      --text-title:   27px;
+
+      --lh-normal: 128.637%;
+    }
+
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Karla', sans-serif;
+      background: var(--cream);
+      color: var(--dark);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .section-inner {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 0 var(--pad-desktop);
+    }
+
+    /* ── TYPOGRAPHY ── */
+    .section-title {
+      font-size: var(--text-title);
+      font-weight: 700;
+      line-height: var(--lh-normal);
+      color: #282828;
+      margin-bottom: 20px;
+      letter-spacing: -0.6px;
+    }
+    .body-text {
+      font-size: var(--text-body);
+      font-weight: 400;
+      line-height: 118%;
+      letter-spacing: -0.6px;
+      color: #2a2a2a;
+    }
+    .body-text strong { font-weight: 700; color: #000; }
+    .body-text + .body-text { margin-top: 20px; }
+    .body-text p + p { margin-top: 20px; }
+
+    /* ── TAGS ── */
+    .tag { font-size: 11px; font-weight: 700; letter-spacing: 0.07em; text-transform: uppercase; padding: 5px 13px; border-radius: 100px; color: #000; }
+    .tag-service  { background: var(--c-service); }
+    .tag-product  { background: var(--c-product); }
+    .tag-strategy { background: var(--c-strategy); color: #fff; }
+
+    /* ── NAV TABS ── */
+    .nav-back, .nav-next {
+      position: fixed;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 100;
+      text-decoration: none;
+      transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+    .nav-back { left: 0; }
+    .nav-next { right: 0; }
+    .nav-back:hover { transform: translateY(-50%) translateX(-3px); }
+    .nav-next:hover { transform: translateY(-50%) translateX(3px); }
+
+    .nav-tab {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 95px;
+      min-height: 71px;
+      padding: 16px 20px 16px 16px;
+      background: #fff;
+      box-shadow: 0px 2px 5.3px 1px rgba(0, 0, 0, 0.1);
+      transition: background 0.2s;
+      white-space: normal;
+      text-align: left;
+    }
+    .nav-back .nav-tab { border-radius: 0 100px 100px 0; padding-left: 18px; padding-right: 24px; }
+    .nav-next .nav-tab { border-radius: 100px 0 0 100px; padding-right: 18px; padding-left: 24px; text-align: left; }
+    .nav-label {
+      font-family: 'Karla', sans-serif;
+      font-size: var(--text-body-sm);
+      font-weight: 700;
+      letter-spacing: -0.6px;
+      line-height: 118%;
+      color: #6B6B6B;
+      transition: color 0.25s ease;
+      display: block;
+    }
+    .nav-back:hover .nav-label, .nav-next:hover .nav-label { color: var(--c-indigo); }
+    .nav-back:hover .nav-tab, .nav-next:hover .nav-tab { background: #F8F7FF; }
+
+    /* ── 1. HERO ── */
+    .hero { position: relative; height: 85vh; min-height: 480px; overflow: hidden; }
+    .hero-bg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center center; display: block; }
+    .hero-overlay { position: absolute; inset: 0; background: rgba(54, 50, 37, 0.44); }
+    .hero-title { position: absolute; top: 26px; left: 0; right: 0; text-align: center; font-size: clamp(36px, 6vw, 72px); font-weight: 800; color: #fff; line-height: 0.84; letter-spacing: -3px; padding: 0 var(--pad-desktop); z-index: 1; }
+    .hero-sub { position: absolute; bottom: 26px; left: 0; right: 0; text-align: center; font-size: clamp(20px, 2.2vw, 32px); font-weight: 600; letter-spacing: -0.6px; color: #fff; line-height: 1.1; padding: 0 var(--pad-desktop); z-index: 1; }
+
+    /* ── SECTION SPACING ── */
+    .section-pad-y { padding-top: var(--space-35); padding-bottom: var(--space-35); }
+
+    /* ── 2. INTRO SPLIT ── */
+    .intro-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: start; }
+    .intro-labels { display: flex; flex-direction: column; align-items: flex-start; gap: 10px; padding-top: 4px; }
+
+    /* ── EYEBROW ── */
+    .eyebrow {
+      display: inline-block;
+      font-size: var(--text-label);
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--mid);
+      margin-bottom: 18px;
+    }
+    .eyebrow-solo { font-size: 18px; margin-bottom: 0; }
+
+    /* ── PLACEHOLDER IMAGES ── */
+    .placeholder-img {
+      background: #E8E8E8;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+    }
+    .placeholder-label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #999;
+      font-family: 'Karla', sans-serif;
+      padding: 20px;
+    }
+
+    /* ── DUO FULL (two full-width images side by side) ── */
+    .duo-full { display: grid; grid-template-columns: 1fr 1fr; }
+    .duo-full-cell { height: 70vh; overflow: hidden; position: relative; }
+    .duo-full-cell img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .duo-full-cell-left img { object-position: left center; }
+    .duo-full-cell-light { background: #F5F5F5; display: flex; align-items: flex-end; justify-content: center; padding-bottom: 5%; box-sizing: border-box; }
+    .duo-full-cell-light img, .duo-full-cell-light .placeholder-img { width: 100%; height: auto; object-fit: contain; }
+
+    /* ── 6. FEATURE SPLIT (50/50) — the workhorse ── */
+    .feature-split { display: flex; width: 100%; align-items: stretch; }
+    .feature-split-text {
+      width: 50%;
+      box-sizing: border-box;
+      padding: var(--space-16) 60px var(--space-16) var(--content-inset);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    .feature-split-text:last-child { padding: var(--space-16) var(--content-inset) var(--space-16) 60px; }
+    .feature-split-media { width: 50%; box-sizing: border-box; position: relative; overflow: hidden; min-height: 480px; }
+    .feature-split-media .placeholder-img { width: 100%; height: 100%; }
+    .feature-split-media > img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .feature-split-media-icon { background: #F5F5F5; display: flex; align-items: center; justify-content: center; }
+    .feature-split-media-icon img { object-fit: contain; display: block; }
+    .feature-split-media-icon.icon-36 img { width: 36%; height: 36%; }
+    .feature-split-media-icon.icon-60 img { width: 60%; height: 60%; }
+    .feature-split-media-dotted {
+      background-color: #F2F2F2;
+      background-image: radial-gradient(circle, #C8C8C8 1px, transparent 1px);
+      background-size: 24px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 40px;
+    }
+    .feature-split-media-dotted img { max-width: 85%; max-height: 85%; width: auto; height: auto; object-fit: contain; display: block; }
+
+    /* ── 7. OVERLAP DUO ── */
+    .overlap-duo {
+      position: relative;
+      background-color: #F2F2F2;
+      background-image: radial-gradient(circle, #C8C8C8 1px, transparent 1px);
+      background-size: 24px 24px;
+      padding: var(--space-16) var(--pad-desktop);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 620px;
+      overflow: hidden;
+    }
+    .overlap-duo-diagram { height: 488px; width: auto; max-width: 100%; border-radius: 12px; box-shadow: 0 12px 32px rgba(0, 0, 0, 0.14); }
+    .overlap-duo-mockup {
+      position: absolute;
+      right: 12%;
+      bottom: 8%;
+      width: 34%;
+      max-width: 360px;
+      height: auto;
+      border: 10px solid #fff;
+      border-radius: 18px;
+      box-shadow: 0 24px 48px rgba(20, 15, 50, 0.18);
+      display: block;
+    }
+
+    /* ── DATA BAND (wraps a Feature Split) ── */
+    .data-band { background: var(--cards-bg); width: 100%; }
+
+    /* ── RESULTS CARDS (closing section) ── */
+    .results-band { background: #F5F5F5; padding: var(--space-16) 0; }
+    .results-subtitle { margin-top: 16px; max-width: 600px; }
+
+    /* horizontal side-scroll row; last card clips at the viewport edge */
+    .results-scroller {
+      margin-top: 48px;
+      width: 100vw;
+      position: relative;
+      left: 50%;
+      transform: translateX(-50%);
+      overflow-x: auto;
+      overflow-y: hidden;
+      scrollbar-width: none;
+      -webkit-overflow-scrolling: touch;
+    }
+    .results-scroller::-webkit-scrollbar { display: none; }
+    .results-grid {
+      display: flex;
+      gap: 20px;
+      width: max-content;
+      padding-left: var(--content-inset);
+      padding-right: 48px;
+    }
+    .results-card {
+      flex: none;
+      width: 264px;
+      background: #fff;
+      border-radius: 20px;
+      padding: 32px 30px;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      min-height: 320px;
+      box-sizing: border-box;
+    }
+    .results-icon { width: 30px; height: 30px; display: block; margin-bottom: 48px; flex: none; }
+    .results-card svg { margin-bottom: 48px; display: block; }
+    .results-card h4 { font-size: var(--text-body); font-weight: 700; line-height: 1.2; letter-spacing: -0.6px; color: #282828; margin: 0 0 12px; min-height: 2.4em; }
+    .results-card p { font-size: var(--text-body-sm); line-height: 1.35; letter-spacing: -0.6px; color: #444; }
+    .results-closing { margin-top: 40px; font-size: var(--text-body); line-height: 1.3; letter-spacing: -0.6px; color: #2a2a2a; max-width: 760px; }
+
+    footer {
+      background: #000;
+      height: 180px;
+      box-sizing: border-box;
+      padding: 0 var(--pad-desktop);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 24px;
+      border-radius: 24px 24px 0 0;
+    }
+    footer a {
+      color: #fff;
+      text-decoration: none;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      opacity: 0.7;
+      transition: opacity 0.2s;
+    }
+    footer a:hover { opacity: 1; }
+    footer .sep { color: rgba(255, 255, 255, 0.3); }
+
+    /* ── 2. INTRO SPLIT (Pepupo) ── */
+    .intro-band { background: #F5F5F5; }
+    .tag-research { background: var(--c-research); }
+    .tag-ux       { background: var(--c-ux); }
+    .tag-visuals  { background: var(--c-visuals); }
+    .intro-lead + .body-text { margin-top: 44px; }
+
+    /* ── 3. THE PROBLEM (white band, Overlap Duo photos) ── */
+    .problem-band { background: #FFFFFF; }
+    .feature-split-media-photos {
+      background: #FFFFFF;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 48px;
+    }
+    .feature-split-media-photos > img {
+      width: 70%;
+      height: auto;
+      max-height: 100%;
+      object-fit: contain;
+    }
+
+    /* ── 4. HOW WE RESEARCHED (image cards w/ overlay text) ── */
+    .research-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-top: 44px; }
+    .research-card {
+      position: relative;
+      border-radius: 20px;
+      overflow: hidden;
+      aspect-ratio: 16 / 11;
+    }
+    .research-card > img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+    .research-card::after { content: ""; position: absolute; inset: 0; }
+    /* Figma layer-colour overlays (top → bottom), darkened toward black */
+    .research-card-parent::after {
+      background: linear-gradient(180deg, #201C19 0%, rgba(32,28,25,0) 42%);
+      opacity: 0.72;
+    }
+    .research-card-child::after {
+      background: linear-gradient(180deg, #17150F 15%, rgba(23,21,15,0.22) 52%, rgba(23,21,15,0) 100%);
+      opacity: 0.88;
+    }
+    .research-card-body { position: relative; z-index: 1; padding: 34px 38px; color: #fff; }
+    .research-card-body h3 {
+      font-size: 24px;
+      font-weight: 700;
+      line-height: 1.15;
+      letter-spacing: -0.6px;
+      margin-bottom: 10px;
+    }
+    .research-card-body p {
+      font-size: var(--text-body-sm);
+      line-height: 1.3;
+      letter-spacing: -0.6px;
+      max-width: 32ch;
+    }
+
+    /* ── 5. LEARNINGS (white panel + 6 badge tiles) ── */
+    .learnings-panel {
+      background: #FFFFFF;
+      border-radius: 28px;
+      display: grid;
+      grid-template-columns: 1fr 1.3fr;
+      gap: 32px;
+      align-items: center;
+      padding: 64px 56px;
+    }
+    .learnings-text { text-align: center; max-width: 380px; margin: 0 auto; }
+    .learnings-text .section-title { margin-bottom: 14px; }
+    .learnings-badges img { width: 100%; height: auto; display: block; }
+
+    /* ── 6. STAT CARDS ── */
+    .stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+    .stat-card {
+      background: #FFFFFF;
+      border-radius: 28px;
+      padding: 48px;
+      text-align: center;
+      min-height: 380px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    .stat-figure { display: flex; align-items: center; justify-content: center; gap: 16px; margin-bottom: 22px; }
+    .stat-figure img { height: 64px; width: auto; display: block; }
+    .stat-number { font-size: 64px; font-weight: 800; letter-spacing: -2px; line-height: 1; color: #111111; }
+    .stat-prefix { font-size: 15px; font-weight: 500; color: var(--mid); }
+    .stat-card p {
+      font-size: var(--text-body-sm);
+      line-height: 1.4;
+      letter-spacing: -0.3px;
+      color: #2a2a2a;
+      max-width: 40ch;
+      margin: 0 auto;
+    }
+
+    /* ── 7. CONTENT CREATION (text + full-bleed infinite character carousel) ── */
+    .cc-band { padding-top: 100px; }
+    .cc-text { max-width: 620px; }
+    .cc-text .section-title { margin-bottom: 20px; }
+    .cc-characters {
+      margin-top: 72px;
+      width: 100vw;
+      position: relative;
+      left: 50%;
+      transform: translateX(-50%);
+      overflow-x: auto;
+      overflow-y: hidden;
+      scrollbar-width: none;
+      -webkit-overflow-scrolling: touch;
+      cursor: grab;
+    }
+    .cc-characters::-webkit-scrollbar { display: none; }
+    .cc-track { display: flex; gap: 8px; width: max-content; }
+    .cc-track img {
+      flex: none;
+      width: 34vw;
+      min-width: 240px;
+      height: auto;
+      display: block;
+      user-select: none;
+      -webkit-user-drag: none;
+    }
+
+    /* ── 8. AND A GAME STRUCTURE (phone screen + floating deco) ── */
+    .game-media { background: #F5F5F5; min-height: 760px; }
+    .game-media > .game-phone {
+      position: absolute;
+      left: 7%;
+      top: 50%;
+      transform: translateY(-50%);
+      height: 86%;
+      max-height: 660px;
+      width: auto;
+      object-fit: contain;
+      border-radius: 26px;
+      box-shadow: 0 22px 54px rgba(20, 15, 50, 0.16);
+      z-index: 1;
+    }
+    .game-media > .game-deco {
+      position: absolute;
+      right: 6%;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 30%;
+      max-width: 208px;
+      height: auto;
+      object-fit: contain;
+      z-index: 0;
+    }
+
+    /* ── 9. VISUALS BAND (contained red panel) ── */
+    .visuals-intro { padding-top: 56px; }
+    .visuals-hero { width: 100%; height: auto; display: block; border-radius: 24px; }
+    .visuals-tag { display: inline-block; margin-top: 40px; }
+
+    /* ── 10. VISUALS DETAIL (full-bleed 2×2 grid of tiles) ── */
+    .visuals-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      width: 100vw;
+      position: relative;
+      left: 50%;
+      transform: translateX(-50%);
+      margin-top: 48px;
+    }
+    .visuals-grid img { width: 100%; height: auto; display: block; }
+
+    /* ── Vertical rhythm: sections 4–6 form a tight card stack (~24px gaps) ── */
+    .research-band  { padding: var(--space-35) 0 12px; }
+    .learnings-band { padding: 12px 0; }
+    .stats-band     { padding: 12px 0 100px; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 1024px) {
+      .research-grid { grid-template-columns: 1fr; }
+      .learnings-panel { grid-template-columns: 1fr; gap: 32px; padding: 48px 32px; }
+      .stats-grid { grid-template-columns: 1fr; }
+      .stat-card { min-height: 0; }
+      .visuals-grid { grid-template-columns: 1fr; }
+      :root { --pad-desktop: var(--pad-tablet); }
+      .intro-grid { grid-template-columns: 1fr; gap: 32px; }
+      .feature-split { flex-direction: column; }
+      .feature-split-text, .feature-split-media { width: 100%; }
+      .feature-split-text { padding: var(--space-8) var(--pad-tablet); }
+      .feature-split-media { min-height: 320px; }
+      .game-media { min-height: 480px; }
+      .game-media > .game-phone { height: 84%; }
+      .cc-track img { width: 62vw; min-width: 200px; }
+      .duo-full { grid-template-columns: 1fr; }
+      .overlap-duo { min-height: 420px; padding: var(--space-8) var(--pad-tablet); }
+      .overlap-duo-mockup { width: 46%; right: 8%; }
+      .results-grid { padding-left: var(--pad-tablet); }
+    }
+  </style>
+</head>
+<body>
+
+  <a class="nav-back" href="index.html">
+    <div class="nav-tab"><span class="nav-label" data-i18n="nav-back">Home</span></div>
+  </a>
+  <a class="nav-next" href="lutz.html">
+    <div class="nav-tab"><span class="nav-label" data-i18n="nav-next">Next project</span></div>
+  </a>
+
+  <!-- 1. HERO -->
+  <section class="hero">
+    <img class="hero-bg" src="assets/pepupo-hero.png" alt="Pepupo app — phone mockups and character badges"/>
+    <div class="hero-overlay"></div>
+    <h1 class="hero-title" data-i18n="hero-title">Play Without Labels</h1>
+    <p class="hero-sub" data-i18n="hero-sub">Breaking gender stereotypes through play</p>
+  </section>
+
+  <!-- 2. INTRO SPLIT -->
+  <div class="intro-band section-pad-y">
+  <div class="section-inner">
+  <div class="intro-grid">
+    <div class="intro-labels">
+      <span class="tag tag-research" data-i18n="tag-research">Research</span>
+      <span class="tag tag-ux" data-i18n="tag-ux">UX Design</span>
+      <span class="tag tag-visuals" data-i18n="tag-visuals">Visuals</span>
+    </div>
+    <div>
+      <p class="body-text intro-lead" data-i18n="intro-lead">Gender roles still quietly shape the worlds children imagine for themselves.</p>
+      <div class="body-text">
+        <p data-i18n="intro-p1">Motivated by a shared vision, we formed a voluntary <strong>collective of designers, educators, and developers</strong> in 2022 to design a game that introduces kids aged 3–6 to professions, fostering creativity, skills, and equality.</p>
+        <p data-i18n="intro-p2"><strong>Pepupo is where play meets possibility, opening doors to a future free from stereotypes.</strong></p>
+      </div>
+    </div>
+  </div>
+  </div>
+  </div>
+
+  <!-- 3. THE PROBLEM -->
+  <div class="problem-band">
+    <div class="feature-split">
+      <div class="feature-split-media feature-split-media-photos">
+        <img src="assets/pepupo-problem-photos.png" alt="A girl holding a cupcake beside a toy kitchen, and a boy running a science experiment"/>
+      </div>
+      <div class="feature-split-text">
+        <span class="eyebrow" data-i18n="problem-label">The problem</span>
+        <h2 class="section-title" data-i18n="problem-title">Parents want to free their kids from the gender roles they grew up with</h2>
+        <div class="body-text">
+          <p data-i18n="problem-p1">Many parents grew up with messages pushing <strong>girls toward beauty and service</strong>, and <strong>boys toward power and leadership, leaving little room for vulnerability or care.</strong></p>
+          <p data-i18n="problem-p2">Now, they want something different for their kids. Yet, children today still absorb subtle gender stereotypes from media, toys, and daily life. Breaking these patterns starts with awareness and the right tools early on.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 4. HOW WE RESEARCHED -->
+  <div class="research-band">
+  <div class="section-inner">
+    <h2 class="section-title" data-i18n="research-title">How we researched</h2>
+    <div class="research-grid">
+      <div class="research-card research-card-parent">
+        <img src="assets/pepupo-research-interviews.png" alt="A parent standing in a living room during an interview"/>
+        <div class="research-card-body">
+          <h3 data-i18n="research-c1-h">Interviews and surveys to parents</h3>
+          <p data-i18n="research-c1-p">I explored parents' concerns about gender stereotypes and their educational goals</p>
+        </div>
+      </div>
+      <div class="research-card research-card-child">
+        <img src="assets/pepupo-research-observation.png" alt="A child playing with a wooden toy kitchen, seen from above"/>
+        <div class="research-card-body">
+          <h3 data-i18n="research-c2-h">Child-Behavioral Observation</h3>
+          <p data-i18n="research-c2-p">I observed children interacting with existing apps and toys</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  </div>
+
+  <!-- 5. LEARNINGS -->
+  <div class="learnings-band">
+  <div class="section-inner">
+    <div class="learnings-panel">
+      <div class="learnings-text">
+        <span class="eyebrow" data-i18n="learn-label">Learnings</span>
+        <h2 class="section-title" data-i18n="learn-title">Designing for Little Hands (and big dreams)</h2>
+        <p class="body-text" data-i18n="learn-sub">Creating an app for 3- to 6-year-olds means understanding their world.</p>
+      </div>
+      <div class="learnings-badges">
+        <img src="assets/pepupo-learnings-badges.svg" alt="Six traits of young children: short attention spans, developing motor skills, eagerness to explore, simple intuitive interfaces, large buttons, colorful visuals"/>
+      </div>
+    </div>
+  </div>
+  </div>
+
+  <!-- 6. STAT CARDS -->
+  <div class="stats-band">
+  <div class="section-inner">
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-figure">
+          <img src="assets/pepupo-stat-spark.svg" alt=""/>
+          <span class="stat-number" data-i18n="stat1-num">80%</span>
+        </div>
+        <p data-i18n="stat1-p">of young children engage better with interactive, story-driven content that sparks curiosity while aiding learning.</p>
+      </div>
+      <div class="stat-card">
+        <div class="stat-figure">
+          <img src="assets/pepupo-stat-star.svg" alt=""/>
+          <span class="stat-prefix" data-i18n="stat2-prefix">at age</span>
+          <span class="stat-number" data-i18n="stat2-num">4</span>
+        </div>
+        <p data-i18n="stat2-p">children's perceptions of gender roles are already forming, influencing how they see themselves and others.</p>
+      </div>
+    </div>
+  </div>
+  </div>
+
+  <!-- 7. CONTENT CREATION -->
+  <div class="cc-band">
+    <div class="section-inner">
+      <div class="cc-text">
+        <span class="eyebrow" data-i18n="cc-label">Content Creation</span>
+        <h2 class="section-title" data-i18n="cc-title">Using research insights to build the stories</h2>
+        <p class="body-text" data-i18n="cc-p">We crafted stories, games, and activities with diverse characters with a focus on challenging gender stereotypes, sparking curiosity and promoting gender equality.</p>
+      </div>
+    </div>
+    <div class="cc-characters" id="ccCarousel">
+      <div class="cc-track" id="ccTrack">
+        <img src="assets/pepupo-character-athlete.svg" alt="Illustrated character: a child wearing a headband"/>
+        <img src="assets/pepupo-character-glasses.svg" alt="Illustrated character: a child wearing glasses"/>
+        <img src="assets/pepupo-character-builder.svg" alt="Illustrated character: a child in a builder's helmet and overalls"/>
+        <img src="assets/pepupo-character-scientist.svg" alt="Illustrated character: a child in a lab coat"/>
+      </div>
+    </div>
+  </div>
+
+  <!-- 8. AND A GAME STRUCTURE -->
+  <div class="feature-split">
+    <div class="feature-split-text">
+      <span class="eyebrow" data-i18n="game-label">UX and educational design</span>
+      <h2 class="section-title" data-i18n="game-title">And a game structure</h2>
+      <div class="body-text">
+        <p data-i18n="game-p">We started by conceptualizing the app's core features and content, focusing on simplicity, interactivity, and age-appropriate design to cater to the needs of young children.</p>
+      </div>
+    </div>
+    <div class="feature-split-media game-media">
+      <img class="game-deco" src="assets/pepupo-deco-flowers.svg" alt=""/>
+      <img class="game-phone" src="assets/pepupo-screen-ready.svg" alt="App start screen reading &ldquo;Ready to play?&rdquo; with a Start button"/>
+    </div>
+  </div>
+
+  <!-- 9. VISUALS BAND -->
+  <div class="visuals-intro">
+    <div class="section-inner">
+      <img class="visuals-hero" src="assets/pepupo-visuals-phones.png" alt="Three phones showing Pepupo screens: a character, the category menu, and another character"/>
+      <span class="tag tag-visuals visuals-tag" data-i18n="tag-visuals">Visuals</span>
+    </div>
+  </div>
+
+  <!-- 10. VISUALS DETAIL -->
+  <div class="visuals-grid">
+    <img src="assets/pepupo-visuals-logo.svg" alt="The Pepupo logo with sticker badges"/>
+    <img src="assets/pepupo-visuals-badge-starburst.svg" alt="A character badge on a starburst"/>
+    <img src="assets/pepupo-visuals-mosaic.svg" alt="A grid of abstract shapes from the app's visual language"/>
+    <img src="assets/pepupo-visuals-screen-ropa.svg" alt="A game screen for choosing a character's clothes"/>
+  </div>
+
+  <!-- 11. DATA -->
+  <div class="results-band">
+    <div class="section-inner">
+      <span class="eyebrow" data-i18n="data-label">Data</span>
+      <h2 class="section-title" data-i18n="data-title">How we measured success</h2>
+    </div>
+    <div class="results-scroller">
+      <div class="results-grid">
+        <div class="results-card">
+          <img class="results-icon" src="assets/pepupo-data-clock.svg" alt=""/>
+          <h4 data-i18n="data-c1-h">Session Length</h4>
+          <p data-i18n="data-c1-p">The average amount of time a child spends using the app in one session.</p>
+        </div>
+        <div class="results-card">
+          <img class="results-icon" src="assets/pepupo-data-chat.svg" alt=""/>
+          <h4 data-i18n="data-c2-h">Parent Feedback on Engagement</h4>
+          <p data-i18n="data-c2-p">Qualitative feedback from parents about how engaged their child seems while using the app.</p>
+        </div>
+        <div class="results-card">
+          <img class="results-icon" src="assets/pepupo-data-check.svg" alt=""/>
+          <h4 data-i18n="data-c3-h">Task Completion Rate</h4>
+          <p data-i18n="data-c3-p">The percentage of games that children successfully complete within the app.</p>
+        </div>
+        <div class="results-card">
+          <img class="results-icon" src="assets/pepupo-data-target.svg" alt=""/>
+          <h4 data-i18n="data-c4-h">Engagement with Specific Content</h4>
+          <p data-i18n="data-c4-p">The amount of time spent on particular features or activities within the app.</p>
+        </div>
+        <div class="results-card">
+          <img class="results-icon" src="assets/pepupo-data-return.svg" alt=""/>
+          <h4 data-i18n="data-c5-h">Return Rate</h4>
+          <p data-i18n="data-c5-p">The percentage of users who return to the app after their first session.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <a href="https://linkedin.com" target="_blank">LinkedIn</a>
+    <span class="sep">|</span>
+    <a href="#">CV</a>
+    <span class="sep">|</span>
+    <a href="index.html" data-i18n="footer-more">More projects</a>
+  </footer>
+
+  <script>
+    window.I18N = {
+      en: {
+        'nav-back': 'Home',
+        'nav-next': 'Next project',
+        'hero-title': 'Play Without Labels',
+        'hero-sub': 'Breaking gender stereotypes through play',
+        'tag-research': 'Research',
+        'tag-ux': 'UX Design',
+        'tag-visuals': 'Visuals',
+        'intro-lead': 'Gender roles still quietly shape the worlds children imagine for themselves.',
+        'intro-p1': 'Motivated by a shared vision, we formed a voluntary <strong>collective of designers, educators, and developers</strong> in 2022 to design a game that introduces kids aged 3–6 to professions, fostering creativity, skills, and equality.',
+        'intro-p2': '<strong>Pepupo is where play meets possibility, opening doors to a future free from stereotypes.</strong>',
+        'problem-label': 'The problem',
+        'problem-title': 'Parents want to free their kids from the gender roles they grew up with',
+        'problem-p1': 'Many parents grew up with messages pushing <strong>girls toward beauty and service</strong>, and <strong>boys toward power and leadership, leaving little room for vulnerability or care.</strong>',
+        'problem-p2': 'Now, they want something different for their kids. Yet, children today still absorb subtle gender stereotypes from media, toys, and daily life. Breaking these patterns starts with awareness and the right tools early on.',
+        'research-title': 'How we researched',
+        'research-c1-h': 'Interviews and surveys to parents',
+        'research-c1-p': "I explored parents' concerns about gender stereotypes and their educational goals",
+        'research-c2-h': 'Child-Behavioral Observation',
+        'research-c2-p': 'I observed children interacting with existing apps and toys',
+        'learn-label': 'Learnings',
+        'learn-title': 'Designing for Little Hands (and big dreams)',
+        'learn-sub': 'Creating an app for 3- to 6-year-olds means understanding their world.',
+        'stat1-num': '80%',
+        'stat1-p': 'of young children engage better with interactive, story-driven content that sparks curiosity while aiding learning.',
+        'stat2-prefix': 'at age',
+        'stat2-num': '4',
+        'stat2-p': "children's perceptions of gender roles are already forming, influencing how they see themselves and others.",
+        'cc-label': 'Content Creation',
+        'cc-title': 'Using research insights to build the stories',
+        'cc-p': 'We crafted stories, games, and activities with diverse characters with a focus on challenging gender stereotypes, sparking curiosity and promoting gender equality.',
+        'game-label': 'UX and educational design',
+        'game-title': 'And a game structure',
+        'game-p': "We started by conceptualizing the app's core features and content, focusing on simplicity, interactivity, and age-appropriate design to cater to the needs of young children.",
+        'data-label': 'Data',
+        'data-title': 'How we measured success',
+        'data-c1-h': 'Session Length',
+        'data-c1-p': 'The average amount of time a child spends using the app in one session.',
+        'data-c2-h': 'Parent Feedback on Engagement',
+        'data-c2-p': 'Qualitative feedback from parents about how engaged their child seems while using the app.',
+        'data-c3-h': 'Task Completion Rate',
+        'data-c3-p': 'The percentage of games that children successfully complete within the app.',
+        'data-c4-h': 'Engagement with Specific Content',
+        'data-c4-p': 'The amount of time spent on particular features or activities within the app.',
+        'data-c5-h': 'Return Rate',
+        'data-c5-p': 'The percentage of users who return to the app after their first session.',
+        'footer-more': 'More projects'
+      },
+      es: {
+        'nav-back': 'Home',
+        'nav-next': 'Siguiente proyecto',
+        'hero-title': 'Jugar sin etiquetas',
+        'hero-sub': 'Rompiendo estereotipos de género a través del juego',
+        'tag-research': 'Investigación',
+        'tag-ux': 'UX Design',
+        'tag-visuals': 'Visuales',
+        'intro-lead': 'Los roles de género todavía moldean en silencio los mundos que los niños imaginan para sí mismos.',
+        'intro-p1': 'Con una visión compartida, en 2022 formamos un <strong>colectivo voluntario de diseñadoras, educadores y desarrolladores</strong> para crear un juego que acerca a chicos de 3 a 6 años a distintas profesiones, fomentando la creatividad, las habilidades y la igualdad.',
+        'intro-p2': '<strong>Pepupo es donde el juego se encuentra con la posibilidad, y abre puertas a un futuro libre de estereotipos.</strong>',
+        'problem-label': 'El problema',
+        'problem-title': 'Los padres quieren liberar a sus hijos de los roles de género con los que crecieron',
+        'problem-p1': 'Muchos padres crecieron con mensajes que empujaban a <strong>las nenas hacia la belleza y el servicio a los demás</strong>, y a <strong>los varones hacia el poder y el liderazgo, dejando poco lugar para la vulnerabilidad o el cuidado.</strong>',
+        'problem-p2': 'Hoy quieren algo distinto para sus hijos. Pero los chicos siguen absorbiendo estereotipos de género sutiles de los medios, los juguetes y la vida cotidiana. Romper esos patrones empieza por la conciencia y las herramientas adecuadas desde temprano.',
+        'research-title': 'Cómo investigamos',
+        'research-c1-h': 'Entrevistas y encuestas a madres y padres',
+        'research-c1-p': 'Indagué en las preocupaciones de las familias sobre los estereotipos de género y sus objetivos educativos',
+        'research-c2-h': 'Observación del comportamiento infantil',
+        'research-c2-p': 'Observé a chicos interactuando con apps y juguetes que ya existían',
+        'learn-label': 'Aprendizajes',
+        'learn-title': 'Diseñar para manos pequeñas (y grandes sueños)',
+        'learn-sub': 'Crear una app para chicos de 3 a 6 años implica entender su mundo.',
+        'stat1-num': '80%',
+        'stat1-p': 'de los chicos se enganchan más con contenido interactivo y narrativo que despierta la curiosidad mientras acompaña el aprendizaje.',
+        'stat2-prefix': 'a los',
+        'stat2-num': '4 años',
+        'stat2-p': 'las percepciones de los chicos sobre los roles de género ya se están formando, y moldean cómo se ven a sí mismos y a los demás.',
+        'cc-label': 'Creación de contenido',
+        'cc-title': 'Usar los insights de la investigación para construir las historias',
+        'cc-p': 'Creamos historias, juegos y actividades con personajes diversos, con el foco puesto en desafiar los estereotipos de género, estimular la curiosidad y promover la igualdad de género.',
+        'game-label': 'UX y diseño educativo',
+        'game-title': 'Y una estructura de juego',
+        'game-p': 'Empezamos por conceptualizar las funcionalidades principales y el contenido de la app, con foco en la simplicidad, la interactividad y un diseño adecuado a la edad para responder a las necesidades de los más chicos.',
+        'data-label': 'Datos',
+        'data-title': 'Cómo medimos el éxito',
+        'data-c1-h': 'Duración de sesión',
+        'data-c1-p': 'El tiempo promedio que un chico usa la app en una sola sesión.',
+        'data-c2-h': 'Feedback de las familias sobre el engagement',
+        'data-c2-p': 'Comentarios cualitativos de las familias sobre qué tan enganchado se ve su hijo mientras usa la app.',
+        'data-c3-h': 'Tasa de finalización de tareas',
+        'data-c3-p': 'El porcentaje de juegos que los chicos completan con éxito dentro de la app.',
+        'data-c4-h': 'Engagement con contenido específico',
+        'data-c4-p': 'El tiempo dedicado a funciones o actividades puntuales dentro de la app.',
+        'data-c5-h': 'Tasa de retorno',
+        'data-c5-p': 'El porcentaje de usuarios que vuelven a la app después de su primera sesión.',
+        'footer-more': 'Más proyectos'
+      }
+    };
+  </script>
+  <script src="i18n.js"></script>
+
+  <!-- Content-creation infinite character carousel -->
+  <script>
+    (function () {
+      var wrap = document.getElementById('ccCarousel');
+      var track = document.getElementById('ccTrack');
+      if (!wrap || !track) return;
+
+      var GAP = 8;
+      var SETS = 7;                 // total copies of the 4-image set
+      var base = Array.prototype.slice.call(track.children);
+      for (var s = 1; s < SETS; s++) {
+        base.forEach(function (img) { track.appendChild(img.cloneNode(true)); });
+      }
+
+      var setWidth = 0;
+      function measure() {
+        var w = 0;
+        for (var i = 0; i < base.length; i++) {
+          w += track.children[i].getBoundingClientRect().width + GAP;
+        }
+        setWidth = w;
+        // park the scroll a few sets in so there's room to loop both ways
+        wrap.scrollLeft = setWidth * 3;
+      }
+
+      var ticking = false;
+      wrap.addEventListener('scroll', function () {
+        if (ticking || !setWidth) return;
+        ticking = true;
+        requestAnimationFrame(function () {
+          if (wrap.scrollLeft < setWidth) wrap.scrollLeft += setWidth;
+          else if (wrap.scrollLeft > setWidth * (SETS - 2)) wrap.scrollLeft -= setWidth;
+          ticking = false;
+        });
+      });
+
+      // drag-to-scroll for mouse users
+      var down = false, startX = 0, startLeft = 0, moved = false;
+      wrap.addEventListener('pointerdown', function (e) {
+        down = true; moved = false; startX = e.clientX; startLeft = wrap.scrollLeft;
+        wrap.style.cursor = 'grabbing';
+      });
+      window.addEventListener('pointermove', function (e) {
+        if (!down) return;
+        var dx = e.clientX - startX;
+        if (Math.abs(dx) > 3) moved = true;
+        wrap.scrollLeft = startLeft - dx;
+      });
+      window.addEventListener('pointerup', function () {
+        down = false; wrap.style.cursor = '';
+      });
+      wrap.addEventListener('click', function (e) { if (moved) e.preventDefault(); }, true);
+
+      if (document.readyState === 'complete') measure();
+      else window.addEventListener('load', measure);
+      var rt;
+      window.addEventListener('resize', function () { clearTimeout(rt); rt = setTimeout(measure, 150); });
+    })();
+  </script>
+
+</body>
+</html>

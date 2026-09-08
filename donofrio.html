@@ -78,6 +78,8 @@
     .body-text { font-size: var(--text-body); font-weight: 400; line-height: 118%; letter-spacing: -0.6px; color: #2a2a2a; }
     .body-text strong { font-weight: 700; color: #000; }
     .body-text-sm { font-size: var(--text-body-sm); font-weight: 400; line-height: 118%; letter-spacing: -0.6px; color: #444; }
+    /* soft highlight — light grey underline instead of bold */
+    .underline-soft { font-weight: 400; text-decoration: underline; text-decoration-color: #CFCFCF; text-decoration-thickness: 2px; text-underline-offset: 3px; }
 
     .tag { font-size: 11px; font-weight: 700; letter-spacing: 0.07em; text-transform: uppercase; padding: 5px 13px; border-radius: 100px; color: #000; }
     .tag-product     { background: var(--c-product); }
@@ -141,14 +143,16 @@
     .profile-item h4 { font-size: var(--text-body); font-weight: 700; letter-spacing: -0.6px; color: #282828; margin-bottom: 6px; }
     .profile-item p { font-size: var(--text-body-sm); line-height: 118%; letter-spacing: -0.6px; color: #444; }
 
-    /* ── BAND + LEAD STATEMENT (goal quote) ── */
-    .band { position: relative; background: #58A2DA; min-height: 110vh; box-sizing: border-box; display: flex; align-items: center; overflow: hidden; }
-    .band-texture { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; mix-blend-mode: color-burn; opacity: 0.5; pointer-events: none; }
-    .band-illustration { position: absolute; left: var(--content-inset); top: 50%; transform: translateY(-50%); width: 440px; aspect-ratio: 49 / 44; object-fit: cover; object-position: center; z-index: 1; }
-    .band .section-inner { position: relative; z-index: 2; width: 100%; }
-    .band-lead { font-size: var(--text-title); font-weight: 400; line-height: 118%; letter-spacing: -0.6px; text-align: center; color: #fff; max-width: 760px; margin: 0 auto; }
-    .band-lead strong { font-weight: 700; }
-    .band-lead span { text-decoration: underline; text-decoration-color: #F5CF00; text-decoration-thickness: 3px; text-underline-offset: 4px; }
+    /* ── GOAL SECTION (dotted background, vendor cutout + statement) ── */
+    .goal-section {
+      background-color: #fff;
+      background-image: radial-gradient(circle, #C8C8C8 1px, transparent 1px);
+      background-size: 24px 24px;
+      margin-top: 64px;
+      padding: 112px 0 40px;
+    }
+    .goal-split { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; }
+    .goal-split img { width: 100%; max-width: 180px; height: auto; display: block; }
 
     /* ── MOBILE APP SPLIT ── */
     .mobileapp-split { display: flex; width: 100%; align-items: stretch; padding-left: var(--content-inset); box-sizing: border-box; }
@@ -164,7 +168,7 @@
     .user-photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
 
     footer { background: #000; height: 180px; box-sizing: border-box; padding: 0 var(--pad-desktop); display: flex; align-items: center; justify-content: center; gap: 24px; border-radius: 24px 24px 0 0; }
-    footer a { color: #fff; text-decoration: none; font-size: 12px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; opacity: 0.7; transition: opacity 0.2s; }
+    footer a { color: #fff; text-decoration: none; font-size: 11px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; opacity: 0.7; transition: opacity 0.2s; }
     footer a:hover { opacity: 1; }
     footer .sep { color: rgba(255, 255, 255, 0.3); }
 
@@ -220,20 +224,22 @@
   </div>
   </div>
 
-  <div style="padding-top: var(--space-35);">
-  <div class="band">
-    <img class="band-texture" src="assets/donofrio-goal-texture.jpg" alt=""/>
-    <img class="band-illustration" src="assets/donofrio-goal-illustration.svg" alt="Illustration of a vendor on a route, marked by a location pin"/>
+  <div class="goal-section">
   <div class="section-inner">
-    <p class="band-lead" data-i18n="quote-text">Our goal was clear:<br><strong>to <span>empower street vendors</span> with tech that let them be found.</strong><br>And let customers find them on a map.</p>
-  </div>
+    <div class="goal-split">
+      <img src="assets/donofrio-heladero.png" alt="D'Onofrio ice cream vendor with his cart on the route"/>
+      <div class="goal-text-col">
+        <h2 class="section-title" data-i18n="quote-title">Our goal was clear</h2>
+        <p class="body-text" data-i18n="quote-text">To empower street vendors with tech that let them be found. And let customers find them on a map.</p>
+      </div>
+    </div>
   </div>
   </div>
 
   <div style="padding-top: var(--space-35); padding-bottom: 20px;">
   <div class="section-inner">
     <span class="eyebrow" data-i18n="about-title">About the vendors</span>
-    <p class="body-text" style="max-width: 680px; margin-top: -6px; margin-bottom: 8px;" data-i18n="about-subtitle">We talked to them to understand their day-to-day, how they work, and their conditions.</p>
+    <p class="body-text" style="margin-top: -6px; margin-bottom: 8px;" data-i18n="about-subtitle">We talked to them to understand their day-to-day, how they work, and their conditions.</p>
     <div class="insight-grid">
       <div class="insight-card">
         <img src="assets/donofrio-icon-roots.svg" alt=""/>
@@ -259,19 +265,19 @@
   <div class="feature-split">
     <div class="feature-split-text">
       <h2 class="section-title" data-i18n="survival-title">Focused on making ends meet, not on innovating</h2>
-      <p class="body-text-sm" style="max-width: 480px; margin-top: -12px; margin-bottom: 8px;" data-i18n="survival-subtitle">When we floated the idea, we explored how they'd react to a change.</p>
+      <p class="body-text" style="max-width: 480px; margin-top: -12px; margin-bottom: 8px;" data-i18n="survival-subtitle">When we floated the idea, we explored <span class="underline-soft">how they'd react to a change</span>.</p>
       <div class="profile-list">
         <div class="profile-item">
           <h4 data-i18n="profile1-h">Prefer tradition over change</h4>
-          <p data-i18n="profile1-p">The less their routine changes, the better — if it already works.</p>
+          <p data-i18n="profile1-p"><span class="underline-soft">The less their routine changes, the better</span> — if it already works.</p>
         </div>
         <div class="profile-item">
           <h4 data-i18n="profile2-h">Don't see the benefit yet</h4>
-          <p data-i18n="profile2-p">At first, they don't see much value in the initiative.</p>
+          <p data-i18n="profile2-p">At first, they <span class="underline-soft">don't see much value in the initiative</span>.</p>
         </div>
         <div class="profile-item">
           <h4 data-i18n="profile3-h">Know the basics when it comes to tech</h4>
-          <p data-i18n="profile3-p">They have limited experience using technology or apps.</p>
+          <p data-i18n="profile3-p">They have <span class="underline-soft">limited experience using technology or apps</span>.</p>
         </div>
       </div>
     </div>
@@ -291,7 +297,7 @@
       <div class="feature-split-text">
         <span class="eyebrow" style="border-bottom-color: var(--c-strategy);" data-i18n="firstattempt-eyebrow">First solution</span>
         <h2 class="section-title" data-i18n="firstattempt-title">Our first pilot failed.</h2>
-        <p class="body-text" data-i18n="firstattempt-p">In a first attempt, we asked vendors to carry mobile phones with an app we built to track their location.<br>But after the pilot, we found out this asked too much of them — they'd forget to turn the app on, and used the phone to download games instead.</p>
+        <p class="body-text" data-i18n="firstattempt-p">In a first attempt, we asked vendors to <strong>carry mobile phones with an app we built to track their location</strong>.<br>But after the pilot, we found out <strong>this asked too much of them</strong>.<br><br>They'd forget to turn the app on, and used the phone to download games instead.</p>
       </div>
     </div>
   </div>
@@ -303,7 +309,7 @@
       <div class="feature-split-text">
         <span class="eyebrow" style="border-bottom-color: var(--don-blue);" data-i18n="output-eyebrow">Output</span>
         <h2 class="section-title" data-i18n="output-title">We ended up finding a solution that required zero effort</h2>
-        <p class="body-text" data-i18n="output-p">We attached a small Sigfox locator to each cart. It's a low-power, low-cost technology that regularly sends location coordinates to our system.<br>This way, customers could find their favorite vendor through a simple app, while vendors benefited from a solution that <strong>fit seamlessly into their daily routine — they didn't have to do a single thing.</strong></p>
+        <p class="body-text" data-i18n="output-p">We attached <span class="underline-soft">a small Sigfox locator to each cart</span>. It's a <span class="underline-soft">low-power, low-cost technology</span> that regularly sends location coordinates to our system.<br><br>This way, customers could find their favorite vendor through a simple app, while vendors benefited from a solution that <strong>fit seamlessly into their daily routine — they didn't have to do a single thing.</strong></p>
       </div>
       <div class="feature-split-media">
         <img src="assets/donofrio-sigfox-device.jpg" alt="Sigfox localization device"/>
@@ -318,7 +324,7 @@
       <div class="feature-split-text">
         <span class="eyebrow" style="border-bottom-color: var(--c-strategy);" data-i18n="myrole-eyebrow">My role</span>
         <h2 class="section-title" data-i18n="myrole-title">I immersed myself in their daily lives and ensured a successful implementation</h2>
-        <p class="body-text-sm" data-i18n="myrole-p">Walking the streets of Lima, I gathered insights into local challenges while coordinating with the team in San Francisco and doing on-site research. Together, we ensured the smooth implementation and monitoring of the localization technology, supported by Pilot44's technical experiments.</p>
+        <p class="body-text" data-i18n="myrole-p">Walking the streets of Lima, I <strong>gathered insights into local challenges</strong> while <span class="underline-soft">coordinating with the team in San Francisco</span> and doing on-site research. Together, we <strong>ensured the smooth implementation and monitoring</strong> of the localization technology, supported by Pilot44's technical experiments.</p>
       </div>
       <div class="feature-split-media">
         <img src="assets/donofrio-myrole.jpg" alt="Vendor checking a route printout on the street"/>
@@ -332,8 +338,8 @@
       <div class="mobileapp-text">
         <span class="eyebrow" data-i18n="consumer-eyebrow">Consumer output</span>
         <h2 class="section-title" data-i18n="consumer-title">I built an app and an awareness campaign for customers</h2>
-        <p class="body-text" data-i18n="consumer-p1">We built an app with a simple map and a discount system. Now, whenever they craved ice cream, they could track vendors' location in real time.</p>
-        <p class="body-text" style="margin-top: 20px;" data-i18n="consumer-p2">But that's not all — we knew that technology alone wasn't enough. We needed to raise awareness and drive engagement, so we launched a comprehensive campaign, spreading the word far and wide.</p>
+        <p class="body-text" data-i18n="consumer-p1">We built an app with <strong>a simple map and a discount system</strong>. Now, whenever they craved ice cream, they could <span class="underline-soft">track vendors' location in real time</span>.</p>
+        <p class="body-text" style="margin-top: 20px;" data-i18n="consumer-p2">But that's not all — we knew that <strong>technology alone wasn't enough</strong>. We needed to raise awareness and drive engagement, so we <span class="underline-soft">launched a comprehensive campaign</span>, spreading the word far and wide.</p>
       </div>
       <div class="mobileapp-media">
         <img src="assets/donofrio-app.png" alt="Consumer app showing a vendor's live location on a map"/>
@@ -353,9 +359,9 @@
       <div class="feature-split-text">
         <span class="eyebrow" style="border-bottom-color: var(--don-blue);" data-i18n="conclusion-eyebrow">Conclusion</span>
         <h2 class="section-title" data-i18n="conclusion-title">Una derrota no es caída</h2>
-        <p class="body-text" data-i18n="conclusion-p1">As we wrapped up the pilot, we couldn't help but smile at the bumps we hit trying to fit new technology into the vendors' lives.</p>
+        <p class="body-text" data-i18n="conclusion-p1">As we wrapped up the pilot, we couldn't help but smile at <span class="underline-soft">the bumps we hit trying to fit new technology into the vendors' lives</span>.</p>
         <p class="body-text" style="margin-top: 12px;"><strong data-i18n="conclusion-p2">The lesson: changing routines that are years in the making is hard. The less effort it takes, the more effective it is.</strong></p>
-        <p class="body-text" style="margin-top: 12px;" data-i18n="conclusion-p3">In the end, customers were thrilled to easily find their favorite vendors, and the vendors were happy too, thanks to a fully passive technology that let them be found without changing a single thing about their routine.</p>
+        <p class="body-text" style="margin-top: 12px;" data-i18n="conclusion-p3">In the end, customers were thrilled to easily find their favorite vendors, and the vendors were happy too, thanks to <span class="underline-soft">a fully passive technology that let them be found without changing a single thing</span> about their routine.</p>
       </div>
       <div class="feature-split-media">
         <img src="assets/donofrio-closing.jpg" alt="Vendor checking his phone at the end of the day"/>
@@ -395,32 +401,33 @@
         'about-3-h': '"I\'ve done it this way my whole life"',
         'about-3-p': 'They sell the same way they have for generations, with little interest in changing that.',
         'survival-title': 'Focused on making ends meet, not on innovating',
-        'survival-subtitle': "When we shared the idea with them, we explored how they'd react to a change.",
+        'survival-subtitle': "When we shared the idea with them, we explored <span class=\"underline-soft\">how they'd react to a change</span>.",
         'profile1-h': 'Prefer tradition over change',
-        'profile1-p': 'The less their routine changes, the better — if it already works.',
+        'profile1-p': '<span class="underline-soft">The less their routine changes, the better</span> — if it already works.',
         'profile2-h': "Don't see the benefit yet",
-        'profile2-p': "At first, they don't see much value in the initiative.",
+        'profile2-p': "At first, they <span class=\"underline-soft\">don't see much value in the initiative</span>.",
         'profile3-h': 'Know the basics when it comes to tech',
-        'profile3-p': 'They have limited experience using technology or apps.',
-        'quote-text': 'Our goal was clear:<br><strong>to <span>empower street vendors</span> with tech that let them be found.</strong><br>And let customers find them on a map.',
+        'profile3-p': 'They have <span class="underline-soft">limited experience using technology or apps</span>.',
+        'quote-title': 'Our goal was clear',
+        'quote-text': 'To empower street vendors with tech that let them be found. And let customers find them on a map.',
         'firstattempt-eyebrow': 'First solution',
         'firstattempt-title': 'Our first pilot failed.',
-        'firstattempt-p': "In a first attempt, we asked vendors to carry mobile phones with an app we built to track their location.<br>But after the pilot, we found out this asked too much of them — they'd forget to turn the app on, and used the phone to download games instead.",
+        'firstattempt-p': "In a first attempt, we asked vendors to <strong>carry mobile phones with an app we built to track their location</strong>.<br>But after the pilot, we found out <strong>this asked too much of them</strong>.<br><br>They'd forget to turn the app on, and used the phone to download games instead.",
         'output-eyebrow': 'Output',
         'output-title': 'We ended up finding a solution that required zero effort',
-        'output-p': "We attached a small Sigfox locator to each cart. It's a low-power, low-cost technology that regularly sends location coordinates to our system.<br>This way, customers could find their favorite vendor through a simple app, while vendors benefited from a solution that <strong>fit seamlessly into their daily routine — they didn't have to do a single thing.</strong>",
+        'output-p': "We attached <span class=\"underline-soft\">a small Sigfox locator to each cart</span>. It's a <span class=\"underline-soft\">low-power, low-cost technology</span> that regularly sends location coordinates to our system.<br><br>This way, customers could find their favorite vendor through a simple app, while vendors benefited from a solution that <strong>fit seamlessly into their daily routine — they didn't have to do a single thing.</strong>",
         'myrole-eyebrow': 'My role',
         'myrole-title': 'I immersed myself in their daily lives and ensured a successful implementation',
-        'myrole-p': "Walking the streets of Lima, I gathered insights into local challenges while coordinating with the team in San Francisco and doing on-site research. Together, we ensured the smooth implementation and monitoring of the localization technology, supported by Pilot44's technical experiments.",
+        'myrole-p': "Walking the streets of Lima, I <strong>gathered insights into local challenges</strong> while <span class=\"underline-soft\">coordinating with the team in San Francisco</span> and doing on-site research. Together, we <strong>ensured the smooth implementation and monitoring</strong> of the localization technology, supported by Pilot44's technical experiments.",
         'consumer-eyebrow': 'Consumer output',
         'consumer-title': 'I built an app and an awareness campaign for customers',
-        'consumer-p1': "We built an app with a simple map and a discount system. Now, whenever they craved ice cream, they could track vendors' location in real time.",
-        'consumer-p2': "But that's not all — we knew that technology alone wasn't enough. We needed to raise awareness and drive engagement, so we launched a comprehensive campaign, spreading the word far and wide.",
+        'consumer-p1': "We built an app with <strong>a simple map and a discount system</strong>. Now, whenever they craved ice cream, they could <span class=\"underline-soft\">track vendors' location in real time</span>.",
+        'consumer-p2': "But that's not all — we knew that <strong>technology alone wasn't enough</strong>. We needed to raise awareness and drive engagement, so we <span class=\"underline-soft\">launched a comprehensive campaign</span>, spreading the word far and wide.",
         'conclusion-eyebrow': 'Conclusion',
         'conclusion-title': 'Una derrota no es caída',
-        'conclusion-p1': "As we wrapped up the pilot, we couldn't help but smile at the bumps we hit trying to fit new technology into the vendors' lives.",
+        'conclusion-p1': "As we wrapped up the pilot, we couldn't help but smile at <span class=\"underline-soft\">the bumps we hit trying to fit new technology into the vendors' lives</span>.",
         'conclusion-p2': "The lesson: changing routines that are years in the making is hard. The less effort it takes, the more effective it is.",
-        'conclusion-p3': 'In the end, customers were thrilled to easily find their favorite vendors, and the vendors were happy too, thanks to a fully passive technology that let them be found without changing a single thing about their routine.',
+        'conclusion-p3': 'In the end, customers were thrilled to easily find their favorite vendors, and the vendors were happy too, thanks to <span class="underline-soft">a fully passive technology that let them be found without changing a single thing</span> about their routine.',
         'footer-more': 'More projects'
       },
       es: {
@@ -444,32 +451,33 @@
         'about-3-h': '"Así lo hice toda mi vida"',
         'about-3-p': 'Venden de la misma manera desde hace generaciones y no tienen particular interés en innovar.',
         'survival-title': 'Enfocados en llegar a fin de mes, no en innovar',
-        'survival-subtitle': 'Cuando les comentamos la iniciativa, exploramos cómo enfrentarían un cambio.',
+        'survival-subtitle': 'Cuando les comentamos la iniciativa, exploramos <span class="underline-soft">cómo enfrentarían un cambio</span>.',
         'profile1-h': 'Prefieren la tradición al cambio',
-        'profile1-p': 'Cuanto menos pueden cambiar la rutina que les funciona, mejor.',
+        'profile1-p': '<span class="underline-soft">Cuanto menos pueden cambiar la rutina que les funciona</span>, mejor.',
         'profile2-h': 'No terminan de ver el beneficio',
-        'profile2-p': 'En principio, no encuentran mucho valor en la iniciativa.',
+        'profile2-p': 'En principio, <span class="underline-soft">no encuentran mucho valor en la iniciativa</span>.',
         'profile3-h': 'En cuanto a tecnología, conocen lo básico',
-        'profile3-p': 'Tienen experiencia limitada usando tecnología y apps.',
-        'quote-text': 'Nuestro objetivo era claro:<br><strong>darle a los <span>vendedores ambulantes</span> tecnología que los hiciera fáciles de encontrar.</strong><br>Y permitir a clientes encontrarlos en un mapa.',
+        'profile3-p': 'Tienen <span class="underline-soft">experiencia limitada usando tecnología y apps</span>.',
+        'quote-title': 'Nuestro objetivo era claro',
+        'quote-text': 'Darle a los vendedores ambulantes tecnología que los hiciera fáciles de encontrar. Y permitir a clientes encontrarlos en un mapa.',
         'firstattempt-eyebrow': 'Primera solución',
         'firstattempt-title': 'Nuestro primer piloto falló.',
-        'firstattempt-p': 'En un primer intento les pedimos a los vendedores que llevaran consigo teléfonos móviles con una app que desarrollamos para rastrear su ubicación.<br>Pero tras el piloto descubrimos que esto les exigía demasiado esfuerzo. Terminaban olvidándose de activar la app y usando el móvil para descargar juegos.',
+        'firstattempt-p': 'En un primer intento les pedimos a los vendedores que <strong>llevaran consigo teléfonos móviles con una app que desarrollamos para rastrear su ubicación</strong>.<br>Pero tras el piloto descubrimos que <strong>esto les exigía demasiado esfuerzo</strong>.<br><br>Terminaban olvidándose de activar la app y usando el móvil para descargar juegos.',
         'output-eyebrow': 'Solución',
         'output-title': 'Terminamos dando con una solución que requería cero esfuerzo',
-        'output-p': 'En cada carrito adherimos un mini dispositivo de localización con Sigfox. Es una tecnología de bajo consumo y bajo costo, que envía regularmente coordenadas de ubicación a nuestro sistema.<br>De esta manera los clientes podían encontrar a su heladero favorito desde una app simple, mientras que los vendedores se beneficiaban de una solución que <strong>se integraba sin fricciones a su rutina diaria. No tenían que hacer absolutamente nada.</strong>',
+        'output-p': 'En cada carrito adherimos <span class="underline-soft">un mini dispositivo de localización con Sigfox</span>. Es una <span class="underline-soft">tecnología de bajo consumo y bajo costo</span>, que envía regularmente coordenadas de ubicación a nuestro sistema.<br><br>De esta manera los clientes podían encontrar a su heladero favorito desde una app simple, mientras que los vendedores se beneficiaban de una solución que <strong>se integraba sin fricciones a su rutina diaria. No tenían que hacer absolutamente nada.</strong>',
         'myrole-eyebrow': 'Mi rol',
         'myrole-title': 'Me sumergí en su día a día y garanticé una implementación exitosa',
-        'myrole-p': 'Recorrí las calles de Lima recolectando insights sobre los desafíos locales, mientras coordinaba con el equipo en San Francisco e investigaba en terreno. Juntos, aseguramos una implementación fluida y el monitoreo de la tecnología de localización, apoyados en los experimentos técnicos de Pilot44.',
+        'myrole-p': 'Recorrí las calles de Lima <strong>recolectando insights sobre los desafíos locales</strong>, mientras <span class="underline-soft">coordinaba con el equipo en San Francisco</span> e investigaba en terreno. Juntos, <strong>aseguramos una implementación fluida y el monitoreo</strong> de la tecnología de localización, apoyados en los experimentos técnicos de Pilot44.',
         'consumer-eyebrow': 'Del lado del consumidor',
         'consumer-title': 'Creé una app y una campaña de difusión para los clientes',
-        'consumer-p1': 'Creamos una app con un simple mapa y sistema de descuentos. Ahora cada vez que les apetecía un helado, podían rastrear la ubicación de los vendedores en tiempo real.',
-        'consumer-p2': 'Pero eso no fue todo: sabíamos que la tecnología sola no alcanzaba. Necesitábamos generar conciencia e impulsar el uso, así que lanzamos una campaña integral que llevó el mensaje a todos lados.',
+        'consumer-p1': 'Creamos una app con <strong>un simple mapa y sistema de descuentos</strong>. Ahora cada vez que les apetecía un helado, podían <span class="underline-soft">rastrear la ubicación de los vendedores en tiempo real</span>.',
+        'consumer-p2': 'Pero eso no fue todo: sabíamos que <strong>la tecnología sola no alcanzaba</strong>. Necesitábamos generar conciencia e impulsar el uso, así que <span class="underline-soft">lanzamos una campaña integral</span> que llevó el mensaje a todos lados.',
         'conclusion-eyebrow': 'Conclusión',
         'conclusion-title': 'Una derrota no es caída',
-        'conclusion-p1': 'Al cerrar el piloto, no pudimos evitar sonreír ante los tropiezos que tuvimos al intentar encajar tecnología nueva en la vida de los vendedores.',
+        'conclusion-p1': 'Al cerrar el piloto, no pudimos evitar sonreír ante <span class="underline-soft">los tropiezos que tuvimos al intentar encajar tecnología nueva en la vida de los vendedores</span>.',
         'conclusion-p2': 'El aprendizaje: intentar cambiar rutinas arraigadas hace años es difícil. Cuanto menos esfuerzo, más efectivo.',
-        'conclusion-p3': 'Finalmente los clientes quedaron encantados de poder encontrar fácil a sus heladeros favoritos, y los heladeros fueron felices gracias a una tecnología totalmente pasiva que les permitió ser encontrados cambiando absolutamente nada de sus rutinas.',
+        'conclusion-p3': 'Finalmente los clientes quedaron encantados de poder encontrar fácil a sus heladeros favoritos, y los heladeros fueron felices gracias a <span class="underline-soft">una tecnología totalmente pasiva que les permitió ser encontrados cambiando absolutamente nada</span> de sus rutinas.',
         'footer-more': 'Más proyectos'
       }
     };

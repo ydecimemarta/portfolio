@@ -46,6 +46,8 @@
       --pad-desktop: 112px;
       --pad-tablet:  48px;
       --pad-mobile:  20px;
+      /* left/right inset that matches the centered .section-inner content edge, for full-width rows */
+      --content-inset: calc((100vw - min(100vw, var(--max-width))) / 2 + var(--pad-desktop));
 
       /* Typography scale */
       --text-label:   14px;  /* section labels — uppercase */
@@ -112,6 +114,14 @@
       line-height: 118%;
       letter-spacing: -0.6px;
       color: #444;
+    }
+    /* soft highlight — light grey underline instead of bold */
+    .underline-soft {
+      font-weight: 400;
+      text-decoration: underline;
+      text-decoration-color: #CFCFCF;
+      text-decoration-thickness: 2px;
+      text-underline-offset: 3px;
     }
 
     /* ── TAGS ── */
@@ -220,7 +230,7 @@
     .gallery-cell.lifestyle-cell img { object-fit: cover; object-position: center; }
 
     /* ── ROLE SECTION ── */
-    .role-section { padding: 144px 0; }
+    .role-section { padding: 144px 0 187px; }
     .role-lead { font-size: var(--text-title); font-weight: 500; line-height: 118%; letter-spacing: -0.6px; text-align: center; color: #282828; max-width: 760px; margin: 0 auto 61px; }
     .role-cols { max-width: 900px; margin: 0 auto; }
     .role-col { display: flex; flex-direction: column; align-items: center; text-align: center; gap: 20px; }
@@ -236,7 +246,7 @@
     .gif-placeholder span { font-size: 13px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #A2A2A2; }
 
     /* ── PDP SECTION ── */
-    .pdp-section { padding: 80px 0; background: #fff; }
+    .pdp-section { padding: 240px 0; background: #fff; }
     .pdp-gif-wrap { border: 3px solid #0A0A0A; border-radius: 24px; overflow: hidden; background: #F2F2F2; }
     .pdp-gif-wrap img { width: 100%; height: auto; display: block; }
 
@@ -267,7 +277,7 @@
 
     /* ── FOOTER ── */
     footer { background: var(--dark); height: 180px; box-sizing: border-box; padding: 0 var(--pad-desktop); display: flex; align-items: center; justify-content: center; gap: 24px; border-radius: 24px 24px 0 0; }
-    footer a { color: #fff; text-decoration: none; font-size: 12px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; opacity: 0.7; transition: opacity 0.2s; }
+    footer a { color: #fff; text-decoration: none; font-size: 11px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; opacity: 0.7; transition: opacity 0.2s; }
     footer a:hover { opacity: 1; }
     footer .sep { color: rgba(255,255,255,0.3); }
 
@@ -577,7 +587,7 @@
   <div class="ab-section-wrap" style="display: flex; background: #fff; align-items: flex-start;">
 
     <!-- Left half: white, with page padding -->
-    <div class="ab-left" style="width: 50%; padding: 80px 72px 80px var(--pad-desktop); display:flex; flex-direction:column; gap: 32px; box-sizing: border-box;">
+    <div class="ab-left" style="width: 50%; padding: 80px 72px 80px var(--content-inset); display:flex; flex-direction:column; gap: 32px; box-sizing: border-box;">
       <div>
         <span class="section-label" data-i18n="ab-label">Revenue</span>
         <h2 class="section-title" data-i18n="ab-title">Optimized the <span style="color:#F06554;">Reservations Flow</span>, landing 15% more purchases in reserved products</h2>
@@ -608,17 +618,15 @@
       </div>
     </div>
 
-    <!-- Right half: orange, full bleed, SVG aligned to bottom -->
-    <div id="ab-orange" class="ab-right" style="width: 50%; background: #EE6D3B; display:flex; align-items:flex-end; justify-content:center; padding: 48px 48px 0; overflow: hidden; align-self: flex-start; margin-top: 112px;">
-      <img id="ab-img" src="assets/lutz-ab-test.svg" alt="A/B test comparison" style="width:100%; max-width:600px; display:block;"
-        onload="var h=this.getBoundingClientRect().height; this.parentElement.style.maxHeight=(h*1.5)+'px';"
-      />
+    <!-- Right half: orange, full bleed, full section height, SVG aligned to bottom -->
+    <div id="ab-orange" class="ab-right" style="width: 50%; background: #EE6D3B; display:flex; align-items:flex-end; justify-content:center; padding: 48px 48px 0; overflow: hidden; align-self: stretch; margin-top: -30px;">
+      <img id="ab-img" src="assets/lutz-ab-test.svg" alt="A/B test comparison" style="width:100%; max-width:600px; display:block;"/>
     </div>
 
   </div>
 
   <!-- Measurement Section -->
-  <div style="background: #F2F2F2; padding: 96px 0;">
+  <div style="background: #F2F2F2; padding: 192px 0 96px;">
   <div class="section-inner">
     <div class="two-col measurement-cols" style="align-items: start; gap: 80px;">
 
@@ -640,7 +648,7 @@
         <div>
           <span class="section-label" data-i18n="data-label">Data</span>
           <h2 class="section-title" data-i18n="data-title">How we measure success</h2>
-          <p class="body-text-sm" style="margin-top: 16px;" data-i18n="data-body">We used Google's HEART framework to measure how feature changes impacted Happiness, Engagement, Adoption, Retention, and Task success. This data-driven approach kept us grounded in user needs and business goals.</p>
+          <p class="body-text-sm" style="margin-top: 16px;" data-i18n="data-body">We used <strong>Google's HEART framework</strong> to measure how feature changes impacted <strong>Happiness, Engagement, Adoption, Retention, and Task success</strong>. This data-driven approach kept us grounded in user needs and business goals.</p>
         </div>
 
       </div>
@@ -659,7 +667,7 @@
   <div class="section-inner">
     <span class="section-label" data-i18n="learnings-label">Agile collaboration</span>
     <h2 class="section-title" data-i18n="learnings-title">Learnings from the environment</h2>
-    <p class="body-text-sm" style="margin-top: 16px; max-width: 600px;" data-i18n="learnings-body">I worked within a Scrum Agile structure, which taught me invaluable lessons about teamwork and collaboration.</p>
+    <p class="body-text-sm" style="margin-top: 16px; max-width: 600px;" data-i18n="learnings-body">I worked within a Scrum Agile structure, which taught me <span class="underline-soft">invaluable lessons about teamwork and collaboration</span>.</p>
 
     <div class="learnings-grid" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-top: 48px;">
 
@@ -671,7 +679,7 @@
           </svg>
           <h4 style="font-size: var(--text-body); font-weight: 700; line-height: 118%; letter-spacing: -0.6px; color: #282828; margin-bottom: 0;" data-i18n="learn1-h">Deep understanding of the tech side</h4>
         </div>
-        <p class="body-text-sm" data-i18n="learn1-p">Over time, I learned how back-end systems connect with the environment and worked closely with front-end developers to refine ideas and improve handoffs.</p>
+        <p class="body-text-sm" data-i18n="learn1-p">Over time, I learned <span class="underline-soft">how back-end systems connect with the environment</span> and worked closely with front-end developers to refine ideas and improve handoffs.</p>
       </div>
 
       <div style="background: #fff; border-radius: 20px; padding: 32px 28px; display:flex; flex-direction:column; justify-content:space-between; min-height: 320px;">
@@ -682,7 +690,7 @@
           </svg>
           <h4 style="font-size: var(--text-body); font-weight: 700; line-height: 118%; letter-spacing: -0.6px; color: #282828; margin-bottom: 0;" data-i18n="learn2-h">Navigating big company dynamics</h4>
         </div>
-        <p class="body-text-sm" data-i18n="learn2-p">I figured out how to turn ideas into reality in a big company: lots of pitching, clever presentations, chatting up the right people, and keeping stakeholders happy.</p>
+        <p class="body-text-sm" data-i18n="learn2-p">I figured out <span class="underline-soft">how to turn ideas into reality in a big company</span>: lots of pitching, clever presentations, chatting up the right people, and keeping stakeholders happy.</p>
       </div>
 
       <div style="background: #fff; border-radius: 20px; padding: 32px 28px; display:flex; flex-direction:column; justify-content:space-between; min-height: 320px;">
@@ -693,7 +701,7 @@
           </svg>
           <h4 style="font-size: var(--text-body); font-weight: 700; line-height: 118%; letter-spacing: -0.6px; color: #282828; margin-bottom: 0;" data-i18n="learn3-h">Facilitating and owning the product</h4>
         </div>
-        <p class="body-text-sm" data-i18n="learn3-p">Led workshops to align stakeholders and balance big-picture goals with user needs alongside the Product Owner.</p>
+        <p class="body-text-sm" data-i18n="learn3-p">Led workshops to <span class="underline-soft">align stakeholders and balance big-picture goals with user needs</span> alongside the Product Owner.</p>
       </div>
 
     </div>
@@ -795,16 +803,16 @@
         'usability-li4': '<strong>Analytics and custom dashboards</strong> to track feature performance over time.',
         'data-label': 'Data',
         'data-title': 'How we measure success',
-        'data-body': "We used Google's HEART framework to measure how feature changes impacted Happiness, Engagement, Adoption, Retention, and Task success. This data-driven approach kept us grounded in user needs and business goals.",
+        'data-body': "We used <strong>Google's HEART framework</strong> to measure how feature changes impacted <strong>Happiness, Engagement, Adoption, Retention, and Task success</strong>. This data-driven approach kept us grounded in user needs and business goals.",
         'learnings-label': 'Agile collaboration',
         'learnings-title': 'Learnings from the environment',
-        'learnings-body': 'I worked within a Scrum Agile structure, which taught me invaluable lessons about teamwork and collaboration.',
+        'learnings-body': 'I worked within a Scrum Agile structure, which taught me <span class="underline-soft">invaluable lessons about teamwork and collaboration</span>.',
         'learn1-h': 'Deep understanding of the tech side',
-        'learn1-p': 'Over time, I learned how back-end systems connect with the environment and worked closely with front-end developers to refine ideas and improve handoffs.',
+        'learn1-p': 'Over time, I learned <span class="underline-soft">how back-end systems connect with the environment</span> and worked closely with front-end developers to refine ideas and improve handoffs.',
         'learn2-h': 'Navigating big company dynamics',
-        'learn2-p': 'I figured out how to turn ideas into reality in a big company: lots of pitching, clever presentations, chatting up the right people, and keeping stakeholders happy.',
+        'learn2-p': 'I figured out <span class="underline-soft">how to turn ideas into reality in a big company</span>: lots of pitching, clever presentations, chatting up the right people, and keeping stakeholders happy.',
         'learn3-h': 'Facilitating and owning the product',
-        'learn3-p': 'Led workshops to align stakeholders and balance big-picture goals with user needs alongside the Product Owner.',
+        'learn3-p': 'Led workshops to <span class="underline-soft">align stakeholders and balance big-picture goals with user needs</span> alongside the Product Owner.',
         'footer-more': 'More projects'
       },
       es: {
@@ -819,13 +827,13 @@
         'intro-title': 'La segunda cadena de muebles más grande de Europa',
         'intro-body': 'Lutz es la cadena de muebles más grande de Austria, con operaciones en más de 23 países de la UE. XXXLutz es un jugador dominante en el mercado europeo de muebles, el segundo más grande después de IKEA.',
         'role-label': 'Mi rol',
-        'role-lead': 'Estuve a cargo de la UX y la Estrategia de la Product Detail Page (PDP) y etapas clave del proceso de evaluación de productos.',
+        'role-lead': 'Estoy a cargo de la UX y la estrategia de producto para la Product Detail Page (PDP) y las etapas clave del recorrido de evaluación de productos.',
         'role-strategy-h': 'Estrategia',
-        'role-strategy-p': 'Definí el roadmap, prioricé iniciativas y establecí timelines para mantener los proyectos en movimiento.',
+        'role-strategy-p': 'Defino el roadmap, priorizo iniciativas y fijo los tiempos para mantener los proyectos en marcha.',
         'role-design-h': 'Diseño',
-        'role-design-p': 'Investigué, testeé y entregué soluciones centradas en el usuario, desde el concepto hasta la implementación.',
+        'role-design-p': 'Investigo, testeo y entrego soluciones centradas en el usuario, del concepto a la implementación.',
         'role-collab-h': 'Colaboración',
-        'role-collab-p': 'Gestioné stakeholders de distintos equipos, facilité workshops de alineación y balanceé los objetivos de usuarios y de negocio.',
+        'role-collab-p': 'Gestiono stakeholders de distintos equipos, facilito workshops de alineación y equilibro los objetivos de usuario y de negocio.',
         'pdp-label': 'Navegación de página',
         'pdp-title': 'Reestructuré la product detail page (PDP), logrando un 21% más de conversiones',
         'pdp-body': 'Desarrollé el concepto y la estrategia para mejorar la navegación y el engagement en la PDP, negocié con distintos equipos y supervisé la implementación. Esto resultó en un <strong>21% más de conversiones de Add to Cart</strong> y aumentó el engagement general.',
@@ -846,16 +854,16 @@
         'usability-li4': '<strong>Analytics y dashboards personalizados</strong> para trackear el rendimiento de las features en el tiempo.',
         'data-label': 'Data',
         'data-title': 'Cómo medimos el éxito',
-        'data-body': 'Usamos el framework HEART de Google para medir cómo los cambios en las features impactaban en Happiness, Engagement, Adoption, Retention y Task success. Este approach basado en datos nos mantuvo enfocados en las necesidades de los usuarios y los objetivos de negocio.',
+        'data-body': 'Usamos el <strong>framework HEART de Google</strong> para medir cómo los cambios en las features impactaban en <strong>Happiness, Engagement, Adoption, Retention y Task success</strong>. Este approach basado en datos nos mantuvo enfocados en las necesidades de los usuarios y los objetivos de negocio.',
         'learnings-label': 'Colaboración ágil',
         'learnings-title': 'Aprendizajes del entorno',
-        'learnings-body': 'Trabajé dentro de una estructura Scrum Agile, que me enseñó lecciones invaluables sobre trabajo en equipo y colaboración.',
+        'learnings-body': 'Trabajé dentro de una estructura Scrum Agile, que me enseñó <span class="underline-soft">lecciones invaluables sobre trabajo en equipo y colaboración</span>.',
         'learn1-h': 'Entendimiento profundo del lado técnico',
-        'learn1-p': 'Con el tiempo, aprendí cómo los sistemas de back-end se conectan con el entorno y trabajé de cerca con desarrolladores front-end para refinar ideas y mejorar los handoffs.',
+        'learn1-p': 'Con el tiempo, aprendí <span class="underline-soft">cómo los sistemas de back-end se conectan con el entorno</span> y trabajé de cerca con desarrolladores front-end para refinar ideas y mejorar los handoffs.',
         'learn2-h': 'Navegando las dinámicas de una gran empresa',
-        'learn2-p': 'Descubrí cómo convertir ideas en realidad dentro de una gran empresa: mucho pitching, presentaciones inteligentes, hablar con las personas indicadas y mantener contentos a los stakeholders.',
+        'learn2-p': 'Descubrí <span class="underline-soft">cómo convertir ideas en realidad dentro de una gran empresa</span>: mucho pitching, presentaciones inteligentes, hablar con las personas indicadas y mantener contentos a los stakeholders.',
         'learn3-h': 'Facilitando y siendo owner del producto',
-        'learn3-p': 'Facilité workshops para alinear stakeholders y balancear los objetivos generales con las necesidades de los usuarios junto al Product Owner.',
+        'learn3-p': 'Facilité workshops para <span class="underline-soft">alinear stakeholders y balancear los objetivos generales con las necesidades de los usuarios</span> junto al Product Owner.',
         'footer-more': 'Más proyectos'
       }
     };

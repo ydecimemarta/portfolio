@@ -119,6 +119,14 @@
       letter-spacing: -0.6px;
       color: #444;
     }
+    /* soft highlight — light grey underline instead of bold */
+    .underline-soft {
+      font-weight: 400;
+      text-decoration: underline;
+      text-decoration-color: #CFCFCF;
+      text-decoration-thickness: 2px;
+      text-underline-offset: 3px;
+    }
 
     /* ── TAGS ── */
     .tag { font-size: 11px; font-weight: 700; letter-spacing: 0.07em; text-transform: uppercase; padding: 5px 13px; border-radius: 100px; color: #000; }
@@ -269,9 +277,10 @@
     .mini-card { background: #fff; border-radius: 12px; padding: 18px 20px; }
     .mini-card h5 { font-size: var(--text-body-sm); font-weight: 700; color: #282828; letter-spacing: -0.6px; margin-bottom: 6px; }
     .mini-card p { font-size: var(--text-body-sm); line-height: 118%; letter-spacing: -0.6px; color: #444; }
-    .smartwatch-text { font-size: 22px; line-height: 118%; letter-spacing: -0.6px; color: #444; }
+    .smartwatch-text { font-size: var(--text-body); line-height: 118%; letter-spacing: -0.6px; color: #444; }
     .pill-row { display: flex; gap: 10px; margin-top: 20px; }
     .pill-row-stacked { flex-direction: column; }
+    .pill-row.pills-body-sm .pill-tag { font-size: var(--text-body-sm); }
     .iot-split { aspect-ratio: 2 / 1; }
 
     /* ── AWARDS / CLOSING BAND ── */
@@ -282,8 +291,8 @@
     .awards-row { display: flex; align-items: center; justify-content: center; gap: var(--space-12); flex-wrap: wrap; }
     .award-item { display: flex; align-items: center; gap: 20px; max-width: 340px; }
     .award-item img { width: 64px; height: 64px; flex-shrink: 0; display: block; }
-    .award-item-text { font-size: 13px; line-height: 1.4; letter-spacing: -0.2px; color: #444; }
-    .award-item-text strong { display: block; font-size: 14px; font-weight: 700; color: #282828; margin-bottom: 4px; }
+    .award-item-text { font-size: 11px; line-height: 1.4; letter-spacing: -0.2px; color: #444; }
+    .award-item-text strong { display: block; font-weight: 700; color: #282828; margin-bottom: 4px; }
 
     footer {
       background: #000;
@@ -299,7 +308,7 @@
     footer a {
       color: #fff;
       text-decoration: none;
-      font-size: 12px;
+      font-size: 11px;
       font-weight: 600;
       letter-spacing: 0.12em;
       text-transform: uppercase;
@@ -311,7 +320,7 @@
 
     /* ── FUTURE / LEARNINGS CARDS ── */
     .future-learnings { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; align-items: stretch; }
-    .fl-card { background: #FFFAF5; border-radius: 20px; padding: 40px; box-sizing: border-box; }
+    .fl-card { background: #FFFAF5; border-radius: 20px; padding: 40px; box-sizing: border-box; min-height: 380px; }
     .fl-eyebrow {
       display: inline-block;
       font-size: var(--text-label);
@@ -323,15 +332,15 @@
       border-bottom: 4px solid #BDA38C;
       margin-bottom: 24px;
     }
-    .fl-card p { font-size: var(--text-body-sm); line-height: 118%; letter-spacing: -0.6px; color: #444; }
+    .fl-card p { font-size: var(--text-body); line-height: 118%; letter-spacing: -0.6px; color: #444; }
     .fl-card p + p { margin-top: 20px; }
     .fl-card p strong { color: #000; font-weight: 700; }
 
     /* ── STAT CARDS GRID ── */
     .stat-cards-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-top: 36px; }
     .stat-card { border-radius: 0; padding: 28px 24px; box-sizing: border-box; display: flex; flex-direction: column; justify-content: space-between; min-height: 280px; color: #fff; }
-    .stat-card-top { display: flex; align-items: flex-start; justify-content: space-between; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; opacity: 0.85; gap: 12px; }
-    .stat-card-insight { font-family: 'Scope One', serif; font-size: 26px; line-height: 1.3; letter-spacing: -0.2px; margin-top: 20px; }
+    .stat-card-top { display: flex; align-items: flex-start; justify-content: space-between; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; opacity: 0.85; gap: 12px; }
+    .stat-card-insight { font-family: 'Scope One', serif; font-size: var(--text-title); line-height: 1.3; letter-spacing: -0.2px; margin-top: 20px; }
     .stat-underline { text-decoration: underline; text-decoration-color: #F5CF00; text-decoration-thickness: 2px; text-underline-offset: 3px; }
     .stat-card-sample { font-size: 11px; opacity: 0.6; margin-top: 14px; font-family: 'Karla', sans-serif; }
     .stat-card-light { color: #282828; }
@@ -372,10 +381,10 @@
       justify-content: center;
       background: radial-gradient(circle, #C6B5AB 0%, rgba(198, 181, 171, 0) 35%);
     }
-    .mobileapp-media img { width: 124%; max-width: 760px; display: block; transform: translateX(15px); }
+    .mobileapp-media img { width: 124%; max-width: 760px; display: block; transform: translateX(45px); }
     .mobileapp-text { width: 50%; box-sizing: border-box; padding: var(--space-16) var(--content-inset) var(--space-16) 60px; }
     .mobileapp-text .section-title { margin-bottom: 6px; }
-    .mobileapp-subtitle { font-size: var(--text-body-sm); color: #6B6B6B; margin-bottom: 24px; }
+    .mobileapp-subtitle { font-size: var(--text-body); color: #6B6B6B; margin-bottom: 24px; }
     .mobileapp-text .pill-row { flex-direction: column; margin-top: 0; }
     .mobileapp-text .pill-tag { padding: 16px 18px; font-size: 14px; line-height: 1.4; }
 
@@ -388,7 +397,7 @@
 
     /* ── DEVELOP BAND ── */
     .develop-band { background: #FFFAF5; width: 100%; padding: 64px 0 0; }
-    .develop-band .section-inner { padding-bottom: 30px; }
+    .develop-band .section-inner { padding-bottom: 90px; }
     .develop-band img { width: 100%; display: block; margin-top: 40px; }
 
     /* ── PROCESS CARDS (2-up) ── */
@@ -425,6 +434,8 @@
     .principles-split { display: flex; align-items: stretch; border-radius: 24px; overflow: hidden; }
     .principles-media { width: 50%; box-sizing: border-box; position: relative; overflow: hidden; }
     .principles-media img { width: 100%; height: 100%; object-fit: cover; display: block; border-radius: 24px; }
+    /* seam variant: image left corners square so it reads as one card with the text half */
+    .principles-split.seam .principles-media img { border-top-left-radius: 0; border-bottom-left-radius: 0; }
     .principles-box {
       width: 50%;
       box-sizing: border-box;
@@ -442,7 +453,7 @@
     .insight-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-top: 36px; }
     .insight-card { background: #fff; border-radius: 20px; padding: 28px 24px; }
     .insight-card img { width: 48px; height: 48px; margin-bottom: 18px; display: block; }
-    .insight-card p { font-size: var(--text-body-sm); font-weight: 600; line-height: 118%; letter-spacing: -0.6px; color: #444; }
+    .insight-card p { font-size: var(--text-body); font-weight: 600; line-height: 118%; letter-spacing: -0.6px; color: #444; }
 
     /* ── RESEARCH METHODS SPLIT ── */
     .research-split { display: flex; align-items: center; }
@@ -601,7 +612,7 @@
   <div style="padding-top: var(--space-8); padding-bottom: 0;">
   <div class="section-inner">
     <h2 class="section-title" style="margin-bottom: 28px;" data-i18n="principles-title">To design principles</h2>
-    <div class="principles-split">
+    <div class="principles-split seam">
       <div class="principles-box">
         <div class="principles-list">
           <div class="principle-item">
@@ -625,7 +636,7 @@
   </div>
   </div>
 
-  <div style="padding-top: 224px; padding-bottom: var(--space-35);">
+  <div style="padding-top: 112px; padding-bottom: var(--space-35);">
   <div class="section-inner">
     <h2 class="section-title" data-i18n="process-title">Process</h2>
     <div class="process-cards">
@@ -652,15 +663,15 @@
   </div>
   </div>
 
-  <div style="padding-top: var(--space-35); padding-bottom: 40px;">
+  <div style="padding-top: 0; padding-bottom: 0;">
     <div class="agile-split">
       <div class="agile-media-box">
         <img src="assets/ellie-agile-collab.jpg" alt="Agile collaboration"/>
       </div>
       <div class="agile-text">
         <h2 class="section-title" data-i18n="agile-title">Agile collaboration</h2>
-        <p class="body-text-sm" data-i18n="agile-p1">I collaborated with occupational therapists, IoT engineers, and developers during agile sprints.</p>
-        <p class="body-text-sm" data-i18n="agile-p2">We validated functional prototypes with users in two rounds.</p>
+        <p class="body-text" data-i18n="agile-p1">I collaborated with <strong>occupational therapists, IoT engineers, and developers</strong> <span class="underline-soft">during agile sprints</span>.</p>
+        <p class="body-text" data-i18n="agile-p2">We <strong>validated functional prototypes with users</strong> <span class="underline-soft">in two rounds</span>.</p>
       </div>
     </div>
   </div>
@@ -670,21 +681,21 @@
     <span class="eyebrow" style="border-bottom-color: #7B8D73;">Deliver</span>
     <h2 class="section-title" data-i18n="deliver-title">The solution, a 360 service.</h2>
     <div class="deliver-stack">
-      <div class="principles-split">
+      <div class="principles-split seam">
         <div class="principles-box" style="background: #FFFAF5;">
           <div class="deliver-card-title" data-i18n="sdp-title">Service Design Plan</div>
           <div class="service-plan-items">
             <div class="mini-card">
               <h5 data-i18n="sdp1-h">Blueprint</h5>
-              <p data-i18n="sdp1-p">Mapped frontstage and backstage interactions, identifying critical points like IoT setup and alert response.</p>
+              <p data-i18n="sdp1-p">Mapped frontstage and backstage interactions, identifying <span class="underline-soft">critical points like IoT setup and alert response</span>.</p>
             </div>
             <div class="mini-card">
               <h5 data-i18n="sdp2-h">User journey map</h5>
-              <p data-i18n="sdp2-p">Highlighted key moments, emotions, and frictions for older adults and caregivers.</p>
+              <p data-i18n="sdp2-p">Highlighted <span class="underline-soft">key moments, emotions, and frictions</span> for older adults and caregivers.</p>
             </div>
             <div class="mini-card">
               <h5 data-i18n="sdp3-h">Service prototyping</h5>
-              <p data-i18n="sdp3-p">Simulated scenarios to evaluate device and communication flows during emergencies, resulting in a 90% accuracy rate in emergency response simulation.</p>
+              <p data-i18n="sdp3-p">Simulated scenarios to evaluate device and communication flows during emergencies, resulting in a <span class="underline-soft">90% accuracy rate in emergency response simulation</span>.</p>
             </div>
           </div>
         </div>
@@ -693,11 +704,11 @@
         </div>
       </div>
 
-      <div class="principles-split">
+      <div class="principles-split seam">
         <div class="principles-box" style="background: #FFFAF5;">
           <div class="deliver-card-title" data-i18n="watch-title">Smartwatch</div>
           <p class="smartwatch-text" data-i18n="watch-text">Designed to look like a traditional analog watch to feel familiar. Zero interaction required.</p>
-          <div class="pill-row">
+          <div class="pill-row pills-body-sm">
             <span class="pill-tag" data-i18n="watch-pill1">Automated fall detection.</span>
             <span class="pill-tag" data-i18n="watch-pill2">Quick alert activation with simple screen taps.</span>
           </div>
@@ -710,7 +721,7 @@
   </div>
   </div>
 
-  <div style="padding-top: 80px; padding-bottom: 0;">
+  <div style="padding-top: 80px; padding-bottom: 80px;">
     <div class="mobileapp-split">
       <div class="mobileapp-media">
         <img src="assets/ellie-app-home.png" alt="Ellie Care mobile app — home screen"/>
@@ -732,7 +743,7 @@
       <div class="dualcol-card">
         <img src="assets/ellie-app-carecircle.jpg" alt="Care Circle app screen"/>
         <h4 data-i18n="dualcol1-h">Privacy-focused user roles</h4>
-        <p data-i18n="dualcol1-p">Allow older adults to control the information they share, while caregivers have specific permissions to access essential data.</p>
+        <p data-i18n="dualcol1-p" style="font-size: var(--text-body);">Allow older adults to control the information they share, while caregivers have specific permissions to access essential data.</p>
       </div>
       <div class="dualcol-card">
         <img src="assets/ellie-app-accessibility.jpg" alt="Accessibility app screen"/>
@@ -823,8 +834,8 @@
       </div>
       <div class="fl-card">
         <span class="fl-eyebrow" data-i18n="learnings-label">Learnings</span>
-        <p data-i18n="learnings-p1">The biggest challenge was that stakeholders and the technical team were overly focused on features that didn't solve core user problems, while stakeholders also prioritized business requirements.</p>
-        <p data-i18n="learnings-p2">The solution was to deepen their involvement with user needs, linking these to business goals and showing how addressing user problems drives business success.</p>
+        <p data-i18n="learnings-p1">The biggest challenge was that stakeholders and the technical team were <strong>overly focused on features that didn't solve core user problems</strong>, while stakeholders also prioritized business requirements.</p>
+        <p data-i18n="learnings-p2">The solution was to <strong>deepen their involvement with user needs</strong>, linking these to business goals and <strong>showing how addressing user problems drives business success</strong>.</p>
       </div>
     </div>
   </div>
@@ -902,16 +913,16 @@
         'process2-p': 'I organized workshops with stakeholders to share research findings, align goals and understand business requirements.',
         'develop-title': 'Service and MVP definition',
         'agile-title': 'Agile collaboration',
-        'agile-p1': 'I collaborated with occupational therapists, IoT engineers, and developers during agile sprints.',
-        'agile-p2': 'We validated functional prototypes with users in two rounds.',
+        'agile-p1': 'I collaborated with <strong>occupational therapists, IoT engineers, and developers</strong> <span class="underline-soft">during agile sprints</span>.',
+        'agile-p2': 'We <strong>validated functional prototypes with users</strong> <span class="underline-soft">in two rounds</span>.',
         'deliver-title': 'The solution, a 360 service.',
         'sdp-title': 'Service Design Plan',
         'sdp1-h': 'Blueprint',
-        'sdp1-p': 'Mapped frontstage and backstage interactions, identifying critical points like IoT setup and alert response.',
+        'sdp1-p': 'Mapped frontstage and backstage interactions, identifying <span class="underline-soft">critical points like IoT setup and alert response</span>.',
         'sdp2-h': 'User journey map',
-        'sdp2-p': 'Highlighted key moments, emotions, and frictions for older adults and caregivers.',
+        'sdp2-p': 'Highlighted <span class="underline-soft">key moments, emotions, and frictions</span> for older adults and caregivers.',
         'sdp3-h': 'Service prototyping',
-        'sdp3-p': 'Simulated scenarios to evaluate device and communication flows during emergencies, resulting in a 90% accuracy rate in emergency response simulation.',
+        'sdp3-p': 'Simulated scenarios to evaluate device and communication flows during emergencies, resulting in a <span class="underline-soft">90% accuracy rate in emergency response simulation</span>.',
         'watch-title': 'Smartwatch',
         'watch-text': 'Designed to look like a traditional analog watch to feel familiar. Zero interaction required.',
         'watch-pill1': 'Automated fall detection.',
@@ -947,8 +958,8 @@
         'future-p2': '<strong>Expand functionality</strong> to integrate with healthcare providers.',
         'future-p3': 'Explore advanced <strong>predictive analytics</strong> once sufficient data is collected.',
         'learnings-label': 'Learnings',
-        'learnings-p1': "The biggest challenge was that stakeholders and the technical team were overly focused on features that didn't solve core user problems, while stakeholders also prioritized business requirements.",
-        'learnings-p2': 'The solution was to deepen their involvement with user needs, linking these to business goals and showing how addressing user problems drives business success.',
+        'learnings-p1': "The biggest challenge was that stakeholders and the technical team were <strong>overly focused on features that didn't solve core user problems</strong>, while stakeholders also prioritized business requirements.",
+        'learnings-p2': 'The solution was to <strong>deepen their involvement with user needs</strong>, linking these to business goals and <strong>showing how addressing user problems drives business success</strong>.',
         'award1': '<strong>Nominated to HealthTech Startup of the Year 2024</strong>\n          Global Startup Awards - Latin America Edition 11',
         'award2': '<strong>Global Partner on the FIELD Global Immersion Program</strong>\n          Harvard Business School - Edition 2024',
         'footer-more': 'More projects'
@@ -993,16 +1004,16 @@
         'process2-p': 'Organicé workshops con stakeholders para compartir hallazgos de investigación, alinear objetivos y entender los requerimientos de negocio.',
         'develop-title': 'Definición del servicio y el MVP',
         'agile-title': 'Colaboración ágil',
-        'agile-p1': 'Colaboré con terapistas ocupacionales, ingenieros de IoT y developers durante los sprints ágiles.',
-        'agile-p2': 'Validamos prototipos funcionales con usuarios en dos rondas.',
+        'agile-p1': 'Colaboré con <strong>terapistas ocupacionales, ingenieros de IoT y developers</strong> <span class="underline-soft">durante los sprints ágiles</span>.',
+        'agile-p2': '<strong>Validamos prototipos funcionales con usuarios</strong> <span class="underline-soft">en dos rondas</span>.',
         'deliver-title': 'La solución, un servicio 360.',
         'sdp-title': 'Service Design Plan',
         'sdp1-h': 'Blueprint',
-        'sdp1-p': 'Mapeé las interacciones frontstage y backstage, identificando puntos críticos como la configuración del IoT y la respuesta a alertas.',
+        'sdp1-p': 'Mapeé las interacciones frontstage y backstage, identificando <span class="underline-soft">puntos críticos como la configuración del IoT y la respuesta a alertas</span>.',
         'sdp2-h': 'User journey map',
-        'sdp2-p': 'Destaqué momentos clave, emociones y fricciones tanto para adultos mayores como para cuidadores.',
+        'sdp2-p': 'Destaqué <span class="underline-soft">momentos clave, emociones y fricciones</span> tanto para adultos mayores como para cuidadores.',
         'sdp3-h': 'Prototipado de servicio',
-        'sdp3-p': 'Simulé escenarios para evaluar los flujos de dispositivo y comunicación durante emergencias, logrando un 90% de precisión en la simulación de respuesta a emergencias.',
+        'sdp3-p': 'Simulé escenarios para evaluar los flujos de dispositivo y comunicación durante emergencias, logrando un <span class="underline-soft">90% de precisión en la simulación de respuesta a emergencias</span>.',
         'watch-title': 'Smartwatch',
         'watch-text': 'Diseñado para verse como un reloj analógico tradicional y resultar familiar. Cero interacción necesaria.',
         'watch-pill1': 'Detección automática de caídas.',
@@ -1038,8 +1049,8 @@
         'future-p2': '<strong>Expandir funcionalidades</strong> para integrarse con proveedores de salud.',
         'future-p3': 'Explorar <strong>analítica predictiva</strong> avanzada una vez que se recolecten suficientes datos.',
         'learnings-label': 'Aprendizajes',
-        'learnings-p1': 'El mayor desafío fue que los stakeholders y el equipo técnico estaban demasiado enfocados en features que no resolvían los problemas centrales de los usuarios, mientras los stakeholders también priorizaban los requerimientos de negocio.',
-        'learnings-p2': 'La solución fue profundizar su involucramiento con las necesidades de los usuarios, conectándolas con los objetivos de negocio y mostrando cómo resolver los problemas de los usuarios impulsa el éxito del negocio.',
+        'learnings-p1': 'El mayor desafío fue que los stakeholders y el equipo técnico estaban <strong>demasiado enfocados en features que no resolvían los problemas centrales de los usuarios</strong>, mientras los stakeholders también priorizaban los requerimientos de negocio.',
+        'learnings-p2': 'La solución fue <strong>profundizar su involucramiento con las necesidades de los usuarios</strong>, conectándolas con los objetivos de negocio y <strong>mostrando cómo resolver los problemas de los usuarios impulsa el éxito del negocio</strong>.',
         'award1': '<strong>Nominada a HealthTech Startup of the Year 2024</strong>\n          Global Startup Awards - Edición Latinoamérica 11',
         'award2': '<strong>Global Partner en el FIELD Global Immersion Program</strong>\n          Harvard Business School - Edición 2024',
         'footer-more': 'Más proyectos'

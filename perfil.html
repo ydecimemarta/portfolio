@@ -1,0 +1,1001 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <link rel="icon" type="image/png" href="favicon.png"/>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sobre mí · Martina Hirschler</title>
+  <meta name="description" content="Martina Hirschler, diseñadora senior. Investigo, mapeo y facilito para que los equipos entiendan el problema antes de diseñar la primera pantalla." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Karla:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400;1,500&display=swap" rel="stylesheet" />
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --cream:      #FFF9F1;
+      --cards-bg:   #F9F0E8;
+      --dark:       #0B0B0B;
+      --mid:        #9A928A;
+      --hair:       rgba(0,0,0,.14);
+      --light-gray: #ECDFCD;
+
+      --c-product:     #A79BF3; /* violeta */
+      --c-strategy:    #F06554; /* coral */
+      --c-research:    #ECDFCD; /* beige */
+      --c-ux:          #A79BF3; /* violeta */
+      --c-service:     #EEA91A; /* ámbar */
+      --c-visuals:     #D8D2FF; /* lavanda */
+      --c-stakeholder: #FFADA3; /* salmón */
+
+      --ink-violet: #4B3FB0;
+
+      --pad:  clamp(22px, 6vw, 76px);
+      --maxw: 1180px;
+      --rail-w: 62px;
+      --sans: 'Karla', system-ui, -apple-system, sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--sans);
+      background: var(--cream);
+      color: var(--dark);
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+      line-height: 1.5;
+    }
+    a { color: inherit; }
+
+    /* ── nav chrome (same as home alternativo) ── */
+    .left-rail {
+      position: fixed; top: 0; left: 0; bottom: 0; width: var(--rail-w);
+      border-right: 1.5px solid var(--dark); background: var(--cream);
+      display: flex; flex-direction: column; align-items: center; padding-top: 24px;
+      z-index: 40;
+    }
+    .left-rail .icon-btn { background: none; border: none; cursor: pointer; padding: 4px; display: flex; }
+    .frame { margin-left: var(--rail-w); position: relative; }
+    .topbar {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 20px var(--pad); border-bottom: 1.5px solid var(--dark);
+    }
+    .topbar .logo { font-size: 22px; font-weight: 700; letter-spacing: -.5px; text-decoration: none; }
+    .lang-switch { display: flex; gap: 2px; padding: 4px; background: var(--cards-bg); border-radius: 100px; }
+    .lang-switch button {
+      border: none; background: transparent; cursor: pointer; font-family: inherit;
+      font-size: 12px; font-weight: 700; letter-spacing: .03em; padding: 6px 14px;
+      border-radius: 100px; color: #8A7A63; transition: background .2s, color .2s, box-shadow .2s;
+    }
+    .lang-switch button.active { background: #fff; color: var(--dark); box-shadow: 0 1px 4px rgba(0,0,0,.12); }
+
+    section {
+      position: relative;
+      padding-inline: var(--pad);
+      max-width: var(--maxw);
+      margin-inline: auto;
+    }
+    .sec { padding-top: clamp(64px, 11vh, 140px); padding-bottom: clamp(64px, 11vh, 140px); }
+
+    /* ── low-hierarchy section eyebrow ── */
+    .eyebrow {
+      display: block;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--mid);
+      letter-spacing: .005em;
+      margin-bottom: 22px;
+    }
+
+    /* ── shared statement type ── */
+    .statement {
+      font-weight: 700;
+      font-size: clamp(30px, 5.1vw, 62px);
+      line-height: 1.08;
+      letter-spacing: -0.035em;
+      text-wrap: pretty;
+    }
+    .u { text-underline-offset: 6px; text-decoration-thickness: 3px; }
+    .w-service  { color: #6b4a00; text-decoration: underline; text-decoration-color: var(--c-service); }
+    .w-strategy { color: var(--c-strategy); text-decoration: underline; text-decoration-color: var(--c-strategy); }
+    .w-product  { color: var(--ink-violet); text-decoration: underline; text-decoration-color: var(--c-product); }
+    .hot { color: var(--c-strategy); }
+
+    .body {
+      font-size: clamp(16px, 1.5vw, 19px);
+      font-weight: 500;
+      line-height: 1.55;
+      max-width: 58ch;
+    }
+    .body strong { font-weight: 700; color: var(--dark); }
+    .note-txt {
+      font-size: clamp(15px, 1.6vw, 17px);
+      font-weight: 500;
+      font-style: italic;
+      line-height: 1.45;
+      color: #5c554d;
+      max-width: 34ch;
+    }
+
+    /* ── real photo print: raster border with irregular edges, no shadow ── */
+    .photo {
+      display: block; position: relative;
+      background: transparent;
+      border: 18px solid transparent;
+      border-width: 18px 18px 26px 18px;
+      border-image: url("assets/photo-frame.png") 26 fill / 18px 18px 26px 18px / 0 stretch;
+    }
+    .photo img { display: block; width: 100%; height: auto; }
+    .photo.tilt-l { transform: rotate(-2deg); }
+    .photo.tilt-r { transform: rotate(1.6deg); }
+
+    .ph {
+      aspect-ratio: 4 / 5;
+      background: #d9d5cd;
+      display: flex; align-items: center; justify-content: center; text-align: center;
+      font-size: 10.5px; letter-spacing: .12em; font-weight: 600;
+      color: #6b6459; text-transform: uppercase; padding: 16px;
+    }
+
+    /* ═══════════════════ HERO ═══════════════════ */
+    .hero { padding-top: clamp(38px, 5vh, 66px); padding-bottom: clamp(56px, 9vh, 120px); position: relative; }
+    .hero-stage { position: relative; }
+    .hero-statement { position: relative; z-index: 3; max-width: 24ch; }
+
+    .hero-row {
+      display: grid; grid-template-columns: 1fr auto;
+      gap: clamp(30px, 6vw, 80px); align-items: start;
+      margin-top: clamp(34px, 5vh, 60px);
+    }
+    .hero-sub {
+      position: relative; z-index: 3;
+      font-size: 15px; line-height: 1.7; color: #4a443d;
+      max-width: 44ch;
+    }
+    .hero-sub b { color: var(--dark); font-weight: 700; }
+
+    .hero-props { position: relative; width: 340px; flex: none; }
+    .hero-props .frame { position: relative; z-index: 2; width: 100%; }
+    .hero-props .folder  { position: absolute; left: -26%; top: 6%;  z-index: 1; }
+    .hero-props .chip.c1 { position: absolute; left: 0;    bottom: -13%; z-index: 4; }
+    .hero-props .chip.c2 { position: absolute; left: 11%;  bottom: -29%; z-index: 4; }
+
+    @media (min-width: 901px) {
+      .hero-stage { min-height: 470px; }
+      .hero-statement { max-width: 48%; }
+      .hero-props { position: absolute; top: 8px; right: 0; width: clamp(340px, 32vw, 460px); }
+      .hero-sub { max-width: 44ch; }
+    }
+
+    .folder {
+      display: inline-flex; flex-direction: column; align-items: center; gap: 8px;
+      font-size: 12px; color: #4a443d; user-select: none;
+    }
+    .folder svg { width: 72px; height: auto; }
+    .chip {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: #fff; border: 1px solid rgba(0,0,0,.14);
+      font-size: 12px; color: #4a443d; padding: 7px 11px;
+      box-shadow: 0 3px 8px -5px rgba(0,0,0,.3);
+    }
+    .chip::before { content: ""; width: 12px; height: 12px; background: var(--c-product); border-radius: 2px; flex: none; }
+
+    .float { position: absolute; z-index: 2; will-change: transform; }
+
+    /* Figma-style selection around the name */
+    .selname { position: relative; display: inline-block; }
+    .selname .box {
+      position: absolute; inset: -6px -8px -4px -8px;
+      border: 1.5px solid var(--c-product);
+      pointer-events: none; opacity: 0; transform: scale(.97);
+      transition: opacity .5s ease .45s, transform .5s ease .45s;
+    }
+    .selname.on .box { opacity: 1; transform: scale(1); }
+    .selname .box i { position: absolute; width: 7px; height: 7px; background: #fff; border: 1.5px solid var(--c-product); }
+    .selname .box i:nth-child(1) { top: -4px; left: -4px; }
+    .selname .box i:nth-child(2) { top: -4px; right: -4px; }
+    .selname .box i:nth-child(3) { bottom: -4px; left: -4px; }
+    .selname .box i:nth-child(4) { bottom: -4px; right: -4px; }
+    .selname .tag {
+      position: absolute; top: -30px; right: -10px;
+      background: var(--ink-violet); color: #fff;
+      font-size: 11px; font-weight: 600; letter-spacing: .01em;
+      padding: 3px 9px; white-space: nowrap;
+      opacity: 0; transform: translateY(4px);
+      transition: opacity .4s ease .7s, transform .4s ease .7s;
+    }
+    .selname.on .tag { opacity: 1; transform: translateY(0); }
+
+    /* ═══════════════════ ORIGIN ═══════════════════ */
+    .origin { display: grid; grid-template-columns: 1.4fr .6fr; gap: clamp(30px, 6vw, 84px); align-items: center; }
+    .origin .big {
+      font-weight: 700; font-size: clamp(26px, 4vw, 50px);
+      line-height: 1.12; letter-spacing: -.03em;
+    }
+    .origin .big .v { color: var(--c-product); }
+    .origin .after { margin-top: 24px; font-size: 16px; line-height: 1.55; color: #4a443d; max-width: 46ch; }
+    .origin .aside { position: relative; }
+    .origin .aside .photo { position: relative; z-index: 1; }
+    .origin .bg-note {
+      position: absolute; z-index: 0; top: -22px; left: 2px;
+      width: min(268px, 92%);
+      color: #c7bfb0; font-size: 17px; font-weight: 700; line-height: 1.24;
+      transform: rotate(-2deg); pointer-events: none;
+    }
+
+    /* ═══════════════════ WHAT I DO ═══════════════════ */
+    .do-statement { font-size: clamp(24px, 3.5vw, 42px); max-width: 20ch; }
+    .do-body { margin-top: 28px; }
+    .flow {
+      list-style: none; margin-top: clamp(36px, 6vw, 66px);
+      display: grid; grid-template-columns: repeat(7, 1fr);
+      border-top: 1.5px solid var(--dark); border-bottom: 1.5px solid var(--dark);
+    }
+    .flow li { padding: 18px 14px 20px; border-right: 1px solid var(--hair); position: relative; }
+    .flow li:last-child { border-right: none; }
+    .flow .n { font-size: 11px; color: var(--mid); font-weight: 600; }
+    .flow .t { font-weight: 700; font-size: clamp(13px, 1.4vw, 17px); margin-top: 8px; letter-spacing: -.02em; }
+    .flow .g { font-size: 12px; color: #6b6459; margin-top: 6px; line-height: 1.35; }
+    .flow li::after {
+      content: "→"; position: absolute; right: -7px; top: 22px;
+      font-size: 12px; color: var(--dark); background: var(--cream); padding: 1px 0; z-index: 2;
+    }
+    .flow li:last-child::after { content: none; }
+    .do-not { margin-top: 16px; font-size: 13px; color: var(--mid); }
+
+    /* ═══════════════════ GLOSARIO ═══════════════════ */
+    .gloss-head h2 { font-weight: 800; font-size: clamp(28px, 4vw, 46px); letter-spacing: -.02em; }
+
+    .gset { margin-top: 48px; }
+    .gset > h3 {
+      font-size: 12px; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; color: #3a352f;
+      padding-bottom: 10px; border-bottom: 1.5px solid var(--dark); margin-bottom: 2px;
+    }
+    .ggrid { display: grid; grid-template-columns: repeat(12, 1fr); }
+    .gterm {
+      grid-column: span 4;
+      border-bottom: 1px solid var(--hair);
+      border-right: 1px solid var(--hair);
+      padding: 22px 26px 24px 24px;
+      display: grid; grid-template-columns: 22px 1fr; gap: 8px 14px;
+      min-height: 132px;
+    }
+    .gterm:nth-child(3n)   { border-right: none; }
+    .gterm:nth-child(3n+1) { padding-left: 0; }
+    .gterm .gn { font-size: 11px; color: var(--mid); font-weight: 600; padding-top: 4px; }
+    .gterm .gt { display: flex; flex-wrap: wrap; align-items: center; gap: 9px; }
+    .gterm .gt b { font-size: 15.5px; font-weight: 700; letter-spacing: -.01em; }
+    .gterm .gd { grid-column: 2; font-size: 12.5px; line-height: 1.42; color: #6b6459; }
+    .dot { width: 10px; height: 10px; border-radius: 50%; flex: none; display: inline-block; }
+    .d-service { background: var(--c-service); }
+    .d-research { background: var(--c-research); box-shadow: inset 0 0 0 1px rgba(0,0,0,.22); }
+    .d-strategy { background: var(--c-strategy); }
+    .d-ux { background: var(--c-ux); }
+    .d-visuals { background: var(--c-visuals); }
+    .d-stakeholder { background: var(--c-stakeholder); }
+
+    .tools { margin-top: 20px; display: flex; flex-wrap: wrap; gap: 10px; }
+    .tool {
+      display: inline-flex; align-items: center; gap: 9px;
+      font-size: 13px; font-weight: 600; letter-spacing: .01em;
+      padding: 6px 15px 6px 6px; border-radius: 100px;
+      background: var(--cards-bg); border: 1px solid rgba(0,0,0,.14);
+    }
+    .tlogo {
+      width: 20px; height: 20px; border-radius: 5px; flex: none;
+      object-fit: contain; background: #fff;
+    }
+
+    /* idiomas — visual meter */
+    .langs { margin-top: 30px; border-top: 1px solid var(--hair); }
+    .lang {
+      display: grid; grid-template-columns: 120px 88px 1fr; align-items: center; gap: 18px;
+      padding: 15px 0; border-bottom: 1px solid var(--hair);
+    }
+    .lang .lname { font-size: 18px; font-weight: 700; letter-spacing: -.01em; }
+    .lang .lmeter { display: inline-flex; gap: 5px; }
+    .lang .lmeter i { width: 9px; height: 9px; border-radius: 50%; border: 1.5px solid var(--dark); }
+    .lang .lmeter i.on { background: var(--dark); }
+    .lang .llevel { font-size: 13px; color: #6b6459; }
+
+    /* ═══════════════════ FACILITATION ═══════════════════ */
+    .facil { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(28px, 6vw, 76px); align-items: center; }
+    .facil .say { font-weight: 700; font-size: clamp(22px, 3.1vw, 38px); line-height: 1.14; letter-spacing: -.03em; }
+
+    /* ═══════════════════ TRUTHS — scattered playing cards ═══════════════════ */
+    .mx-stage { position: relative; margin-top: 32px; height: 660px; }
+    .mx {
+      position: absolute; width: clamp(228px, 22vw, 286px); min-height: 236px;
+      background: var(--bg, #fff); border: 1px solid rgba(0,0,0,.1); border-radius: 20px;
+      padding: 22px 22px 24px; text-align: left; color: #141414;
+      font-family: inherit; display: flex; flex-direction: column; gap: 12px;
+      cursor: grab; touch-action: none; user-select: none;
+      transition: border-color .2s ease;
+      will-change: transform;
+    }
+    .mx:hover { border-color: rgba(0,0,0,.32); }
+    .mx:active { cursor: grabbing; }
+    .mx-n { position: absolute; top: 16px; right: 20px; font-size: 30px; font-weight: 800; letter-spacing: -.03em; opacity: .85; }
+    .mx-tag { font-size: 11px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; opacity: .68; }
+    .mx-doodle { width: 40px; height: 40px; overflow: visible; }
+    .mx-doodle * { stroke: #141414; stroke-width: 2.4; fill: none; stroke-linecap: round; stroke-linejoin: round; }
+    .mx-text { font-size: 16px; font-weight: 600; line-height: 1.34; letter-spacing: -.01em; margin-top: auto; }
+
+    .mx-scrim {
+      position: fixed; inset: 0; z-index: 900; background: rgba(24,18,12,.44);
+      opacity: 0; pointer-events: none; transition: opacity .35s ease;
+    }
+    .mx-scrim.on { opacity: 1; pointer-events: auto; }
+
+    .mx.expanded {
+      position: fixed !important;
+      height: auto; max-height: 88vh; overflow: auto;
+      z-index: 1000; cursor: default; padding: 44px 44px 48px; border-radius: 26px;
+      border-color: rgba(0,0,0,.14);
+    }
+    .mx.expanded .mx-n { font-size: 46px; top: 28px; right: 34px; }
+    .mx.expanded .mx-tag { font-size: 13px; }
+    .mx.expanded .mx-doodle { width: 60px; height: 60px; }
+    .mx.expanded .mx-text { font-size: clamp(22px, 3.6vw, 34px); font-weight: 700; line-height: 1.2; }
+
+    /* ═══════════════════ LEAN ═══════════════════ */
+    .lean { display: grid; grid-template-columns: 1fr auto; gap: 40px; align-items: center; }
+    .lean p { font-weight: 600; font-size: clamp(19px, 2.5vw, 29px); line-height: 1.34; letter-spacing: -.02em; max-width: 26ch; }
+    .lean p strong { color: var(--c-strategy); }
+    .lean .aside-note {
+      font-size: 13px; font-weight: 700; letter-spacing: .04em; text-transform: uppercase;
+      color: #3a352f; border: 1.5px solid var(--dark); border-radius: 40px / 60px;
+      padding: 14px 22px; white-space: nowrap; line-height: 1.3; text-align: center;
+    }
+
+    /* ═══════════════════ TESTIMONIALS — side scroll, full bleed ═══════════════════ */
+    .quotes { max-width: none; padding-inline: 0; }
+    .quotes .eyebrow { padding-inline: var(--pad); }
+    .quotes-track {
+      margin-top: 40px;
+      display: flex; gap: 30px;
+      overflow-x: auto; scroll-snap-type: x proximity;
+      padding: 22px var(--pad) 24px;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+    }
+    .quotes-track::-webkit-scrollbar { display: none; }
+    .tcard {
+      flex: 0 0 clamp(238px, 58vw, 316px);
+      scroll-snap-align: start;
+      background: var(--pi, #FDE68A);
+      padding: 26px 24px 24px;
+      display: flex; flex-direction: column; gap: 14px;
+      box-shadow: 2px 7px 16px -7px rgba(0,0,0,.3);
+      position: relative;
+    }
+    .tcard::before {
+      content: ""; position: absolute; top: -11px; left: 50%;
+      width: 66px; height: 21px; background: rgba(255,255,255,.55);
+      border: 1px solid rgba(0,0,0,.05);
+      transform: translateX(-50%) rotate(var(--tape, -3deg));
+    }
+    .tcard:nth-child(1) { --pi:#FDE68A; --tape:-5deg; transform: rotate(-1.6deg); border-radius: 2px 16px 4px 12px; }
+    .tcard:nth-child(2) { --pi:#FBD0E4; --tape:4deg;  transform: rotate(1.3deg);  border-radius: 14px 2px 14px 2px; }
+    .tcard:nth-child(3) { --pi:#C4DEFB; --tape:-2deg; transform: rotate(-0.7deg); border-radius: 3px 3px 18px 3px; }
+    .tcard:nth-child(4) { --pi:#C8F0D6; --tape:3deg;  transform: rotate(1.8deg);  border-radius: 16px 6px 2px 16px; }
+    .tcard .q { font-size: 15.5px; font-weight: 600; line-height: 1.5; letter-spacing: -.01em; color: #17140f; }
+    .tcard .a { font-size: 12px; line-height: 1.55; color: #4a443d; margin-top: auto; }
+    .tcard .a b { color: #17140f; display: block; font-weight: 700; font-size: 13px; }
+
+    /* ═══════════════════ WORK — equal-height cards, side scroll ═══════════════════ */
+    .pub-track {
+      margin-top: 10px;
+      display: flex; gap: 22px;
+      overflow-x: auto; scroll-snap-type: x proximity;
+      padding: 4px 0 18px;
+      scrollbar-width: none;
+    }
+    .pub-track::-webkit-scrollbar { display: none; }
+    .pub-card {
+      flex: 0 0 clamp(300px, 34vw, 400px); height: 384px;
+      scroll-snap-align: start;
+      display: flex; flex-direction: column; gap: 10px;
+      background: var(--cream); border: 1.5px solid var(--dark);
+      padding: 16px 16px 18px; text-decoration: none; color: inherit;
+      transition: transform .2s ease;
+    }
+    .pub-card:hover { transform: translateY(-3px); }
+    .pub-card .card-thumb { width: 100%; aspect-ratio: 16 / 10; object-fit: cover; display: block; flex: none; }
+    .pub-card h3 {
+      font-size: 16.5px; font-weight: 700; line-height: 1.24; letter-spacing: -.02em;
+      display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+    }
+    .pub-card .card-read { font-size: 12px; font-weight: 500; color: var(--mid); }
+    .pub-card .card-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: auto; max-height: 48px; overflow: hidden; }
+    .pub-card .tag {
+      font-size: 10px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase;
+      padding: 4px 11px; border-radius: 100px; color: var(--dark);
+    }
+    .tag-product { background: var(--c-product); }
+    .tag-ux { background: var(--c-ux); }
+    .tag-strategy { background: var(--c-strategy); color: #fff; }
+    .tag-research { background: var(--c-research); }
+    .tag-service { background: var(--c-service); }
+    .tag-visuals { background: var(--c-visuals); }
+    .tag-stakeholder { background: var(--c-stakeholder); }
+    .pub-more-card { align-items: center; justify-content: center; gap: 12px; font-size: 19px; font-weight: 700; }
+    .pub-more-card .arw { font-size: 22px; transition: transform .2s ease; }
+    .pub-more-card:hover .arw { transform: translateX(5px); }
+
+    /* ═══════════════════ CONTACT ═══════════════════ */
+    .contact { padding-bottom: clamp(72px, 12vh, 150px); }
+    .contact .big { font-weight: 700; font-size: clamp(28px, 5.6vw, 70px); line-height: 1.05; letter-spacing: -.045em; max-width: 15ch; }
+    .contact .friend-note { margin-top: 16px; font-size: 16px; font-weight: 500; color: #4a443d; }
+    .contact .row { margin-top: 34px; display: flex; flex-wrap: wrap; gap: 14px 16px; align-items: center; }
+    .btn {
+      display: inline-flex; align-items: center; gap: 10px;
+      font-size: 14px; font-weight: 700; padding: 14px 20px; text-decoration: none;
+      border: 1.5px solid var(--dark); background: var(--dark); color: var(--cream);
+      transition: transform .16s ease;
+    }
+    .btn .mi { font-size: 19px; line-height: 1; }
+    .btn.ghost { background: transparent; color: var(--dark); }
+    .btn:hover { transform: translateY(-2px); }
+    .contact .avail {
+      margin-top: 32px; font-size: 13px; color: #4a443d;
+      display: inline-flex; align-items: center; gap: 9px;
+    }
+    .contact .avail::before { content: ""; width: 9px; height: 9px; border-radius: 50%; background: #35b46a; box-shadow: 0 0 0 4px rgba(53,180,106,.2); }
+
+    /* ── reveal ── */
+    .reveal { opacity: 0; transform: translateY(22px); transition: opacity .7s ease, transform .7s cubic-bezier(.2,.7,.2,1); }
+    .reveal.in { opacity: 1; transform: none; }
+    .reveal.d1 { transition-delay: .08s; }
+    .reveal.d2 { transition-delay: .16s; }
+    .reveal.d3 { transition-delay: .24s; }
+
+    @media (prefers-reduced-motion: reduce) {
+      .reveal { opacity: 1 !important; transform: none !important; }
+      * { scroll-behavior: auto !important; }
+    }
+
+    /* ── responsive (mobile pass comes later) ── */
+    @media (max-width: 900px) {
+      .hero-row { grid-template-columns: 1fr; }
+      .hero-props { margin: 14px 0 44px; }
+      .hero-props .folder { left: auto; right: -3%; top: 0; }
+      .origin, .facil, .lean { grid-template-columns: 1fr; }
+      .lean .aside-note { justify-self: start; }
+      .flow { grid-template-columns: repeat(2, 1fr); }
+      .flow li { border-bottom: 1px solid var(--hair); }
+      .flow li::after { content: none; }
+      .gterm { grid-column: span 6; padding-left: 24px; }
+      .gterm:nth-child(3n)   { border-right: 1px solid var(--hair); }
+      .gterm:nth-child(3n+1) { padding-left: 24px; }
+      .gterm:nth-child(2n)   { border-right: none; }
+      .mx-stage { height: auto; display: flex; flex-direction: column; align-items: center; gap: 16px; }
+      .mx-stage .mx { position: relative; left: auto; top: auto; width: min(300px, 88vw); }
+      .mx-stage .mx:nth-child(odd)  { align-self: flex-start; }
+      .mx-stage .mx:nth-child(even) { align-self: flex-end; }
+      .pub-card { flex-basis: min(300px, 82vw); height: 372px; }
+      .lang { grid-template-columns: 100px 84px 1fr; gap: 12px; }
+    }
+    @media (max-width: 560px) {
+      :root { --rail-w: 46px; }
+      .topbar { padding: 16px var(--pad); }
+      .topbar .logo { font-size: 19px; }
+    }
+    @media (max-width: 600px) {
+      .hero-props .folder,
+      .hero-props .chip.c1,
+      .hero-props .chip.c2 { position: static; display: inline-flex; margin: 16px 14px 0 0; }
+      .gterm, .gterm:nth-child(3n) { grid-column: span 12; border-right: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="left-rail" aria-label="Navegación">
+    <button class="icon-btn" type="button" aria-label="Menú">
+      <svg width="20" height="15" viewBox="0 0 20 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M1 1.5H19" stroke="black" stroke-width="1.8" stroke-linecap="round"/>
+        <path d="M1 7.5H19" stroke="black" stroke-width="1.8" stroke-linecap="round"/>
+        <path d="M1 13.5H19" stroke="black" stroke-width="1.8" stroke-linecap="round"/>
+      </svg>
+    </button>
+  </nav>
+
+  <div class="frame">
+    <header class="topbar">
+      <a class="logo" href="index.html">Martina</a>
+      <div class="lang-switch" role="group" aria-label="Idioma">
+        <button type="button" class="active" data-lang="es">ES</button>
+        <button type="button" data-lang="en">EN</button>
+      </div>
+    </header>
+
+  <main>
+
+    <!-- ═══════════════ HERO ═══════════════ -->
+    <section class="hero">
+      <div class="hero-stage">
+        <h1 class="hero-statement statement reveal">
+          Soy <span class="selname" id="selname">Martina Hirschler<span class="tag">Diseñadora · Barcelona</span><span class="box"><i></i><i></i><i></i><i></i></span></span>.
+          <span class="w-product u">Investigo</span>, <span class="w-service u">mapeo el sistema</span>
+          y <span class="w-strategy u">facilito la conversación</span> antes de que alguien diseñe la primera pantalla.
+        </h1>
+
+        <div class="hero-row">
+          <p class="hero-sub reveal d1">
+            <b>Hace más o menos diez años que diseño</b>: de marcas e interfaces a servicios, estrategia y facilitación.
+            Ahora trabajo donde el problema todavía no tiene forma.
+          </p>
+
+          <div class="hero-props reveal d1">
+            <figure class="float frame photo tilt-r" data-rot="1.6">
+              <img src="assets/perfil-martina-3.png" alt="Retrato de Martina Hirschler" />
+            </figure>
+
+            <div class="float folder" data-rot="-6">
+              <svg viewBox="0 0 74 58" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M2 10c0-3 2-5 5-5h20l7 8h33c3 0 5 2 5 5v37c0 3-2 5-5 5H7c-3 0-5-2-5-5V10Z" fill="#4C9AFF"/>
+                <path d="M2 20h70v33c0 3-2 5-5 5H7c-3 0-5-2-5-5V20Z" fill="#7FB8FF"/>
+              </svg>
+              casos
+            </div>
+
+            <div class="float chip c1" data-rot="2">about-me.md</div>
+            <div class="float chip c2" data-rot="-3">about_me_final_final</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════ ORIGIN ═══════════════ -->
+    <section class="sec">
+      <div class="origin">
+        <div>
+          <span class="eyebrow reveal">de dónde viene esto</span>
+          <p class="big reveal d1">
+            A los 8 años hacía presentaciones de PowerPoint <span class="v">por</span> <span class="v">diversión</span>.........
+          </p>
+          <p class="after reveal d2">Así como escuchás. No ha cambiado tanto la cosa. Sigo ordenando ideas para que otras personas las entiendan; solo que ahora también hay usuarios, sistemas y equipos de por medio.</p>
+        </div>
+        <div class="aside reveal d2">
+          <figure class="photo tilt-l" style="width:100%; max-width:250px;">
+            <img src="assets/perfil-infancia.jpg" alt="Martina de chica haciendo el signo de la paz" />
+          </figure>
+          <p class="bg-note reveal d3">cuantas más animaciones, más cool</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════ WHAT I DO ═══════════════ -->
+    <section class="sec">
+      <p class="statement do-statement reveal">
+        Trabajo mejor cuando el problema todavía está <span class="hot">desordenado</span>.
+      </p>
+
+      <p class="body do-body reveal d2">
+        Cuando varios equipos no se ponen de acuerdo, nadie tiene la foto completa y hay que descubrir cuál es
+        el problema real. Hablo con la gente, dibujo el <strong>sistema</strong> que hay <strong>detrás de la experiencia</strong>,
+        encuentro <strong>patrones</strong> y lo convierto en <strong>una dirección</strong> con la que se pueda trabajar.
+      </p>
+
+      <ol class="flow reveal d2">
+        <li><div class="n">01</div><div class="t">Investigar</div><div class="g">escuchar a las personas</div></li>
+        <li><div class="n">02</div><div class="t">Dar sentido</div><div class="g">encontrar el patrón</div></li>
+        <li><div class="n">03</div><div class="t">Alinear</div><div class="g">misma sala, mismo problema</div></li>
+        <li><div class="n">04</div><div class="t">Estrategia</div><div class="g">elegir hacia dónde</div></li>
+        <li><div class="n">05</div><div class="t">Concepto</div><div class="g">imaginar el qué</div></li>
+        <li><div class="n">06</div><div class="t">Dirección</div><div class="g">algo accionable</div></li>
+        <li><div class="n">07</div><div class="t">Diseñar</div><div class="g">que sí, todavía lo hago</div></li>
+      </ol>
+      <p class="do-not reveal">(en vez de ticket, pantalla, componente, handoff)</p>
+    </section>
+
+    <!-- ═══════════════ GLOSARIO ═══════════════ -->
+    <section class="sec">
+      <span class="eyebrow reveal">habilidades, herramientas y formas de trabajar</span>
+      <div class="gloss-head">
+        <h2 class="reveal d1">GLOSARIO</h2>
+      </div>
+
+      <div class="gset reveal d1">
+        <h3>Hard skills</h3>
+        <div class="ggrid">
+          <div class="gterm"><span class="gn">01</span><span class="gt"><span class="dot d-ux"></span><b>UX de producto</b></span><span class="gd">Flujos, arquitectura, wireframes y prototipos de baja y alta fidelidad en web, móvil, iOS y Android. También la UI final cuando hace falta. Ejecución al servicio de una idea.</span></div>
+          <div class="gterm"><span class="gn">02</span><span class="gt"><span class="dot d-service"></span><b>Service Design</b></span><span class="gd">Diseñar lo que la persona vive y también los sistemas, procesos y roles que lo hacen posible. Blueprints, mapas de ecosistema, frontstage y backstage.</span></div>
+          <div class="gterm"><span class="gn">03</span><span class="gt"><span class="dot d-research"></span><b>Investigación</b></span><span class="gd">Entrevistas, tests de usabilidad cualitativos, observación y síntesis. Convertir lo que se escucha en oportunidades, no en un informe.</span></div>
+          <div class="gterm"><span class="gn">04</span><span class="gt"><span class="dot d-strategy"></span><b>Estrategia de diseño</b></span><span class="gd">Traducir insight y complejidad en dirección: principios, prioridades, concepto y visión compartida.</span></div>
+          <div class="gterm"><span class="gn">05</span><span class="gt"><span class="dot d-ux"></span><b>Arquitectura de información</b></span><span class="gd">Ordenar contenido, flujos y navegación para que una estructura compleja se vuelva recorrible.</span></div>
+          <div class="gterm"><span class="gn">06</span><span class="gt"><span class="dot d-service"></span><b>Systems thinking</b></span><span class="gd">Mirar más allá de la interfaz: dependencias, organización, canales y dónde vive de verdad la información.</span></div>
+          <div class="gterm"><span class="gn">07</span><span class="gt"><span class="dot d-strategy"></span><b>Discovery y facilitación</b></span><span class="gd">Cuestionar el encuadre inicial, encontrar la oportunidad grande detrás de un pedido pequeño, y diseñar y conducir los workshops que lo destraban: ejercicios, timeboxing, mapeo colaborativo y decisiones al final.</span></div>
+          <div class="gterm"><span class="gn">08</span><span class="gt"><span class="dot d-ux"></span><b>Creative prompting</b></span><span class="gd">Trabajar con modelos de IA para explorar conceptos, generar direcciones de UI y sintetizar research. Vibe coding para llegar a algo tocable antes de abrir Figma.</span></div>
+          <div class="gterm"><span class="gn">09</span><span class="gt"><span class="dot d-visuals"></span><b>Diseño visual y branding</b></span><span class="gd">Base de diseño gráfico: jerarquía, identidad, ilustración y sistemas visuales que hacen legible lo abstracto.</span></div>
+        </div>
+      </div>
+
+      <div class="gset reveal d1">
+        <h3>Soft skills</h3>
+        <div class="ggrid">
+          <div class="gterm"><span class="gn">10</span><span class="gt"><span class="dot d-visuals"></span><b>Comunicación y storytelling</b></span><span class="gd">Presentar, construir un argumento y meter la evidencia dentro de una narrativa en vez de volcar hallazgos.</span></div>
+          <div class="gterm"><span class="gn">11</span><span class="gt"><span class="dot d-stakeholder"></span><b>Gestión de stakeholders</b></span><span class="gd">Navegar resistencias con evidencia, generar confianza antes de forzar la adopción y trabajar entre mercados y áreas.</span></div>
+          <div class="gterm"><span class="gn">12</span><span class="gt"><span class="dot d-stakeholder"></span><b>Liderazgo coach</b></span><span class="gd">Dar dirección sin controlar cada detalle, crear rituales de feedback y acompañar a perfiles más junior.</span></div>
+          <div class="gterm"><span class="gn">13</span><span class="gt"><span class="dot d-visuals"></span><b>Traducción entre disciplinas</b></span><span class="gd">Moverme entre negocio, tecnología y usuario sin necesidad de ser la especialista más profunda en cada dominio.</span></div>
+          <div class="gterm"><span class="gn">14</span><span class="gt"><span class="dot d-strategy"></span><b>Ambigüedad y autonomía</b></span><span class="gd">De fundadora de estudio: scoping, ownership, relación con cliente y decisiones con información incompleta.</span></div>
+          <div class="gterm"><span class="gn">15</span><span class="gt"><span class="dot d-stakeholder"></span><b>Humor en el equipo</b></span><span class="gd">Para mí lo divertido no está separado del rendimiento: ayuda a la gente a participar y a que le importe el trabajo.</span></div>
+        </div>
+      </div>
+
+      <div class="gset reveal d1">
+        <h3>Herramientas</h3>
+        <div class="tools">
+          <span class="tool"><img class="tlogo" src="assets/logos/figma.png" alt="" />Figma</span>
+          <span class="tool"><img class="tlogo" src="assets/logos/figma.png" alt="" />FigJam</span>
+          <span class="tool"><img class="tlogo" src="assets/logos/miro.png" alt="" />Miro</span>
+          <span class="tool"><img class="tlogo" src="assets/logos/coveo.png" alt="" />Coveo</span>
+          <span class="tool"><img class="tlogo" src="assets/logos/chatgpt.png" alt="" />ChatGPT</span>
+          <span class="tool"><img class="tlogo" src="assets/logos/claude.png" alt="" />Claude</span>
+          <span class="tool"><img class="tlogo" src="assets/logos/lovable.png" alt="" />Lovable</span>
+          <span class="tool"><img class="tlogo" src="assets/logos/notion.png" alt="" />Notion</span>
+          <span class="tool"><img class="tlogo" src="assets/logos/adobe.png" alt="" />Suite Adobe</span>
+        </div>
+      </div>
+
+      <div class="gset reveal d1">
+        <h3>Idiomas</h3>
+        <div class="langs">
+          <div class="lang">
+            <span class="lname">Español</span>
+            <span class="lmeter"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></span>
+            <span class="llevel">Nativo</span>
+          </div>
+          <div class="lang">
+            <span class="lname">English</span>
+            <span class="lmeter"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i></i></span>
+            <span class="llevel">Profesional</span>
+          </div>
+          <div class="lang">
+            <span class="lname">Deutsch</span>
+            <span class="lmeter"><i class="on"></i><i class="on"></i><i class="on"></i><i></i><i></i></span>
+            <span class="llevel">Profesional, con alguna falta de gramática</span>
+          </div>
+          <div class="lang">
+            <span class="lname">Català</span>
+            <span class="lmeter"><i class="on"></i><i class="on"></i><i></i><i></i><i></i></span>
+            <span class="llevel">Aprendiendo, lo justo para una conversación</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════ FACILITATION ═══════════════ -->
+    <section class="sec">
+      <div class="facil">
+        <figure class="photo tilt-l reveal">
+          <img src="assets/perfil-martina-charla.png" alt="Martina facilitando una charla con micrófono frente a un grupo" />
+        </figure>
+        <div>
+          <p class="say reveal">Mi interfaz favorita a veces es una sala poniéndose de acuerdo.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════ TRUTHS — scattered cards, drag + tap to expand ═══════════════ -->
+    <section class="sec">
+      <span class="eyebrow reveal">algunas cosas que son ciertas sobre mí</span>
+      <div class="mx-stage reveal d1">
+
+        <div class="mx" tabindex="0" role="button" data-x="1%" data-y="3%" data-rot="-5" style="--bg:#F06554">
+          <span class="mx-n">01</span><span class="mx-tag">trabajo</span>
+          <svg class="mx-doodle" viewBox="0 0 40 40"><path d="M2 26c6-14 11 14 17 0s10-14 19 0"/></svg>
+          <span class="mx-text">Lidero como coach, no como jefa. Me gusta dar ownership y quitarme del medio.</span>
+        </div>
+
+        <div class="mx" tabindex="0" role="button" data-x="27%" data-y="15%" data-rot="4" style="--bg:#A79BF3">
+          <span class="mx-n">02</span><span class="mx-tag">contexto</span>
+          <svg class="mx-doodle" viewBox="0 0 40 40"><path d="M22 20c0-4 5-4 5 0s-7 8-12 3 -2-16 8-15 13 11 7 20"/></svg>
+          <span class="mx-text">Fundé y llevé mi propio estudio de diseño durante tres años. Vendí, contraté y presenté propuestas.</span>
+        </div>
+
+        <div class="mx" tabindex="0" role="button" data-x="53%" data-y="2%" data-rot="-2" style="--bg:#EEA91A">
+          <span class="mx-n">03</span><span class="mx-tag">vida</span>
+          <svg class="mx-doodle" viewBox="0 0 40 40"><g><circle cx="20" cy="20" r="6"/><line x1="20" y1="2" x2="20" y2="9"/><line x1="20" y1="31" x2="20" y2="38"/><line x1="2" y1="20" x2="9" y2="20"/><line x1="31" y1="20" x2="38" y2="20"/><line x1="7" y1="7" x2="12" y2="12"/><line x1="28" y1="28" x2="33" y2="33"/><line x1="33" y1="7" x2="28" y2="12"/><line x1="12" y1="28" x2="7" y2="33"/></g></svg>
+          <span class="mx-text">Comparto un coworking con amigos. La energía de un buen grupo de gente creativa es mi lugar.</span>
+        </div>
+
+        <div class="mx" tabindex="0" role="button" data-x="15%" data-y="44%" data-rot="5" style="--bg:#D8D2FF">
+          <span class="mx-n">04</span><span class="mx-tag">mirada</span>
+          <svg class="mx-doodle" viewBox="0 0 40 40"><g><line x1="20" y1="4" x2="20" y2="36"/><line x1="4" y1="20" x2="36" y2="20"/><line x1="9" y1="9" x2="31" y2="31"/><line x1="31" y1="9" x2="9" y2="31"/></g></svg>
+          <span class="mx-text">Miro casi todo con lente antropológica. Me fascinan las subculturas urbanas más que los monumentos.</span>
+        </div>
+
+        <div class="mx" tabindex="0" role="button" data-x="42%" data-y="52%" data-rot="-6" style="--bg:#FFFFFF">
+          <span class="mx-n">05</span><span class="mx-tag">fuera de pantalla</span>
+          <svg class="mx-doodle" viewBox="0 0 40 40"><path d="M3 22C11 8 17 34 24 20s9 12 14 -4"/></svg>
+          <span class="mx-text">Yoga, bailar, sol y explorar en la naturaleza. Lo analógico me recarga.</span>
+        </div>
+
+        <div class="mx" tabindex="0" role="button" data-x="68%" data-y="40%" data-rot="3" style="--bg:#ECDFCD">
+          <span class="mx-n">06</span><span class="mx-tag">creencia</span>
+          <svg class="mx-doodle" viewBox="0 0 40 40"><g><circle cx="8" cy="20" r="2.6"/><circle cx="20" cy="20" r="2.6"/><circle cx="32" cy="20" r="2.6"/></g></svg>
+          <span class="mx-text">Lo bello, por sí solo, también genera orgullo y sentido. No todo tiene que justificarse con una métrica.</span>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ═══════════════ LEAN ═══════════════ -->
+    <section class="sec">
+      <div class="lean">
+        <p class="reveal">
+          Me atraen el <strong>impacto social</strong>, la educación, el cuidado y la accesibilidad.
+          Pero el propósito también puede venir de hacer que un servicio o un equipo funcione mucho mejor.
+        </p>
+        <div class="aside-note reveal d1">una inclinación,<br/>no una etiqueta</div>
+      </div>
+    </section>
+
+    <!-- ═══════════════ TESTIMONIALS ═══════════════ -->
+    <!-- Traducción fiel de LinkedIn recs (jun 2024), acortada sólo omitiendo frases enteras.
+         Originales EN para la versión inglesa:
+         Juan María: "She is a great designer in every single challenge she faces, from research and discovery, to overall UX design, to a pixel perfect UI."
+         Serkan: "Her ability to translate complex ideas into intuitive and beautiful designs is truly remarkable. She works exceptionally well with cross-functional teams, ensuring seamless collaboration and effective communication."
+         Georgia: "...a really inspiring time in my own career due to her design and management skills. She has a way of imbuing personality in design, and can turn her hand to branding or UX UI with the same enthusiasm and skill. Her feedback style to more junior team members is thoughtful, detailed and motivating."
+         Una: "I love her passion and willingness to act and move things forward. [...] As an agile coach i find an ally in her in our efforts to continuously improve delivery of what matters."
+         Recambio, Bruno (cliente de agencia, original ES): "Es una persona con gran visión creativa y sin dudas volvería a trabajar con ella." -->
+    <section class="sec quotes">
+      <span class="eyebrow reveal">cosas lindas que dicen sobre mí</span>
+      <div class="quotes-track reveal d1">
+        <div class="tcard">
+          <span class="q">Una gran diseñadora en cada desafío que enfrenta: del research y el discovery, al UX, a una UI pixel perfect.</span>
+          <span class="a"><b>Juan María Sánchez Cruces</b>Product Designer &amp; Design Leader · primero mi profe, después colega</span>
+        </div>
+        <div class="tcard">
+          <span class="q">Su capacidad de traducir ideas complejas en diseños intuitivos y bonitos es realmente notable. Trabaja excepcionalmente bien con equipos multidisciplinarios.</span>
+          <span class="a"><b>Serkan Gökhan Bingöl</b>Product Owner · en el mismo equipo</span>
+        </div>
+        <div class="tcard">
+          <span class="q">Un momento realmente inspirador en mi carrera, por sus skills de diseño y de gestión. Tiene una forma de meterle personalidad al diseño, y pasa del branding al UX/UI con el mismo entusiasmo. Su feedback a los perfiles más junior es cuidado, detallado y motivador.</span>
+          <span class="a"><b>Georgia Watt</b>Brand &amp; Design · fue junior en mi equipo</span>
+        </div>
+        <div class="tcard">
+          <span class="q">Me encanta su pasión y sus ganas de actuar y hacer que las cosas avancen. Como agile coach, encuentro en ella una aliada en nuestro esfuerzo por mejorar la entrega de lo que importa. 🌻</span>
+          <span class="a"><b>Una Dinić</b>Agile Coach · en el mismo equipo</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════ WORK ═══════════════ -->
+    <section class="sec">
+      <div class="pub-track reveal">
+        <a class="pub-card" href="lutz-delivery.html">
+          <img class="card-thumb" src="assets/lutzdelivery-store.jpg" alt="" />
+          <h3>El problema no era la entrega</h3>
+          <p class="card-read">3 min de lectura</p>
+          <div class="card-tags">
+            <span class="tag tag-service">Service Design</span>
+            <span class="tag tag-strategy">Estrategia</span>
+            <span class="tag tag-stakeholder">Gestión de Stakeholders</span>
+          </div>
+        </a>
+        <a class="pub-card" href="ellie.html">
+          <img class="card-thumb" src="assets/home-ellie.png" alt="" />
+          <h3>Acompañando a adultos mayores con IOT</h3>
+          <p class="card-read">4 min de lectura</p>
+          <div class="card-tags">
+            <span class="tag tag-research">Investigación</span>
+            <span class="tag tag-strategy">Estrategia</span>
+            <span class="tag tag-service">Service Design</span>
+            <span class="tag tag-ux">UX</span>
+          </div>
+        </a>
+        <a class="pub-card" href="coalapay.html">
+          <img class="card-thumb" src="assets/coalapay-hero.jpg" alt="" />
+          <h3>Cripto con impacto social</h3>
+          <p class="card-read">3 min de lectura</p>
+          <div class="card-tags">
+            <span class="tag tag-service">Service Design</span>
+            <span class="tag tag-product">Product Design</span>
+            <span class="tag tag-strategy">Estrategia</span>
+          </div>
+        </a>
+        <a class="pub-card pub-more-card" href="index.html">Ver más <span class="arw">→</span></a>
+      </div>
+    </section>
+
+    <!-- ═══════════════ CONTACT ═══════════════ -->
+    <section class="sec contact">
+      <span class="eyebrow reveal">hablemos</span>
+      <p class="big reveal d1">Si has llegado hasta aquí, somos prácticamente amigos.</p>
+      <p class="friend-note reveal d1">Escríbeme y lo hacemos oficial.</p>
+      <div class="row reveal d2">
+        <a class="btn" href="mailto:martina.hsch@gmail.com"><span class="mi">✉</span> martina.hsch@gmail.com</a>
+        <a class="btn ghost" href="https://www.linkedin.com/in/heymarts" target="_blank" rel="noopener">LinkedIn ↗</a>
+        <a class="btn ghost" href="assets/martina-hirschler-cv.pdf" target="_blank" rel="noopener">Descargar CV ↓</a>
+      </div>
+      <p class="avail reveal d3">Abierta a algo nuevo.</p>
+    </section>
+
+  </main>
+  </div>
+
+  <div class="mx-scrim"></div>
+
+  <script>
+    (function () {
+      var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+      var revs = Array.prototype.slice.call(document.querySelectorAll('.reveal'));
+      function showNear() {
+        var vh = window.innerHeight;
+        revs = revs.filter(function (el) {
+          var r = el.getBoundingClientRect();
+          if (r.top < vh * 0.9 && r.bottom > -80) { el.classList.add('in'); return false; }
+          return true;
+        });
+      }
+      if ('IntersectionObserver' in window) {
+        var io = new IntersectionObserver(function (entries) {
+          entries.forEach(function (e) {
+            if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+          });
+        }, { threshold: 0, rootMargin: '0px 0px -8% 0px' });
+        revs.forEach(function (el) { io.observe(el); });
+      }
+      showNear();
+      window.addEventListener('scroll', showNear, { passive: true });
+      window.addEventListener('resize', showNear, { passive: true });
+
+      setTimeout(function () {
+        var s = document.getElementById('selname');
+        if (s) s.classList.add('on');
+      }, 600);
+
+      if (reduce) return;
+
+      /* subtle parallax + idle bob on the hero props */
+      var floats = Array.prototype.slice.call(document.querySelectorAll('.hero .float'));
+      floats.forEach(function (el, i) {
+        el._rot = parseFloat(el.getAttribute('data-rot') || '0');
+        el._d = 4 + (i % 4) * 3;
+        el._ph = i * 1.3;
+      });
+      var tx = 0, ty = 0, cx = 0, cy = 0;
+      window.addEventListener('mousemove', function (ev) {
+        tx = (ev.clientX - innerWidth / 2) / (innerWidth / 2);
+        ty = (ev.clientY - innerHeight / 2) / (innerHeight / 2);
+      }, { passive: true });
+
+      var t0 = performance.now();
+      (function frame(now) {
+        cx += (tx - cx) * 0.05;
+        cy += (ty - cy) * 0.05;
+        var e = (now - t0) / 1000;
+        floats.forEach(function (el) {
+          var bob = Math.sin(e * 0.7 + el._ph) * 3.5;
+          el.style.transform = 'rotate(' + el._rot + 'deg) translate(' +
+            (-cx * el._d).toFixed(2) + 'px,' + (-cy * el._d + bob).toFixed(2) + 'px)';
+        });
+        requestAnimationFrame(frame);
+      })(t0);
+    })();
+  </script>
+
+  <script>
+    /* scattered máxima cards — drag around + tap to expand full-screen */
+    (function () {
+      var stage = document.querySelector('.mx-stage');
+      var scrim = document.querySelector('.mx-scrim');
+      if (!stage || !scrim) return;
+      var cards = Array.prototype.slice.call(stage.querySelectorAll('.mx'));
+      var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+      var mobile = matchMedia('(max-width: 700px)').matches;
+      var stack = 10, open = null, openTs = 0;
+
+      function place(card) {
+        var sw = stage.clientWidth, sh = stage.clientHeight;
+        card._rot = parseFloat(card.dataset.rot || 0);
+        card._hl = (parseFloat(card.dataset.x) / 100 * sw) + 'px';
+        card._ht = (parseFloat(card.dataset.y) / 100 * sh) + 'px';
+        card.style.left = card._hl;
+        card.style.top  = card._ht;
+        card.style.transform = 'rotate(' + card._rot + 'deg)';
+      }
+      if (!mobile) cards.forEach(place);
+
+      function flip(card, first) {
+        if (reduce || !card.animate) return;
+        var last = card.getBoundingClientRect();
+        var dx = (first.left + first.width / 2) - (last.left + last.width / 2);
+        var dy = (first.top + first.height / 2) - (last.top + last.height / 2);
+        var s = first.width / last.width || 1;
+        var endT = getComputedStyle(card).transform;
+        card.animate(
+          [{ transform: 'translate(' + dx + 'px,' + dy + 'px) scale(' + s + ')' },
+           { transform: endT === 'none' ? 'translate(0,0) scale(1)' : endT }],
+          { duration: 440, easing: 'cubic-bezier(.2,.8,.2,1)' });
+      }
+
+      function expand(card) {
+        if (open) return;
+        open = card; openTs = performance.now();
+        var first = card.getBoundingClientRect();
+        stage.style.transform = 'none';   /* kill any ancestor transform so position:fixed is viewport-relative */
+        card.classList.add('expanded');
+        card.style.transform = 'none';
+        card.style.width = Math.round(Math.min(560, innerWidth * 0.92)) + 'px';
+        card.style.left = '0px'; card.style.top = '0px';
+        var w = card.offsetWidth, h = card.offsetHeight;
+        card.style.left = Math.max(14, Math.round((innerWidth - w) / 2)) + 'px';
+        card.style.top  = Math.max(14, Math.round((innerHeight - h) / 2)) + 'px';
+        scrim.classList.add('on');
+        document.documentElement.style.overflow = 'hidden';
+        flip(card, first);
+      }
+      function collapse() {
+        if (!open) return;
+        var card = open; open = null;
+        var first = card.getBoundingClientRect();
+        card.classList.remove('expanded');
+        card.style.width = '';
+        scrim.classList.remove('on');
+        document.documentElement.style.overflow = '';
+        stage.style.transform = '';
+        if (mobile) {
+          card.style.left = ''; card.style.top = ''; card.style.transform = '';
+        } else {
+          card.style.left = card._hl; card.style.top = card._ht;
+          card.style.transform = 'rotate(' + card._rot + 'deg)';
+        }
+        flip(card, first);
+      }
+
+      scrim.addEventListener('click', collapse);
+      document.addEventListener('keydown', function (e) { if (e.key === 'Escape') collapse(); });
+
+      cards.forEach(function (card) {
+        var sx, sy, bl, bt, down = false, drag = false;
+
+        card.addEventListener('pointerdown', function (e) {
+          if (open) return;
+          down = true; drag = false;
+          sx = e.clientX; sy = e.clientY;
+          var cs = getComputedStyle(card);
+          bl = parseFloat(cs.left) || 0; bt = parseFloat(cs.top) || 0;
+          card.style.zIndex = ++stack;
+          try { card.setPointerCapture(e.pointerId); } catch (x) {}
+        });
+        card.addEventListener('pointermove', function (e) {
+          if (!down || mobile) return;
+          var ddx = e.clientX - sx, ddy = e.clientY - sy;
+          if (Math.abs(ddx) + Math.abs(ddy) > 5) drag = true;
+          if (drag) {
+            card.style.left = (bl + ddx) + 'px';
+            card.style.top = (bt + ddy) + 'px';
+          }
+        });
+        card.addEventListener('pointerup', function (e) {
+          if (!down) return;
+          down = false;
+          try { card.releasePointerCapture(e.pointerId); } catch (x) {}
+          if (!drag) expand(card);
+        });
+        card.addEventListener('pointercancel', function () { down = false; });
+        card.addEventListener('click', function () {
+          if (open === card && performance.now() - openTs > 260) collapse();
+        });
+        card.addEventListener('keydown', function (e) {
+          if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); open === card ? collapse() : (open || expand(card)); }
+        });
+      });
+
+      window.addEventListener('resize', function () {
+        var m = matchMedia('(max-width: 700px)').matches;
+        if (open) collapse();
+        if (m !== mobile) { mobile = m; if (!mobile) cards.forEach(place); else cards.forEach(function (c) { c.style.left = c.style.top = ''; c.style.transform = ''; }); }
+      });
+    })();
+  </script>
+</body>
+</html>

@@ -652,10 +652,9 @@
       function openMenu() {
         clearTimeout(closeTimer);
         backdrop.hidden = false;
-        requestAnimationFrame(function () {
-          sideMenu.classList.add('is-open');
-          backdrop.classList.add('is-open');
-        });
+        void backdrop.offsetWidth; /* fuerza reflow para que la transición se dispare */
+        sideMenu.classList.add('is-open');
+        backdrop.classList.add('is-open');
         sideMenu.setAttribute('aria-hidden', 'false');
         menuBtn.setAttribute('aria-expanded', 'true');
         document.body.style.overflow = 'hidden';
@@ -737,6 +736,22 @@
       });
       window.addEventListener('load', layout);
       layout();
+
+      /* si se entra desde otra página con #intro / #work, reubicar tras el masonry */
+      if (location.hash === '#work' || location.hash === '#intro') {
+        var target = document.querySelector(location.hash);
+        if (target) {
+          window.addEventListener('load', function () {
+            layout();
+            requestAnimationFrame(function () {
+              var prev = document.documentElement.style.scrollBehavior;
+              document.documentElement.style.scrollBehavior = 'auto';
+              target.scrollIntoView();
+              document.documentElement.style.scrollBehavior = prev;
+            });
+          });
+        }
+      }
 
       var filterBtns = document.querySelectorAll('.filter-tag');
       var active = new Set();

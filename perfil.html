@@ -21,7 +21,8 @@
       --mid:        #9A928A;
       --hair:       rgba(0,0,0,.14);
       --light-gray: #ECDFCD;
-      --red:        #F06554; /* rojo-coral — tono de marca (menú) */
+      --red:        #EE6D3B; /* rojo-naranja — fondo del menú lateral */
+      --line:       #3F3F3F; /* líneas y texto del menú */
 
       --c-product:     #A79BF3; /* violeta */
       --c-strategy:    #F06554; /* coral */
@@ -504,7 +505,8 @@
       position: fixed; top: 0; left: 0; bottom: 0; z-index: 70;
       width: min(560px, 84vw);
       background: var(--red);
-      color: #fff;
+      border-right: 1.5px solid var(--line);
+      color: var(--line);
       display: flex; flex-direction: column;
       padding: 20px 0 32px;
       transform: translateX(-100%);
@@ -520,33 +522,29 @@
     }
     .menu-close svg { display: block; }
 
-    .menu-logo {
-      font-size: clamp(52px, 12vw, 108px);
-      font-weight: 800; letter-spacing: -3px; line-height: .88;
-      padding: 10px 40px 30px;
-      color: transparent;
-      -webkit-text-stroke: 1.5px rgba(255,255,255,.55);
-      user-select: none; word-break: break-word;
-    }
-
-    .menu-nav { display: flex; flex-direction: column; border-top: 1px solid rgba(255,255,255,.4); }
-    .menu-nav--secondary { margin-top: 30px; border-top: 1px solid rgba(255,255,255,.4); }
+    .menu-nav { display: flex; flex-direction: column; margin-top: 12px; border-top: 1.5px solid var(--line); }
     .menu-item {
       display: flex; align-items: center; gap: 14px;
       padding: 22px 40px;
       font-size: clamp(21px, 3.1vw, 33px); font-weight: 400;
-      color: #fff; text-decoration: none;
-      border-bottom: 1px solid rgba(255,255,255,.4);
+      color: var(--line); text-decoration: none;
+      border-bottom: 1.5px solid var(--line);
       transition: background .18s ease, padding-left .18s ease;
     }
     .menu-item:hover, .menu-item:focus-visible {
-      background: rgba(255,255,255,.12); padding-left: 48px; outline: none;
+      background: rgba(0,0,0,.06); padding-left: 48px; outline: none;
     }
-    .menu-item--sec { font-size: clamp(15px, 1.9vw, 19px); font-weight: 600; letter-spacing: .01em; }
-    .menu-item--sec svg { width: 17px; height: 17px; opacity: .9; flex: 0 0 auto; }
+
+    /* LinkedIn / CV: sin separadores, tipografía chica, siempre pegados abajo del panel */
+    .menu-nav--secondary { margin-top: auto; border-top: none; display: flex; flex-direction: column; }
+    .menu-item--sec {
+      padding: 8px 40px;
+      font-size: 12px; font-weight: 600; letter-spacing: .01em;
+      border-bottom: none;
+    }
+    .menu-item--sec svg { width: 13px; height: 13px; opacity: .9; flex: 0 0 auto; }
 
     @media (max-width: 560px) {
-      .menu-logo { padding-left: 22px; padding-right: 22px; }
       .menu-close { margin-left: 16px; }
       .menu-item { padding-left: 22px; padding-right: 22px; }
     }
@@ -570,11 +568,9 @@
   <aside class="side-menu" id="sideMenu" aria-label="Menú principal" aria-hidden="true">
     <button class="menu-close" id="menuClose" aria-label="Cerrar menú">
       <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M2 2L20 20M20 2L2 20" stroke="rgba(255,255,255,0.9)" stroke-width="1.8" stroke-linecap="round"/>
+        <path d="M2 2L20 20M20 2L2 20" stroke="#3F3F3F" stroke-width="1.8" stroke-linecap="round"/>
       </svg>
     </button>
-
-    <div class="menu-logo" aria-hidden="true">Martina</div>
 
     <nav class="menu-nav" aria-label="Secciones">
       <a class="menu-item" href="index.html#intro">Intro</a>

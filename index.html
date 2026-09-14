@@ -30,6 +30,9 @@
       --c-stakeholder: #ECDFCD; /* beige */
     }
 
+    /* sin scroll-snap-type: el snap "de verdad" lo maneja el JS (wheel/keydown/touch) más abajo;
+       tenerlo también acá hacía que el navegador intentara snapear por su cuenta a la vez que el JS
+       forzaba el glide, y las dos fuerzas peleando se sentían como un snap doble/muy brusco */
     html { scroll-behavior: smooth; }
 
     body {
@@ -40,7 +43,7 @@
       min-height: 100vh;
     }
 
-    /* ── LEFT RAIL — fija, ocupa todo el alto ── */
+    /* ── LEFT RAIL — fija, ocupa todo el alto; oculta en la intro, aparece al salir (igual que la topbar) ── */
     .left-rail {
       position: fixed;
       top: 0;
@@ -54,12 +57,15 @@
       align-items: center;
       padding-top: 26px;
       z-index: 20;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.35s ease;
     }
+    .left-rail.is-visible { opacity: 1; pointer-events: auto; }
 
     /* ── FRAME — todo el contenido, desplazado por el rail ── */
     .frame {
       margin-left: var(--rail-w);
-      padding-top: var(--topbar-h);
       background: var(--cream);
       position: relative;
     }
@@ -126,30 +132,160 @@
       box-shadow: 0 1px 4px rgba(0,0,0,0.12);
     }
 
-    /* ── SECCIÓN 1 — INTRO (ancla #intro) ── */
+    /* ── SECCIÓN 1 — INTRO (ancla #intro) — muy limpia: sin rail, sin topbar, sin líneas ── */
+    /* full-bleed: sale del margen del rail para ocupar todo el ancho de la ventana */
     .intro-section {
-      min-height: calc(100vh - var(--topbar-h));
+      min-height: 100vh;
+      margin-left: calc(-1 * var(--rail-w));
+      width: calc(100% + var(--rail-w));
+      position: relative;
+      scroll-snap-align: start;
+    }
+    /* con la animación activa (JS + desktop + sin reduced-motion) la sección se vuelve un track alto
+       y el collage queda pineado mientras se scrollea el apilado */
+    .intro-section.intro-anim { height: 200vh; }
+
+    .intro-sticky {
+      min-height: 100vh;
+      overflow: hidden;          /* recorta la charla por la izq y la abuela por abajo */
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .intro-anim .intro-sticky {
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      min-height: 0;
+    }
+
+    /* collage: reproducción 1:1 del frame de Figma (1280 × 832). */
+    .intro-collage {
+      position: relative;
+      width: 100%;
+      max-width: 1280px;
+      aspect-ratio: 1280 / 832;
+      margin: 0 auto;
+    }
+    .intro-statement {
+      position: absolute;
+      left: 24.61%;
+      top: 50%;              /* centrado vertical: mismo aire arriba y abajo */
+      width: 50.78%;
+      transform: translateY(-50%);
+      z-index: 1;            /* debajo de las fotos: al apilarse lo tapan */
+      text-align: center;
+      font-size: clamp(24px, 3.6vw, 46px);
+      font-weight: 500;
+      letter-spacing: -1px;
+      line-height: 1.22;
+    }
+    .intro-photos { display: contents; }
+    .iphoto {
+      position: absolute;
+      overflow: hidden;
+      display: block;
+    }
+    .iphoto img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .intro-anim .iphoto { will-change: transform; }
+    /* --edge-gap = margen crema a cada lado cuando el collage llega a su max-width (0 si el viewport es ≤1280).
+       Lo setea el JS con el clientWidth real; el fallback con 100vw sirve para el primer paint. */
+    .ip-5, .ip-6, .ip-8 { --edge-gap: max(0px, (var(--doc-w, 100vw) - 1280px) / 2); }
+    /* placeholder gris para las fotos que Marti todavía no pasó */
+    .iphoto--ph {
+      background: #E8E8E8;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 8px;
+    }
+    .iphoto--ph span {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #999;
+      text-align: center;
+      line-height: 1.3;
+    }
+
+    /* Coordenadas exactas leídas del Figma (frame 1280×832). left/top/width en %, aspect-ratio = w/h de cada foto.
+       z-index = orden de apilado del frame final (2 = más abajo … 10 = arriba de todo). */
+    .ip-1 { left: 31.41%;  top: 17.67%; width: 8.83%;  aspect-ratio: 113 / 97;  z-index: 8;  }  /* manos dándose la mano */
+    .ip-2 { left: 81.41%;  top: 36.06%; width: 12.66%; aspect-ratio: 162 / 164; z-index: 4;  }  /* tacho de basura */
+    .ip-3 { left: 12.73%;  top: 78.85%; width: 10.39%; aspect-ratio: 133 / 137; z-index: 3;  }  /* pies vistos por debajo */
+    .ip-4 { left: 68.83%;  top: 81.01%; width: 16.95%; aspect-ratio: 217 / 221; z-index: 2;  }  /* abuela con el mapa (la más grande) */
+    /* charla: SIEMPRE pegada al borde izquierdo de la pantalla, ~30% escondida detrás */
+    .ip-5 { top: 28%; width: 15.63%; aspect-ratio: 200 / 133; z-index: 5;
+            left: calc(-4.69% - var(--edge-gap)); }
+    /* Paula + post-its: SIEMPRE pegada al borde derecho de la pantalla, entera */
+    .ip-6 { top: 5.77%; width: 6.88%; aspect-ratio: 1 / 1; z-index: 6;
+            left: auto; right: calc(0px - var(--edge-gap)); }
+    .ip-7 { left: 26.17%;  top: 72.48%; width: 6.02%;  aspect-ratio: 1 / 1;  z-index: 10; }  /* tazas + útiles (flatlay) */
+    /* smartwatch: SIEMPRE pegada al borde derecho de la pantalla, entera */
+    .ip-8 { top: 70.67%; width: 5.94%; aspect-ratio: 1 / 1; z-index: 7;
+            left: auto; right: calc(0px - var(--edge-gap)); }
+    .ip-9 { left: 37.81%;  top: 3.13%;  width: 9.77%;  aspect-ratio: 125 / 151; z-index: 9;  }  /* girl phone (arriba, vertical) */
+
+    @media (max-width: 860px) {
+      .intro-section { height: auto; }
+      .intro-sticky { display: contents; }   /* el wrapper desaparece: el collage vuelve a la grilla simple */
+      .intro-collage { position: static; aspect-ratio: auto; display: flex; flex-direction: column; align-items: center; gap: 28px; padding: 8vh 20px 40px; }
+      .intro-photos { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; max-width: 460px; }
+      .iphoto { position: static !important; left: auto !important; right: auto !important; top: auto !important; width: 46% !important; aspect-ratio: 1 / 1 !important; transform: none !important; }
+      .intro-statement { position: static; left: auto; top: auto; width: 100%; transform: none; padding: 0 12px; order: 99; }
+    }
+
+    /* ── SECCIÓN 2 — "quién soy / cómo trabajo" (ancla #s2). Sin rail/topbar todavía. ── */
+    .s2-section {
+      min-height: 100vh;
+      margin-left: calc(-1 * var(--rail-w));
+      width: calc(100% + var(--rail-w));
       display: flex;
       align-items: center;
       justify-content: center;
       padding: 40px;
-      border-bottom: 1.5px solid var(--dark);
+      scroll-snap-align: start;
     }
-    /* placeholder: reemplazar por la intro breve */
-    .intro-placeholder {
-      background: var(--light-gray);
-      color: #8A7A63;
-      font-size: 12px;
+    .s2-copy { max-width: 900px; width: 100%; }
+    .s2-headline {
+      /* mismo tamaño que .intro-statement (sección 1), en negrita */
+      font-size: clamp(24px, 3.6vw, 46px);
       font-weight: 700;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      text-align: center;
-      padding: 72px 88px;
-      max-width: 640px;
+      line-height: 1.22;
+      letter-spacing: -1px;
+      margin-bottom: 28px;
     }
+    .s2-subhead {
+      font-size: clamp(18px, 2.2vw, 24px);
+      font-weight: 700;
+      line-height: 1.4;
+      margin-bottom: 24px;
+    }
+    .s2-body {
+      max-width: 760px;
+      font-size: clamp(16px, 1.7vw, 19px);
+      font-weight: 500;
+      line-height: 1.6;
+      margin-bottom: 18px;
+    }
+    .s2-body:last-child { margin-bottom: 0; }
+    .s2-body strong { font-weight: 700; }
+    .s2-aside { font-weight: 500; opacity: 0.7; }
+    /* mismos colores que usamos para las labels de los proyectos */
+    .s2-word--product { color: var(--c-product); font-weight: 700; }
+    .s2-word--system  { color: var(--c-strategy); font-weight: 700; }
+    .s2-word--service { color: var(--c-service); font-weight: 700; }
 
-    /* ── SECCIÓN 2 — WORK (ancla #work) ── */
-    .work-section { scroll-margin-top: var(--topbar-h); }
+    /* ── SECCIÓN 3 — WORK (ancla #work) ── */
+    /* sin padding-top: scroll-margin-top ya deja el hueco justo para el topbar fijo al snapear;
+       si además hay padding-top se duplica el espacio y queda una franja blanca entre el header y filtrar-por */
+    .work-section { scroll-margin-top: var(--topbar-h); scroll-snap-align: start; }
 
     .page-title {
       font-size: clamp(30px, 4.4vw, 54px);
@@ -175,8 +311,15 @@
     /* líneas de lado a lado, como grilla */
     .divider { border-top: 1.5px solid var(--line); }
 
-    /* ── FILTERS ── */
+    /* ── FILTERS — fija justo debajo del topbar mientras se scrollea la galería;
+       border-bottom propio (reemplaza al divider que había después, que quedaba tapado apenas se scrolleaba
+       un toque porque el filtro ya no está en flujo normal) */
     .filters {
+      position: sticky;
+      top: var(--topbar-h);
+      z-index: 14;
+      background: var(--cream);
+      border-bottom: 1.5px solid var(--line);
       display: flex;
       align-items: center;
       flex-wrap: wrap;
@@ -234,13 +377,12 @@
       .menu-item { padding-left: 22px; padding-right: 22px; }
     }
 
-    /* línea simple — sin decoración de libro, esquinas cuadradas */
+    /* sin línea negra: se distinguen del fondo con un blanco levemente más claro que el crema de la página, sin sombra */
     .pub-card {
       position: absolute;
       top: 0;
       left: 0;
-      background: var(--cream);
-      border: 1.5px solid var(--dark);
+      background: #FFFFFF;
       border-radius: 0;
       padding: 16px 16px 20px;
       display: flex;
@@ -254,24 +396,15 @@
     .pub-card.is-placed { opacity: 1; }
     .pub-card:hover { transform: translateY(-3px); }
 
-    /* cards de artículo — sin foto, fondo con el color extraído de la portada del artículo */
+    /* cards de artículo — sin foto, fondo con el color extraído de la portada del artículo;
+       sin min-height fija: cada una se estira según su propio contenido (Marti pidió que difieran entre sí) */
     .pub-card--flat {
       padding-top: 30px;
-      min-height: 340px;
     }
     .pub-card--flat.bg-lutzres   { background: #EE6D3B; } /* color del hero de lutz-reservation.html */
     .pub-card--flat.bg-lutzc360  { background: #FFF571; } /* color del hero de lutz-customer360.html */
     .pub-card--flat .card-read { color: rgba(0,0,0,0.6); }
 
-    /* artículos: misma tipografía que los headers de sección de los case studies (.section-title) + subtítulo (el dek real del artículo) */
-    .pub-card--flat h3 {
-      font-size: 27px;
-      font-weight: 700;
-      line-height: 1.286;
-      letter-spacing: -0.6px;
-      color: #282828;
-      -webkit-line-clamp: 3;
-    }
     .card-subtitle {
       font-size: 14px;
       font-weight: 500;
@@ -297,16 +430,29 @@
     }
     .card-thumb--tall { aspect-ratio: 4 / 5; }
 
+    /* sin line-clamp: ningún título se recorta, la card crece lo que haga falta (el masonry mide offsetHeight solo) */
     .pub-card h3 {
       font-size: 17px;
       font-weight: 700;
       line-height: 1.25;
       letter-spacing: -0.02em;
-      display: -webkit-box;
-      -webkit-line-clamp: 2;
-      -webkit-box-orient: vertical;
-      overflow: hidden;
     }
+    /* artículos: el título hace de "imagen" de la card (no hay foto), así que va grande y protagónico —
+       declarado después de .pub-card h3 (misma especificidad) para ganarle en cascada */
+    .pub-card--flat h3 {
+      font-size: 34px;
+      line-height: 1.2;
+      letter-spacing: -0.8px;
+      color: #282828;
+    }
+    /* estas dos cards de artículo piden título más bold y un toque más chico que el resto de las flat;
+       lutzres además lo lleva en blanco (fondo naranja) */
+    .bg-lutzres h3,
+    .bg-lutzc360 h3 {
+      font-size: 30px;
+      font-weight: 800;
+    }
+    .bg-lutzres h3 { color: #FFFFFF; }
     .card-read {
       font-size: 12px;
       font-weight: 500;
@@ -497,126 +643,137 @@
       <a class="logo" href="index.html">Martina</a>
 
       <div class="lang-switch" role="group" aria-label="Idioma">
-        <button type="button" class="active" data-lang="es">ES</button>
+        <button type="button" data-lang="es">ES</button>
         <button type="button" data-lang="en">EN</button>
       </div>
     </header>
 
-    <!-- ── SECCIÓN 1 — INTRO (a construir) ── -->
+    <!-- ── SECCIÓN 1 — INTRO (ancla #intro) ── -->
     <section id="intro" class="intro-section">
-      <!-- INTRO: reemplazar este placeholder por la intro breve -->
-      <div class="intro-placeholder">INTRO — POR DEFINIR</div>
+      <div class="intro-sticky">
+        <div class="intro-collage">
+          <div class="intro-photos">
+            <figure class="iphoto ip-1"><img src="assets/intro-analog-hands.jpg" alt="Manos entrelazadas, foto analógica"></figure>
+            <figure class="iphoto ip-2"><img src="assets/intro-trash-can.jpg" alt="Tacho de basura, foto analógica callejera"></figure>
+            <figure class="iphoto ip-3"><img src="assets/intro-analog-street.jpg" alt="Pies vistos por debajo, foto analógica"></figure>
+            <figure class="iphoto ip-4"><img src="assets/intro-abuela.png" alt="Abuela de Martina señalando un mapa"></figure>
+            <figure class="iphoto ip-5"><img src="assets/intro-charla.png" alt="Martina dando una charla"></figure>
+            <figure class="iphoto ip-6"><img src="assets/intro-paula-facilitating.png" alt="Facilitación frente a un muro de post-its"></figure>
+            <figure class="iphoto ip-7"><img src="assets/intro-cups-flatlay.png" alt="Mesa con tazas, lapiceras y post-its"></figure>
+            <figure class="iphoto ip-8"><img src="assets/intro-smartwatch-wrist.png" alt="Muñeca de una persona mayor con un smartwatch"></figure>
+            <figure class="iphoto ip-9"><img src="assets/intro-girl-phone.png" alt="Persona recostada usando el celular"></figure>
+          </div>
+          <p class="intro-statement" data-i18n="intro-statement">Sistemas que empiezan por entender personas.</p>
+        </div>
+      </div>
     </section>
 
-    <!-- ── SECCIÓN 2 — WORK ── -->
+    <!-- ── SECCIÓN 2 — quién soy / cómo trabajo ── -->
+    <section id="s2" class="s2-section">
+      <div class="s2-copy">
+        <h1 class="s2-headline" data-i18n="s2-headline">Ordeno el caos antes del diseño.</h1>
+        <p class="s2-body" data-i18n="s2-joke">Soy diseñadora, pero trabajo como antropóloga. <span class="s2-aside">(No se lo digas a Recursos Humanos.)</span></p>
+        <p class="s2-body" data-i18n="s2-detail">Escucho a la gente, siento en la misma mesa a equipos que no se hablaban, y salgo con un plan ejecutable: un <span class="s2-word--product">producto</span>, <span class="s2-word--system">sistema</span> o <span class="s2-word--service">servicio</span>.</p>
+      </div>
+    </section>
+
+    <!-- ── SECCIÓN 3 — WORK ── -->
     <section id="work" class="work-section">
       <main class="content">
-        <h1 class="page-title">People-First Systems Designer</h1>
-
-        <p class="hero-text">
-          Trabajo en la intersección entre sistemas complejos y experiencias humanas.
-          Parto de lo humano para entender cómo integrar tecnología.
-          Diseño <span class="c-exp">experiencias</span>, repienso <span class="c-svc">servicios</span> y facilito <span class="c-str">decisiones</span> de equipo.
-        </p>
-
-        <div class="divider"></div>
-
         <div class="filters">
-          <span class="filter-label">FILTRAR POR:</span>
-          <button class="filter-tag" data-tag="product">Product Design</button>
-          <button class="filter-tag" data-tag="strategy">Estrategia</button>
-          <button class="filter-tag" data-tag="research">Investigación</button>
-          <button class="filter-tag" data-tag="service">Service Design</button>
-          <button class="filter-tag" data-tag="visuals">Visuales</button>
-          <button class="filter-tag" data-tag="stakeholder">Gestión de Stakeholders</button>
+          <span class="filter-label" data-i18n="filter-label">FILTRAR POR</span>
+          <button class="filter-tag" data-tag="product" data-i18n="tag-product">Product Design</button>
+          <button class="filter-tag" data-tag="strategy" data-i18n="tag-strategy">Estrategia</button>
+          <button class="filter-tag" data-tag="research" data-i18n="tag-research">Investigación</button>
+          <button class="filter-tag" data-tag="service" data-i18n="tag-service">Service Design</button>
+          <button class="filter-tag" data-tag="visuals" data-i18n="tag-visuals">Visuales</button>
+          <button class="filter-tag" data-tag="stakeholder" data-i18n="tag-stakeholder">Gestión de Stakeholders</button>
         </div>
-
-        <div class="divider"></div>
 
         <div class="cards-grid" id="gallery">
 
           <a class="pub-card" href="lutz.html" data-tags="product,strategy">
             <img class="card-thumb card-thumb--tall" src="assets/lutz-hero.png" alt="">
-            <h3>Mejorando la experiencia de compra de muebles online</h3>
-            <p class="card-read">5 min de lectura</p>
+            <h3 data-i18n="lutz-title">Mejorando la experiencia de compra de muebles online</h3>
+            <p class="card-read" data-i18n="lutz-read">5 min de lectura</p>
             <div class="card-tags">
-              <span class="tag tag-product">Product Design</span>
-              <span class="tag tag-strategy">Estrategia</span>
-            </div>
-          </a>
-
-          <a class="pub-card pub-card--flat bg-lutzres" href="lutz-reservation.html" data-tags="strategy">
-            <h3>Una palabra, 15% más ventas</h3>
-            <p class="card-subtitle">Cómo una sola palabra en un botón de reserva convirtió la duda en miles de visitas a la tienda.</p>
-            <p class="card-read">2 min de lectura</p>
-            <div class="card-tags">
-              <span class="tag tag-strategy">Estrategia</span>
-            </div>
-          </a>
-
-          <a class="pub-card pub-card--flat bg-lutzc360" href="lutz-customer360.html" data-tags="service,strategy">
-            <h3>La IA sola no iba a arreglar esto</h3>
-            <p class="card-subtitle">Cómo un workshop de Service Design preparó la empresa para la siguiente generación de experiencias personalizadas.</p>
-            <p class="card-read">3 min de lectura</p>
-            <div class="card-tags">
-              <span class="tag tag-service">Service Design</span>
-              <span class="tag tag-strategy">Estrategia</span>
-            </div>
-          </a>
-
-          <a class="pub-card" href="lutz-delivery.html" data-tags="service,strategy,stakeholder">
-            <img class="card-thumb" src="assets/lutzdelivery-store.jpg" alt="">
-            <h3>El problema no era la entrega</h3>
-            <p class="card-read">3 min de lectura</p>
-            <div class="card-tags">
-              <span class="tag tag-service">Service Design</span>
-              <span class="tag tag-strategy">Estrategia</span>
-              <span class="tag tag-stakeholder">Gestión de Stakeholders</span>
+              <span class="tag tag-product" data-i18n="tag-product">Product Design</span>
+              <span class="tag tag-strategy" data-i18n="tag-strategy">Estrategia</span>
             </div>
           </a>
 
           <a class="pub-card" href="ellie.html" data-tags="research,strategy,service,product">
             <img class="card-thumb card-thumb--tall" src="assets/home-ellie.png" alt="">
-            <h3>Acompañando a adultos mayores con IOT</h3>
-            <p class="card-read">4 min de lectura</p>
+            <h3 data-i18n="ellie-title">Acompañando a adultos mayores con IOT</h3>
+            <p class="card-read" data-i18n="ellie-read">4 min de lectura</p>
             <div class="card-tags">
-              <span class="tag tag-research">Investigación</span>
-              <span class="tag tag-strategy">Estrategia</span>
-              <span class="tag tag-service">Service Design</span>
-              <span class="tag tag-ux">UX</span>
-            </div>
-          </a>
-
-          <a class="pub-card" href="donofrio.html" data-tags="service,strategy,research">
-            <img class="card-thumb" src="assets/home-donofrio.png" alt="">
-            <h3>Empoderando a heladeros ambulantes con tecnología simple</h3>
-            <p class="card-read">3 min de lectura</p>
-            <div class="card-tags">
-              <span class="tag tag-service">Service Design</span>
-              <span class="tag tag-strategy">Estrategia</span>
-              <span class="tag tag-research">Investigación</span>
+              <span class="tag tag-research" data-i18n="tag-research">Investigación</span>
+              <span class="tag tag-strategy" data-i18n="tag-strategy">Estrategia</span>
+              <span class="tag tag-service" data-i18n="tag-service">Service Design</span>
+              <span class="tag tag-ux" data-i18n="tag-ux">UX</span>
             </div>
           </a>
 
           <a class="pub-card" href="coalapay.html" data-tags="service,product,strategy">
             <img class="card-thumb card-thumb--tall" src="assets/coalapay-hero.jpg" alt="">
-            <h3>Cripto con impacto social</h3>
-            <p class="card-read">3 min de lectura</p>
+            <h3 data-i18n="coalapay-title">Cripto con impacto social</h3>
+            <p class="card-read" data-i18n="coalapay-read">3 min de lectura</p>
             <div class="card-tags">
-              <span class="tag tag-service">Service Design</span>
-              <span class="tag tag-product">Product Design</span>
-              <span class="tag tag-strategy">Estrategia</span>
+              <span class="tag tag-service" data-i18n="tag-service">Service Design</span>
+              <span class="tag tag-product" data-i18n="tag-product">Product Design</span>
+              <span class="tag tag-strategy" data-i18n="tag-strategy">Estrategia</span>
+            </div>
+          </a>
+
+          <a class="pub-card pub-card--flat bg-lutzres" href="lutz-reservation.html" data-tags="strategy">
+            <h3 data-i18n="lutzres-title">Una palabra, 15% más ventas</h3>
+            <p class="card-subtitle" data-i18n="lutzres-subtitle">Cómo una sola palabra en un botón de reserva convirtió la duda en miles de visitas a la tienda.</p>
+            <p class="card-read" data-i18n="lutzres-read">2 min de lectura</p>
+            <div class="card-tags">
+              <span class="tag tag-strategy" data-i18n="tag-strategy">Estrategia</span>
+            </div>
+          </a>
+
+          <a class="pub-card" href="donofrio.html" data-tags="service,strategy,research">
+            <img class="card-thumb" src="assets/home-donofrio.png" alt="">
+            <h3 data-i18n="donofrio-title">Empoderando a heladeros ambulantes con tecnología simple</h3>
+            <p class="card-read" data-i18n="donofrio-read">3 min de lectura</p>
+            <div class="card-tags">
+              <span class="tag tag-service" data-i18n="tag-service">Service Design</span>
+              <span class="tag tag-strategy" data-i18n="tag-strategy">Estrategia</span>
+              <span class="tag tag-research" data-i18n="tag-research">Investigación</span>
+            </div>
+          </a>
+
+          <a class="pub-card pub-card--flat bg-lutzc360" href="lutz-customer360.html" data-tags="service,strategy">
+            <h3 data-i18n="lutzc360-title">La IA sola no iba a arreglar esto</h3>
+            <p class="card-subtitle" data-i18n="lutzc360-subtitle">Cómo un workshop de Service Design preparó la empresa para la siguiente generación de experiencias personalizadas.</p>
+            <p class="card-read" data-i18n="lutzc360-read">3 min de lectura</p>
+            <div class="card-tags">
+              <span class="tag tag-service" data-i18n="tag-service">Service Design</span>
+              <span class="tag tag-strategy" data-i18n="tag-strategy">Estrategia</span>
+            </div>
+          </a>
+
+          <a class="pub-card" href="lutz-delivery.html" data-tags="service,strategy,stakeholder">
+            <img class="card-thumb" src="assets/lutzdelivery-store.jpg" alt="">
+            <h3 data-i18n="lutzdelivery-title">El problema no era la entrega</h3>
+            <p class="card-read" data-i18n="lutzdelivery-read">3 min de lectura</p>
+            <div class="card-tags">
+              <span class="tag tag-service" data-i18n="tag-service">Service Design</span>
+              <span class="tag tag-strategy" data-i18n="tag-strategy">Estrategia</span>
+              <span class="tag tag-stakeholder" data-i18n="tag-stakeholder">Gestión de Stakeholders</span>
             </div>
           </a>
 
           <a class="pub-card" href="pepupo.html" data-tags="visuals,product,research">
             <img class="card-thumb" src="assets/home-pepupo.png" alt="">
-            <h3>Rompiendo estereotipos de género a través del juego</h3>
-            <p class="card-read">4 min de lectura</p>
+            <h3 data-i18n="pepupo-title">Rompiendo estereotipos de género a través del juego</h3>
+            <p class="card-read" data-i18n="pepupo-read">4 min de lectura</p>
             <div class="card-tags">
-              <span class="tag tag-visuals">Visuales</span>
-              <span class="tag tag-ux">UX</span>
-              <span class="tag tag-research">Investigación</span>
+              <span class="tag tag-visuals" data-i18n="tag-visuals">Visuales</span>
+              <span class="tag tag-ux" data-i18n="tag-ux">UX</span>
+              <span class="tag tag-research" data-i18n="tag-research">Investigación</span>
             </div>
           </a>
 
@@ -628,7 +785,7 @@
         <span class="sep">|</span>
         <a href="assets/martina-hirschler-cv.pdf" download>CV</a>
         <span class="sep">|</span>
-        <a href="#work">Más proyectos</a>
+        <a href="#work" data-i18n="footer-more">Más proyectos</a>
       </footer>
     </section>
 
@@ -676,17 +833,215 @@
       });
     })();
 
-    /* ── TOPBAR: aparece al salir de la intro ── */
+    /* ── --doc-w: ancho real del documento (sin scrollbar), para anclar las 3 fotos de los bordes a la pantalla ── */
+    (function () {
+      function setDocW() {
+        document.documentElement.style.setProperty('--doc-w', document.documentElement.clientWidth + 'px');
+      }
+      setDocW();
+      window.addEventListener('resize', setDocW);
+    })();
+
+    /* ── TOPBAR + RAIL: ocultos en intro y sección 2; aparecen recién al llegar a #work ── */
     (function () {
       var topbar = document.getElementById('topbar');
-      var intro  = document.getElementById('intro');
-      if (!('IntersectionObserver' in window)) { topbar.classList.add('is-visible'); return; }
+      var rail   = document.querySelector('.left-rail');
+      var work   = document.getElementById('work');
+      if (!('IntersectionObserver' in window)) { topbar.classList.add('is-visible'); rail.classList.add('is-visible'); return; }
       var io = new IntersectionObserver(function (entries) {
         entries.forEach(function (en) {
-          topbar.classList.toggle('is-visible', !en.isIntersecting);
+          topbar.classList.toggle('is-visible', en.isIntersecting);
+          rail.classList.toggle('is-visible', en.isIntersecting);
         });
-      }, { threshold: 0.15 });
-      io.observe(intro);
+      }, { threshold: 0, rootMargin: '0px 0px -45% 0px' });   /* work tiene que subir ~45% del viewport para contar */
+      io.observe(work);
+    })();
+
+    /* ── INTRO: animación de apilado scrubbeada por el scroll ──
+       `#intro` se vuelve un track de 200vh; `.intro-sticky` pinea el collage y, a medida que se scrollea,
+       las 9 fotos viajan al centro y se apilan sobre el texto (frame final 725:4425). El salto entre
+       secciones lo maneja el IIFE "SNAP forzado" más abajo (JS puro, sin CSS scroll-snap). */
+    (function () {
+      var section = document.getElementById('intro');
+      var collage = section.querySelector('.intro-collage');
+      var photos  = Array.prototype.slice.call(collage.querySelectorAll('.iphoto'));
+      var reduce  = window.matchMedia('(prefers-reduced-motion: reduce)');
+      var narrow  = window.matchMedia('(max-width: 860px)');
+
+      /* centros del frame final (Figma 725:4425), en el espacio 1280×832, por clase .ip-N */
+      var END = {
+        'ip-1': [664.5, 395.5], 'ip-2': [665, 375],   'ip-3': [639.5, 415.5],
+        'ip-4': [664.5, 415.5], 'ip-5': [665, 435.5],  'ip-6': [621, 382],
+        'ip-7': [695.5, 365.5], 'ip-8': [672, 407],    'ip-9': [640, 410]
+      };
+      var N        = photos.length;                       // 9
+      var OVERLAP  = 0.15;                                // la siguiente foto arranca cuando la anterior va al 15% de su recorrido
+      var DUR      = 1 / (1 + (N - 1) * OVERLAP);         // recorrido de cada foto (fracción del progreso 0-1)
+      var STAG     = DUR * OVERLAP;                       // offset entre una foto y la siguiente
+      var HOLD     = 0.9;                                 // el apilado se completa al 90% del track; el 10% final queda quieto
+
+      var rest = [], tgt = [], on = false, raf = 0;
+
+      function keyOf(el){ return (el.className.match(/ip-\d+/) || ['ip-1'])[0]; }
+      /* ease in-out cúbico: arranca y frena suave */
+      function ease(t){ return t < 0.5 ? 4*t*t*t : 1 - Math.pow(-2*t + 2, 3) / 2; }
+
+      function measure() {
+        var cr = collage.getBoundingClientRect();
+        photos.forEach(function (p) { p.style.transform = 'none'; });
+        photos.forEach(function (p, i) {
+          var r = p.getBoundingClientRect();
+          rest[i] = { x: r.left + r.width / 2 - cr.left, y: r.top + r.height / 2 - cr.top };
+          var e = END[keyOf(p)] || [640, 416];
+          tgt[i]  = { x: e[0] / 1280 * cr.width, y: e[1] / 832 * cr.height };
+        });
+        render();
+      }
+
+      function progress() {
+        var scrollable = section.offsetHeight - window.innerHeight;
+        if (scrollable <= 0) return 0;
+        return Math.max(0, Math.min(1, -section.getBoundingClientRect().top / scrollable));
+      }
+
+      function render() {
+        var p = Math.min(1, progress() / HOLD);
+        for (var i = 0; i < photos.length; i++) {
+          var lp = Math.max(0, Math.min(1, (p - i * STAG) / DUR));
+          var e  = ease(lp);
+          if (e === 0) { photos[i].style.transform = 'none'; continue; }
+          var dx = (tgt[i].x - rest[i].x) * e;
+          var dy = (tgt[i].y - rest[i].y) * e;
+          photos[i].style.transform = 'translate(' + dx.toFixed(1) + 'px,' + dy.toFixed(1) + 'px)';
+        }
+      }
+
+      function onScroll() {
+        if (raf) return;
+        raf = requestAnimationFrame(function () { raf = 0; render(); });
+      }
+
+      function enable() {
+        if (on) return;
+        on = true;
+        section.classList.add('intro-anim');
+        measure();
+        window.addEventListener('scroll', onScroll, { passive: true });
+      }
+      function disable() {
+        if (!on) return;
+        on = false;
+        window.removeEventListener('scroll', onScroll);
+        section.classList.remove('intro-anim');
+        photos.forEach(function (p) { p.style.transform = ''; });
+      }
+      function sync() { (reduce.matches || narrow.matches) ? disable() : enable(); }
+
+      sync();
+      if (reduce.addEventListener) { reduce.addEventListener('change', sync); narrow.addEventListener('change', sync); }
+      var rt;
+      window.addEventListener('resize', function () {
+        clearTimeout(rt);
+        rt = setTimeout(function () { sync(); if (on) measure(); }, 150);
+      });
+      window.addEventListener('load', function () { if (on) measure(); });
+    })();
+
+    /* ── SNAP forzado entre secciones, sólo después del intro ──
+       El patrón sticky (.intro-section 200vh / .intro-sticky 100vh) deja, después de que el pin suelta,
+       una "zona muerta" de scroll (el collage ya apilado deslizándose antes de que aparezca #s2) —
+       tres fases:
+       1) scrubbeando (pin activo, scrollY < releaseY): no se toca nada, scroll libre para el apilado.
+       2) pin recién soltado pero #intro (200vh) todavía no terminó de pasar: el próximo scroll —
+          para cualquier lado — fuerza el salto directo a #s2 (o de vuelta a #intro), saltándose la
+          zona muerta. Así el snap se siente "apenas termina la animación", no varias pantallas después.
+       3) ya en #s2 / #work: scroll ↓/↑ engancha a la sección siguiente/anterior; dentro de la galería
+          de #work, scroll libre.
+       En mobile y con prefers-reduced-motion, desactivado — scroll normal. */
+    (function () {
+      var intro  = document.getElementById('intro');
+      var s2     = document.getElementById('s2');
+      var work   = document.getElementById('work');
+      var sticky = intro.querySelector('.intro-sticky');
+      var reduce = window.matchMedia('(prefers-reduced-motion: reduce)');
+      var narrow = window.matchMedia('(max-width: 860px)');
+
+      var gliding = false, glideT = 0, tY = 0, enabled = false;
+
+      function rectTop(el)    { return el.getBoundingClientRect().top; }
+      function rectBottom(el) { return el.getBoundingClientRect().bottom; }
+
+      /* fase 1 vs 2/3: ¿el pin del sticky ya soltó? (scrollY llegó al final del recorrido de scrub) */
+      function pinReleased() {
+        if (!intro.classList.contains('intro-anim')) return true;   // sin animación activa: no hay pin que respetar
+        var releaseY = intro.offsetHeight - sticky.offsetHeight;
+        return window.pageYOffset >= releaseY - 2;
+      }
+      /* fase 2 vs 3: ¿ya terminó de pasar el bloque entero de 200vh del intro? */
+      function introFullyPast() { return rectBottom(intro) <= 4; }
+
+      function currentSection() {
+        if (rectTop(work) <= 80) return 'work';
+        return 's2';
+      }
+      function glideTo(el) {
+        gliding = true;
+        el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        clearTimeout(glideT);
+        glideT = setTimeout(function () { gliding = false; }, 750);
+      }
+      function handle(dir) {
+        if (gliding) return true;
+        if (!pinReleased()) return false;               // fase 1: todavía scrubbeando, scroll libre
+        if (!introFullyPast()) {                         // fase 2: zona muerta post-pin → saltarla
+          glideTo(dir > 0 ? s2 : intro);
+          return true;
+        }
+        var sec = currentSection();                      // fase 3: ya en #s2 / #work
+        if (sec === 's2') { glideTo(dir > 0 ? work : intro); return true; }
+        /* sec === 'work' */
+        if (dir < 0 && rectTop(work) >= -4) { glideTo(s2); return true; }
+        return false;                                     // dentro de la galería: scroll libre
+      }
+
+      function onWheel(e) { if (Math.abs(e.deltaY) < 4) return; if (handle(e.deltaY > 0 ? 1 : -1)) e.preventDefault(); }
+      function onKey(e) {
+        var down = ['ArrowDown','PageDown','End',' ','Spacebar'].indexOf(e.key) !== -1;
+        var up   = ['ArrowUp','PageUp','Home'].indexOf(e.key) !== -1;
+        if (!down && !up) return;
+        if (handle(down ? 1 : -1)) e.preventDefault();
+      }
+      function onTouchStart(e) { tY = e.touches[0].clientY; }
+      function onTouchMove(e) { if (gliding && e.cancelable) e.preventDefault(); }
+      function onTouchEnd(e) {
+        var dy = tY - (e.changedTouches[0] ? e.changedTouches[0].clientY : tY);
+        if (Math.abs(dy) < 30) return;
+        if (handle(dy > 0 ? 1 : -1) && e.cancelable) e.preventDefault();
+      }
+
+      function enable() {
+        if (enabled) return;
+        enabled = true;
+        window.addEventListener('wheel', onWheel, { passive: false });
+        window.addEventListener('keydown', onKey);
+        window.addEventListener('touchstart', onTouchStart, { passive: true });
+        window.addEventListener('touchmove', onTouchMove, { passive: false });
+        window.addEventListener('touchend', onTouchEnd, { passive: false });
+      }
+      function disable() {
+        if (!enabled) return;
+        enabled = false;
+        gliding = false;
+        window.removeEventListener('wheel', onWheel);
+        window.removeEventListener('keydown', onKey);
+        window.removeEventListener('touchstart', onTouchStart);
+        window.removeEventListener('touchmove', onTouchMove);
+        window.removeEventListener('touchend', onTouchEnd);
+      }
+      function sync() { (reduce.matches || narrow.matches) ? disable() : enable(); }
+
+      sync();
+      if (reduce.addEventListener) { reduce.addEventListener('change', sync); narrow.addEventListener('change', sync); }
     })();
 
     /* ── CARDS GRID — masonry en cascada + filtros ── */
@@ -708,16 +1063,41 @@
         var colHeights = new Array(cols).fill(0);
         var visible = allCards.filter(function (c) { return c.style.display !== 'none'; });
 
+        /* las dos cards de artículo (fondo sólido, sin foto) se confunden entre sí si quedan pegadas —
+           guardamos dónde cayó la primera (lutzres) para evitar que la segunda (lutzc360) caiga justo
+           al lado (misma fila, columna vecina) o pegada abajo en la misma columna */
+        var lutzresPlacement = null;
+
         visible.forEach(function (card) {
           card.style.width = colWidth + 'px';
-          var minCol = 0;
-          for (var i = 1; i < cols; i++) {
-            if (colHeights[i] < colHeights[minCol]) minCol = i;
+
+          var order = [];
+          for (var i = 0; i < cols; i++) order.push(i);
+          order.sort(function (a, b) { return colHeights[a] - colHeights[b]; });
+
+          var minCol = order[0];
+
+          if (cols > 1 && lutzresPlacement && card.classList.contains('bg-lutzc360')) {
+            var h = card.offsetHeight;
+            for (var k = 0; k < order.length; k++) {
+              var idx = order[k];
+              var top = colHeights[idx], bottom = top + h;
+              var sameColStacked = idx === lutzresPlacement.col && top <= lutzresPlacement.bottom + GAP + 1;
+              var adjacentSameRow = Math.abs(idx - lutzresPlacement.col) === 1 &&
+                top < lutzresPlacement.bottom + GAP && bottom > lutzresPlacement.top - GAP;
+              if (!sameColStacked && !adjacentSameRow) { minCol = idx; break; }
+            }
           }
+
           card.style.left = (minCol * (colWidth + GAP)) + 'px';
-          card.style.top = colHeights[minCol] + 'px';
+          var placedTop = colHeights[minCol];
+          card.style.top = placedTop + 'px';
           colHeights[minCol] += card.offsetHeight + GAP;
           card.classList.add('is-placed');
+
+          if (card.classList.contains('bg-lutzres')) {
+            lutzresPlacement = { col: minCol, top: placedTop, bottom: placedTop + card.offsetHeight };
+          }
         });
 
         grid.style.height = (colHeights.length ? Math.max.apply(null, colHeights) - GAP : 0) + 'px';
@@ -729,6 +1109,7 @@
         resizeTimer = setTimeout(layout, 120);
       });
       window.addEventListener('load', layout);
+      document.addEventListener('i18n:changed', layout);
       layout();
 
       /* si se entra desde otra página con #intro / #work, reubicar tras el masonry */
@@ -766,5 +1147,77 @@
       });
     })();
   </script>
+
+  <script>
+    window.I18N = {
+      en: {
+        'intro-statement': 'Systems that start by understanding people.',
+        's2-headline': 'I sort out the chaos before design begins.',
+        's2-joke': 'I&rsquo;m a designer, but I work like an anthropologist. <span class="s2-aside">(Don&rsquo;t tell HR.)</span>',
+        's2-detail': 'I listen to people, sit teams that hadn&rsquo;t spoken to each other at the same table, and come out with an executable plan: <span class="s2-word--product">product</span>, <span class="s2-word--system">system</span>, or <span class="s2-word--service">service</span>.',
+        'filter-label': 'FILTER BY',
+        'tag-product': 'Product Design',
+        'tag-strategy': 'Strategy',
+        'tag-research': 'Research',
+        'tag-service': 'Service Design',
+        'tag-visuals': 'Visuals',
+        'tag-stakeholder': 'Stakeholder Management',
+        'tag-ux': 'UX',
+        'lutz-title': 'Redesigning navigation and handover for better shopping',
+        'lutz-read': '5 mins read',
+        'lutzres-title': 'One word, 15% more sales',
+        'lutzres-subtitle': 'How a single word in a reservation button turned hesitation into thousands of store visits.',
+        'lutzres-read': '2 mins read',
+        'lutzc360-title': 'AI alone wasn’t going to fix this',
+        'lutzc360-subtitle': 'How a Service Design workshop prepared the company for the next generation of personalized experiences.',
+        'lutzc360-read': '3 mins read',
+        'lutzdelivery-title': "The problem wasn't delivery",
+        'lutzdelivery-read': '3 mins read',
+        'ellie-title': "Supporting older adults' autonomy shift with IoT",
+        'ellie-read': '4 mins read',
+        'donofrio-title': 'Empowering ice cream vendors through effortless tech',
+        'donofrio-read': '3 mins read',
+        'coalapay-title': 'Crypto with social impact',
+        'coalapay-read': '3 mins read',
+        'pepupo-title': 'Breaking gender stereotypes through play',
+        'pepupo-read': '4 mins read',
+        'footer-more': 'More projects'
+      },
+      es: {
+        'intro-statement': 'Sistemas que empiezan por entender personas.',
+        's2-headline': 'Ordeno el caos antes del diseño.',
+        's2-joke': 'Soy diseñadora, pero trabajo como antropóloga. <span class="s2-aside">(No se lo digas a Recursos Humanos.)</span>',
+        's2-detail': 'Escucho a la gente, siento en la misma mesa a equipos que no se hablaban, y salgo con un plan ejecutable: un <span class="s2-word--product">producto</span>, <span class="s2-word--system">sistema</span> o <span class="s2-word--service">servicio</span>.',
+        'filter-label': 'FILTRAR POR',
+        'tag-product': 'Product Design',
+        'tag-strategy': 'Estrategia',
+        'tag-research': 'Investigación',
+        'tag-service': 'Service Design',
+        'tag-visuals': 'Visuales',
+        'tag-stakeholder': 'Gestión de Stakeholders',
+        'tag-ux': 'UX',
+        'lutz-title': 'Mejorando la experiencia de compra de muebles online',
+        'lutz-read': '5 min de lectura',
+        'lutzres-title': 'Una palabra, 15% más ventas',
+        'lutzres-subtitle': 'Cómo una sola palabra en un botón de reserva convirtió la duda en miles de visitas a la tienda.',
+        'lutzres-read': '2 min de lectura',
+        'lutzc360-title': 'La IA sola no iba a arreglar esto',
+        'lutzc360-subtitle': 'Cómo un workshop de Service Design preparó la empresa para la siguiente generación de experiencias personalizadas.',
+        'lutzc360-read': '3 min de lectura',
+        'lutzdelivery-title': 'El problema no era la entrega',
+        'lutzdelivery-read': '3 min de lectura',
+        'ellie-title': 'Acompañando a adultos mayores con IOT',
+        'ellie-read': '4 min de lectura',
+        'donofrio-title': 'Empoderando a heladeros ambulantes con tecnología simple',
+        'donofrio-read': '3 min de lectura',
+        'coalapay-title': 'Cripto con impacto social',
+        'coalapay-read': '3 min de lectura',
+        'pepupo-title': 'Rompiendo estereotipos de género a través del juego',
+        'pepupo-read': '4 min de lectura',
+        'footer-more': 'Más proyectos'
+      }
+    };
+  </script>
+  <script src="i18n.js"></script>
 </body>
 </html>

@@ -437,6 +437,23 @@
     .btn .mi { font-size: 19px; line-height: 1; }
     .btn.ghost { background: transparent; color: var(--dark); }
     .btn:hover { transform: translateY(-2px); }
+    .btn-copy {
+      position: relative; cursor: pointer; font-family: inherit;
+      background: var(--red); border-color: var(--red); color: #fff;
+    }
+    .btn-copy .copy-ico { width: 16px; height: 16px; flex: none; }
+    .copy-toast {
+      position: absolute; left: 50%; bottom: calc(100% + 10px);
+      transform: translateX(-50%) translateY(4px);
+      background: var(--dark); color: #fff; font-size: 12px; font-weight: 700;
+      padding: 6px 12px; border-radius: 6px; white-space: nowrap;
+      opacity: 0; pointer-events: none; transition: opacity .2s ease, transform .2s ease;
+    }
+    .copy-toast::after {
+      content: ""; position: absolute; top: 100%; left: 50%; transform: translateX(-50%);
+      border: 5px solid transparent; border-top-color: var(--dark);
+    }
+    .copy-toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
     .contact .avail {
       margin-top: 32px; font-size: 13px; color: #4a443d;
       display: inline-flex; align-items: center; gap: 9px;
@@ -606,14 +623,14 @@
     <!-- ═══════════════ HERO ═══════════════ -->
     <section class="hero">
       <div class="hero-stage">
-        <h1 class="hero-statement statement reveal">
+        <h1 class="hero-statement statement reveal" data-i18n="hero-statement">
           Soy <span class="selname" id="selname">Martina Hirschler.<span class="tag">Diseñadora · Barcelona</span><span class="box"><i></i><i></i><i></i><i></i></span></span>
           <span class="w-product u">Investigo</span>, <span class="w-service u">mapeo el sistema</span>
           y <span class="w-strategy u">facilito la conversación</span> antes de diseñar la primera pantalla.
         </h1>
 
         <div class="hero-row">
-          <p class="hero-sub reveal d1">
+          <p class="hero-sub reveal d1" data-i18n="hero-sub">
             <b>Hace ~12 años que diseño</b>: de <span class="uk">marcas</span> e <span class="uk">interfaces</span> a <span class="uk">servicios</span>, <span class="uk">estrategia</span> y <span class="uk">facilitación</span>.<br/><br/>
             Ahora trabajo donde el problema todavía no tiene forma.
           </p>
@@ -628,7 +645,7 @@
                 <path d="M2 10c0-3 2-5 5-5h20l7 8h33c3 0 5 2 5 5v37c0 3-2 5-5 5H7c-3 0-5-2-5-5V10Z" fill="#4C9AFF"/>
                 <path d="M2 20h70v33c0 3-2 5-5 5H7c-3 0-5-2-5-5V20Z" fill="#7FB8FF"/>
               </svg>
-              casos
+              <span data-i18n="hero-folder">casos</span>
             </div>
 
             <div class="float chip c1" data-rot="2">about-me.md</div>
@@ -642,14 +659,14 @@
     <section class="sec">
       <div class="origin">
         <div>
-          <span class="eyebrow reveal">de dónde viene esto</span>
-          <p class="big reveal d1">
+          <span class="eyebrow reveal" data-i18n="origin-eyebrow">de dónde viene esto</span>
+          <p class="big reveal d1" data-i18n="origin-heading">
             A los 8 años hacía presentaciones de PowerPoint <span class="v">por</span> <span class="v">diversión</span><span class="dots-light">.........</span>
           </p>
-          <p class="after reveal d2">No ha cambiado tanto la cosa. Sigo ordenando ideas para que otras personas las entiendan; solo que ahora también hay <span class="gu">usuarios</span>, <span class="gu">sistemas</span> y <span class="gu">equipos</span> de por medio.</p>
+          <p class="after reveal d2" data-i18n="origin-after">No ha cambiado tanto la cosa. Sigo ordenando ideas para que otras personas las entiendan; solo que ahora también hay <span class="gu">usuarios</span>, <span class="gu">sistemas</span> y <span class="gu">equipos</span> de por medio.</p>
         </div>
         <div class="aside reveal d2">
-          <p class="bg-note reveal d3">cuantas más animaciones, más cool</p>
+          <p class="bg-note reveal d3" data-i18n="origin-bgnote">cuantas más animaciones, más cool</p>
           <figure class="photo tilt-l" style="width:100%; max-width:250px;">
             <img src="assets/perfil-infancia.jpg" alt="Martina de chica haciendo el signo de la paz" />
           </figure>
@@ -659,64 +676,64 @@
 
     <!-- ═══════════════ WHAT I DO ═══════════════ -->
     <section class="sec">
-      <p class="statement do-statement reveal">
+      <p class="statement do-statement reveal" data-i18n="do-statement">
         Trabajo mejor cuando el problema todavía está <span class="hot">desordenado</span>.
       </p>
 
-      <p class="body do-body reveal d2">
+      <p class="body do-body reveal d2" data-i18n="do-body">
         Cuando varios equipos no se ponen de acuerdo y hay que descubrir cuál es el problema real. Hablo con la gente,
         dibujo el <strong>sistema</strong> que hay <strong>detrás de la experiencia</strong>,
         encuentro <strong>patrones</strong> y lo convierto en <strong>una dirección</strong> con la que se pueda trabajar.
       </p>
 
       <ol class="flow reveal d2">
-        <li><div class="n">01</div><div class="t">Investigar</div><div class="g">escuchar a las personas</div></li>
-        <li><div class="n">02</div><div class="t">Dar sentido</div><div class="g">encontrar el patrón</div></li>
-        <li><div class="n">03</div><div class="t">Alinear</div><div class="g">misma sala, mismo problema</div></li>
-        <li><div class="n">04</div><div class="t">Estrategia</div><div class="g">elegir hacia dónde</div></li>
-        <li><div class="n">05</div><div class="t">Concepto</div><div class="g">imaginar el qué</div></li>
-        <li><div class="n">06</div><div class="t">Dirección</div><div class="g">algo accionable</div></li>
-        <li><div class="n">07</div><div class="t">Diseñar</div><div class="g">que sí, todavía lo hago</div></li>
+        <li><div class="n">01</div><div class="t" data-i18n="flow-t-1">Investigar</div><div class="g" data-i18n="flow-g-1">escuchar a las personas</div></li>
+        <li><div class="n">02</div><div class="t" data-i18n="flow-t-2">Dar sentido</div><div class="g" data-i18n="flow-g-2">encontrar el patrón</div></li>
+        <li><div class="n">03</div><div class="t" data-i18n="flow-t-3">Alinear</div><div class="g" data-i18n="flow-g-3">misma sala, mismo problema</div></li>
+        <li><div class="n">04</div><div class="t" data-i18n="flow-t-4">Estrategia</div><div class="g" data-i18n="flow-g-4">elegir hacia dónde</div></li>
+        <li><div class="n">05</div><div class="t" data-i18n="flow-t-5">Concepto</div><div class="g" data-i18n="flow-g-5">imaginar el qué</div></li>
+        <li><div class="n">06</div><div class="t" data-i18n="flow-t-6">Dirección</div><div class="g" data-i18n="flow-g-6">algo accionable</div></li>
+        <li><div class="n">07</div><div class="t" data-i18n="flow-t-7">Diseñar</div><div class="g" data-i18n="flow-g-7">que sí, todavía lo hago</div></li>
       </ol>
-      <p class="do-not reveal">(en vez de ticket → pantalla → componente → handoff)</p>
+      <p class="do-not reveal" data-i18n="do-not">(en vez de ticket → pantalla → componente → handoff)</p>
     </section>
 
     <!-- ═══════════════ GLOSARIO ═══════════════ -->
     <section class="sec">
-      <span class="eyebrow reveal">habilidades, herramientas y formas de trabajar</span>
+      <span class="eyebrow reveal" data-i18n="gloss-eyebrow">habilidades, herramientas y formas de trabajar</span>
       <div class="gloss-head">
-        <h2 class="reveal d1">GLOSARIO</h2>
+        <h2 class="reveal d1" data-i18n="gloss-h2">GLOSARIO</h2>
       </div>
 
       <div class="gset reveal d1">
         <h3>Hard skills</h3>
         <div class="ggrid">
-          <div class="gterm"><span class="gn">01</span><span class="gt"><span class="dot d-ux"></span><b>UX de producto</b></span><span class="gd">Flujos, arquitectura, wireframes y prototipos de baja y alta fidelidad en web, móvil, iOS y Android. También la UI final cuando hace falta. Ejecución al servicio de una idea.</span></div>
-          <div class="gterm"><span class="gn">02</span><span class="gt"><span class="dot d-service"></span><b>Service Design</b></span><span class="gd">Diseñar lo que la persona vive y también los sistemas, procesos y roles que lo hacen posible. Blueprints, mapas de ecosistema, frontstage y backstage.</span></div>
-          <div class="gterm"><span class="gn">03</span><span class="gt"><span class="dot d-research"></span><b>Investigación</b></span><span class="gd">Entrevistas, tests de usabilidad cualitativos, observación y síntesis. Convertir lo que se escucha en oportunidades, no en un informe.</span></div>
-          <div class="gterm"><span class="gn">04</span><span class="gt"><span class="dot d-strategy"></span><b>Estrategia de diseño</b></span><span class="gd">Traducir insight y complejidad en dirección: principios, prioridades, concepto y visión compartida.</span></div>
-          <div class="gterm"><span class="gn">05</span><span class="gt"><span class="dot d-ux"></span><b>Arquitectura de información</b></span><span class="gd">Ordenar contenido, flujos y navegación para que una estructura compleja se vuelva recorrible.</span></div>
-          <div class="gterm"><span class="gn">06</span><span class="gt"><span class="dot d-service"></span><b>Systems thinking</b></span><span class="gd">Mirar más allá de la interfaz: dependencias, organización, canales y dónde vive de verdad la información.</span></div>
-          <div class="gterm"><span class="gn">07</span><span class="gt"><span class="dot d-strategy"></span><b>Discovery y facilitación</b></span><span class="gd">Cuestionar el encuadre inicial, encontrar la oportunidad grande detrás de un pedido pequeño, y diseñar y conducir los workshops que lo destraban: ejercicios, timeboxing, mapeo colaborativo y decisiones al final.</span></div>
-          <div class="gterm"><span class="gn">08</span><span class="gt"><span class="dot d-ux"></span><b>Creative prompting</b></span><span class="gd">Trabajar con modelos de IA para explorar conceptos, generar direcciones de UI y sintetizar research. Vibe coding para llegar a algo tocable antes de abrir Figma.</span></div>
-          <div class="gterm"><span class="gn">09</span><span class="gt"><span class="dot d-visuals"></span><b>Diseño visual y branding</b></span><span class="gd">Base de diseño gráfico: jerarquía, identidad, ilustración y sistemas visuales que hacen legible lo abstracto.</span></div>
+          <div class="gterm"><span class="gn">01</span><span class="gt"><span class="dot d-ux"></span><b data-i18n="g-t-01">UX de producto</b></span><span class="gd" data-i18n="g-d-01">Flujos, arquitectura, wireframes y prototipos de baja y alta fidelidad en web, móvil, iOS y Android. También la UI final cuando hace falta. Ejecución al servicio de una idea.</span></div>
+          <div class="gterm"><span class="gn">02</span><span class="gt"><span class="dot d-service"></span><b data-i18n="g-t-02">Service Design</b></span><span class="gd" data-i18n="g-d-02">Diseñar lo que la persona vive y también los sistemas, procesos y roles que lo hacen posible. Blueprints, mapas de ecosistema, frontstage y backstage.</span></div>
+          <div class="gterm"><span class="gn">03</span><span class="gt"><span class="dot d-research"></span><b data-i18n="g-t-03">Investigación</b></span><span class="gd" data-i18n="g-d-03">Entrevistas, tests de usabilidad cualitativos, observación y síntesis. Convertir lo que se escucha en oportunidades, no en un informe.</span></div>
+          <div class="gterm"><span class="gn">04</span><span class="gt"><span class="dot d-strategy"></span><b data-i18n="g-t-04">Estrategia de diseño</b></span><span class="gd" data-i18n="g-d-04">Traducir insight y complejidad en dirección: principios, prioridades, concepto y visión compartida.</span></div>
+          <div class="gterm"><span class="gn">05</span><span class="gt"><span class="dot d-ux"></span><b data-i18n="g-t-05">Arquitectura de información</b></span><span class="gd" data-i18n="g-d-05">Ordenar contenido, flujos y navegación para que una estructura compleja se vuelva recorrible.</span></div>
+          <div class="gterm"><span class="gn">06</span><span class="gt"><span class="dot d-service"></span><b data-i18n="g-t-06">Systems thinking</b></span><span class="gd" data-i18n="g-d-06">Mirar más allá de la interfaz: dependencias, organización, canales y dónde vive de verdad la información.</span></div>
+          <div class="gterm"><span class="gn">07</span><span class="gt"><span class="dot d-strategy"></span><b data-i18n="g-t-07">Discovery y facilitación</b></span><span class="gd" data-i18n="g-d-07">Cuestionar el encuadre inicial, encontrar la oportunidad grande detrás de un pedido pequeño, y diseñar y conducir los workshops que lo destraban: ejercicios, timeboxing, mapeo colaborativo y decisiones al final.</span></div>
+          <div class="gterm"><span class="gn">08</span><span class="gt"><span class="dot d-ux"></span><b data-i18n="g-t-08">Creative prompting</b></span><span class="gd" data-i18n="g-d-08">Trabajar con modelos de IA para explorar conceptos, generar direcciones de UI y sintetizar research. Vibe coding para llegar a algo tocable antes de abrir Figma.</span></div>
+          <div class="gterm"><span class="gn">09</span><span class="gt"><span class="dot d-visuals"></span><b data-i18n="g-t-09">Diseño visual y branding</b></span><span class="gd" data-i18n="g-d-09">Base de diseño gráfico: jerarquía, identidad, ilustración y sistemas visuales que hacen legible lo abstracto.</span></div>
         </div>
       </div>
 
       <div class="gset reveal d1">
         <h3>Soft skills</h3>
         <div class="ggrid">
-          <div class="gterm"><span class="gn">10</span><span class="gt"><span class="dot d-visuals"></span><b>Comunicación y storytelling</b></span><span class="gd">Presentar, construir un argumento y meter la evidencia dentro de una narrativa en vez de volcar hallazgos.</span></div>
-          <div class="gterm"><span class="gn">11</span><span class="gt"><span class="dot d-stakeholder"></span><b>Gestión de stakeholders</b></span><span class="gd">Navegar resistencias con evidencia, generar confianza antes de forzar la adopción y trabajar entre mercados y áreas.</span></div>
-          <div class="gterm"><span class="gn">12</span><span class="gt"><span class="dot d-stakeholder"></span><b>Liderazgo coach</b></span><span class="gd">Dar dirección sin controlar cada detalle, crear rituales de feedback y acompañar a perfiles más junior.</span></div>
-          <div class="gterm"><span class="gn">13</span><span class="gt"><span class="dot d-visuals"></span><b>Traducción entre disciplinas</b></span><span class="gd">Moverme entre negocio, tecnología y usuario sin necesidad de ser la especialista más profunda en cada dominio.</span></div>
-          <div class="gterm"><span class="gn">14</span><span class="gt"><span class="dot d-strategy"></span><b>Ambigüedad y autonomía</b></span><span class="gd">De fundadora de estudio: scoping, ownership, relación con cliente y decisiones con información incompleta.</span></div>
-          <div class="gterm"><span class="gn">15</span><span class="gt"><span class="dot d-stakeholder"></span><b>Humor en el equipo</b></span><span class="gd">Para mí lo divertido no está separado del rendimiento: ayuda a la gente a participar y a que le importe el trabajo.</span></div>
+          <div class="gterm"><span class="gn">10</span><span class="gt"><span class="dot d-visuals"></span><b data-i18n="g-t-10">Comunicación y storytelling</b></span><span class="gd" data-i18n="g-d-10">Presentar, construir un argumento y meter la evidencia dentro de una narrativa en vez de volcar hallazgos.</span></div>
+          <div class="gterm"><span class="gn">11</span><span class="gt"><span class="dot d-stakeholder"></span><b data-i18n="g-t-11">Gestión de stakeholders</b></span><span class="gd" data-i18n="g-d-11">Navegar resistencias con evidencia, generar confianza antes de forzar la adopción y trabajar entre mercados y áreas.</span></div>
+          <div class="gterm"><span class="gn">12</span><span class="gt"><span class="dot d-stakeholder"></span><b data-i18n="g-t-12">Liderazgo coach</b></span><span class="gd" data-i18n="g-d-12">Dar dirección sin controlar cada detalle, crear rituales de feedback y acompañar a perfiles más junior.</span></div>
+          <div class="gterm"><span class="gn">13</span><span class="gt"><span class="dot d-visuals"></span><b data-i18n="g-t-13">Traducción entre disciplinas</b></span><span class="gd" data-i18n="g-d-13">Moverme entre negocio, tecnología y usuario sin necesidad de ser la especialista más profunda en cada dominio.</span></div>
+          <div class="gterm"><span class="gn">14</span><span class="gt"><span class="dot d-strategy"></span><b data-i18n="g-t-14">Ambigüedad y autonomía</b></span><span class="gd" data-i18n="g-d-14">De fundadora de estudio: scoping, ownership, relación con cliente y decisiones con información incompleta.</span></div>
+          <div class="gterm"><span class="gn">15</span><span class="gt"><span class="dot d-stakeholder"></span><b data-i18n="g-t-15">Humor en el equipo</b></span><span class="gd" data-i18n="g-d-15">Para mí lo divertido no está separado del rendimiento: ayuda a la gente a participar y a que le importe el trabajo.</span></div>
         </div>
       </div>
 
       <div class="gset reveal d1">
-        <h3>Herramientas</h3>
+        <h3 data-i18n="tools-h3">Herramientas</h3>
         <div class="tools">
           <span class="tool"><img class="tlogo" src="assets/logos/figma.png" alt="" />Figma</span>
           <span class="tool"><img class="tlogo" src="assets/logos/figma.png" alt="" />FigJam</span>
@@ -726,32 +743,32 @@
           <span class="tool"><img class="tlogo" src="assets/logos/claude.png" alt="" />Claude</span>
           <span class="tool"><img class="tlogo" src="assets/logos/lovable.png" alt="" />Lovable</span>
           <span class="tool"><img class="tlogo" src="assets/logos/notion.png" alt="" />Notion</span>
-          <span class="tool"><img class="tlogo" src="assets/logos/adobe.png" alt="" />Suite Adobe</span>
+          <span class="tool"><img class="tlogo" src="assets/logos/adobe.png" alt="" /><span data-i18n="tool-adobe">Suite Adobe</span></span>
         </div>
       </div>
 
       <div class="gset reveal d1">
-        <h3>Idiomas</h3>
+        <h3 data-i18n="lang-h3">Idiomas</h3>
         <div class="langs">
           <div class="lang">
-            <span class="lname">Español</span>
+            <span class="lname" data-i18n="lang-es-name">Español</span>
             <span class="lmeter"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></span>
-            <span class="llevel">Nativo</span>
+            <span class="llevel" data-i18n="lang-es-level">Nativo</span>
           </div>
           <div class="lang">
             <span class="lname">English</span>
             <span class="lmeter"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></span>
-            <span class="llevel">Profesional</span>
+            <span class="llevel" data-i18n="lang-en-level">Profesional</span>
           </div>
           <div class="lang">
             <span class="lname">Deutsch</span>
             <span class="lmeter"><i class="on"></i><i class="on"></i><i class="on"></i><i></i><i></i></span>
-            <span class="llevel">Profesional, con alguna falta de gramática</span>
+            <span class="llevel" data-i18n="lang-de-level">Profesional, con alguna falta de gramática</span>
           </div>
           <div class="lang">
             <span class="lname">Català</span>
             <span class="lmeter"><i class="on"></i><i class="on"></i><i></i><i></i><i></i></span>
-            <span class="llevel">Aprendiendo, lo justo para una conversación</span>
+            <span class="llevel" data-i18n="lang-ca-level">Aprendiendo, lo justo para una conversación</span>
           </div>
         </div>
       </div>
@@ -764,50 +781,50 @@
           <img src="assets/perfil-martina-charla.png" alt="Martina facilitando una charla con micrófono frente a un grupo" />
         </figure>
         <div>
-          <p class="say reveal">Mi interfaz favorita a veces es una sala poniéndose de acuerdo.</p>
+          <p class="say reveal" data-i18n="facil-say">Mi interfaz favorita a veces es una sala poniéndose de acuerdo.</p>
         </div>
       </div>
     </section>
 
     <!-- ═══════════════ TRUTHS — scattered cards, drag + tap to expand ═══════════════ -->
     <section class="sec">
-      <span class="eyebrow reveal">algunas cosas que son ciertas sobre mí</span>
+      <span class="eyebrow reveal" data-i18n="truths-eyebrow">algunas cosas que son ciertas sobre mí</span>
       <div class="mx-stage reveal d1">
 
         <div class="mx" tabindex="0" role="button" data-x="1%" data-y="3%" data-rot="-5" style="--bg:#F06554">
-          <span class="mx-n">01</span><span class="mx-tag">trabajo</span>
+          <span class="mx-n">01</span><span class="mx-tag" data-i18n="truth-tag-1">trabajo</span>
           <svg class="mx-doodle" viewBox="0 0 40 40"><path d="M2 26c6-14 11 14 17 0s10-14 19 0"/></svg>
-          <span class="mx-text">Lidero como coach, no como jefa. Me gusta dar ownership y quitarme del medio.</span>
+          <span class="mx-text" data-i18n="truth-text-1">Lidero como coach, no como jefa. Me gusta dar ownership y quitarme del medio.</span>
         </div>
 
         <div class="mx" tabindex="0" role="button" data-x="27%" data-y="15%" data-rot="4" style="--bg:#A79BF3">
-          <span class="mx-n">02</span><span class="mx-tag">contexto</span>
+          <span class="mx-n">02</span><span class="mx-tag" data-i18n="truth-tag-2">contexto</span>
           <svg class="mx-doodle" viewBox="0 0 40 40"><path d="M22 20c0-4 5-4 5 0s-7 8-12 3 -2-16 8-15 13 11 7 20"/></svg>
-          <span class="mx-text">Fundé y llevé mi propio estudio de diseño durante tres años. Vendí, contraté y presenté propuestas.</span>
+          <span class="mx-text" data-i18n="truth-text-2">Fundé y llevé mi propio estudio de diseño durante tres años. Vendí, contraté y presenté propuestas.</span>
         </div>
 
         <div class="mx" tabindex="0" role="button" data-x="53%" data-y="2%" data-rot="-2" style="--bg:#EEA91A">
-          <span class="mx-n">03</span><span class="mx-tag">vida</span>
+          <span class="mx-n">03</span><span class="mx-tag" data-i18n="truth-tag-3">vida</span>
           <svg class="mx-doodle" viewBox="0 0 40 40"><g><circle cx="20" cy="20" r="6"/><line x1="20" y1="2" x2="20" y2="9"/><line x1="20" y1="31" x2="20" y2="38"/><line x1="2" y1="20" x2="9" y2="20"/><line x1="31" y1="20" x2="38" y2="20"/><line x1="7" y1="7" x2="12" y2="12"/><line x1="28" y1="28" x2="33" y2="33"/><line x1="33" y1="7" x2="28" y2="12"/><line x1="12" y1="28" x2="7" y2="33"/></g></svg>
-          <span class="mx-text">Comparto un coworking con amigos. La energía de un buen grupo de gente creativa es mi lugar.</span>
+          <span class="mx-text" data-i18n="truth-text-3">Comparto un coworking con amigos. La energía de un buen grupo de gente creativa es mi lugar.</span>
         </div>
 
         <div class="mx" tabindex="0" role="button" data-x="15%" data-y="44%" data-rot="5" style="--bg:#D8D2FF">
-          <span class="mx-n">04</span><span class="mx-tag">mirada</span>
+          <span class="mx-n">04</span><span class="mx-tag" data-i18n="truth-tag-4">mirada</span>
           <svg class="mx-doodle" viewBox="0 0 40 40"><g><line x1="20" y1="4" x2="20" y2="36"/><line x1="4" y1="20" x2="36" y2="20"/><line x1="9" y1="9" x2="31" y2="31"/><line x1="31" y1="9" x2="9" y2="31"/></g></svg>
-          <span class="mx-text">Miro casi todo con lente antropológica. Me fascinan las subculturas urbanas más que los monumentos.</span>
+          <span class="mx-text" data-i18n="truth-text-4">Me fascina observar a la gente en sus propios mundos: sus códigos, creencias, rituales y formas de relacionarse.</span>
         </div>
 
         <div class="mx" tabindex="0" role="button" data-x="42%" data-y="52%" data-rot="-6" style="--bg:#FFFFFF">
-          <span class="mx-n">05</span><span class="mx-tag">fuera de pantalla</span>
+          <span class="mx-n">05</span><span class="mx-tag" data-i18n="truth-tag-5">fuera de pantalla</span>
           <svg class="mx-doodle" viewBox="0 0 40 40"><path d="M3 22C11 8 17 34 24 20s9 12 14 -4"/></svg>
-          <span class="mx-text">Yoga, bailar, sol y explorar en la naturaleza. Lo analógico me recarga.</span>
+          <span class="mx-text" data-i18n="truth-text-5">Yoga, bailar, sol y explorar en la naturaleza. Lo analógico me recarga.</span>
         </div>
 
         <div class="mx" tabindex="0" role="button" data-x="68%" data-y="40%" data-rot="3" style="--bg:#ECDFCD">
-          <span class="mx-n">06</span><span class="mx-tag">creencia</span>
+          <span class="mx-n">06</span><span class="mx-tag" data-i18n="truth-tag-6">creencia</span>
           <svg class="mx-doodle" viewBox="0 0 40 40"><g><circle cx="8" cy="20" r="2.6"/><circle cx="20" cy="20" r="2.6"/><circle cx="32" cy="20" r="2.6"/></g></svg>
-          <span class="mx-text">Lo bello, por sí solo, también genera orgullo y sentido. No todo tiene que justificarse con una métrica.</span>
+          <span class="mx-text" data-i18n="truth-text-6">Las métricas importan, pero no cuentan toda la historia. Hay impacto que se mide y hay impacto que se siente.</span>
         </div>
 
       </div>
@@ -815,7 +832,7 @@
 
     <!-- ═══════════════ LEAN ═══════════════ -->
     <section class="sec">
-      <p class="lean-text reveal">
+      <p class="lean-text reveal" data-i18n="lean-text">
         Me atraen el <strong>impacto social</strong>, la educación, el cuidado y la accesibilidad.<br/><br/>
         El propósito también puede venir de hacer que un servicio o un equipo funcione mucho mejor.
       </p>
@@ -830,82 +847,245 @@
          Una: "I love her passion and willingness to act and move things forward. [...] As an agile coach i find an ally in her in our efforts to continuously improve delivery of what matters."
          Recambio, Bruno (cliente de agencia, original ES): "Es una persona con gran visión creativa y sin dudas volvería a trabajar con ella." -->
     <section class="sec quotes">
-      <span class="eyebrow reveal">cosas lindas que dicen sobre mí</span>
+      <span class="eyebrow reveal" data-i18n="quotes-eyebrow">cosas lindas que dicen sobre mí</span>
       <div class="quotes-track reveal d1">
         <div class="tcard">
-          <span class="q">Una gran diseñadora en cada desafío que enfrenta: del research y el discovery, al UX, a una UI pixel perfect.</span>
-          <span class="a"><b>Juan María Sánchez Cruces</b>Product Designer &amp; Design Leader · primero mi profe, después colega</span>
+          <span class="q" data-i18n="tcard-q-1">Una gran diseñadora en cada desafío que enfrenta: del research y el discovery, al UX, a una UI pixel perfect.</span>
+          <span class="a" data-i18n="tcard-a-1"><b>Juan María Sánchez Cruces</b>Product Designer &amp; Design Leader · primero mi profe, después colega</span>
         </div>
         <div class="tcard">
-          <span class="q">Su capacidad de traducir ideas complejas en diseños intuitivos y bonitos es realmente notable. Trabaja excepcionalmente bien con equipos multidisciplinarios.</span>
-          <span class="a"><b>Serkan Gökhan Bingöl</b>Product Owner · en el mismo equipo</span>
+          <span class="q" data-i18n="tcard-q-2">Su capacidad de traducir ideas complejas en diseños intuitivos y bonitos es realmente notable. Trabaja excepcionalmente bien con equipos multidisciplinarios.</span>
+          <span class="a" data-i18n="tcard-a-2"><b>Serkan Gökhan Bingöl</b>Product Owner · en el mismo equipo</span>
         </div>
         <div class="tcard">
-          <span class="q">Un momento realmente inspirador en mi carrera, por sus skills de diseño y de gestión. Tiene una forma de meterle personalidad al diseño, y pasa del branding al UX/UI con el mismo entusiasmo. Su feedback a los perfiles más junior es cuidado, detallado y motivador.</span>
-          <span class="a"><b>Georgia Watt</b>Brand &amp; Design · fue junior en mi equipo</span>
+          <span class="q" data-i18n="tcard-q-3">Un momento realmente inspirador en mi carrera, por sus skills de diseño y de gestión. Tiene una forma de meterle personalidad al diseño, y pasa del branding al UX/UI con el mismo entusiasmo. Su feedback a los perfiles más junior es cuidado, detallado y motivador.</span>
+          <span class="a" data-i18n="tcard-a-3"><b>Georgia Watt</b>Brand &amp; Design · fue junior en mi equipo</span>
         </div>
         <div class="tcard">
-          <span class="q">Me encanta su pasión y sus ganas de actuar y hacer que las cosas avancen. Como agile coach, encuentro en ella una aliada en nuestro esfuerzo por mejorar la entrega de lo que importa. 🌻</span>
-          <span class="a"><b>Una Dinić</b>Agile Coach · en el mismo equipo</span>
+          <span class="q" data-i18n="tcard-q-4">Me encanta su pasión y sus ganas de actuar y hacer que las cosas avancen. Como agile coach, encuentro en ella una aliada en nuestro esfuerzo por mejorar la entrega de lo que importa. 🌻</span>
+          <span class="a" data-i18n="tcard-a-4"><b>Una Dinić</b>Agile Coach · en el mismo equipo</span>
         </div>
       </div>
     </section>
 
     <!-- ═══════════════ WORK ═══════════════ -->
     <section class="sec">
-      <span class="eyebrow reveal">algunos de mis proyectos</span>
+      <span class="eyebrow reveal" data-i18n="work-eyebrow">algunos de mis proyectos</span>
       <div class="pub-track reveal d1">
         <a class="pub-card" href="lutz.html">
           <img class="card-thumb" src="assets/lutz-hero.png" alt="" />
-          <h3>Mejorando la experiencia de compra de muebles online</h3>
-          <p class="card-read">5 min de lectura</p>
+          <h3 data-i18n="work-1-title">Mejorando la experiencia de compra de muebles online</h3>
+          <p class="card-read" data-i18n="work-1-read">5 min de lectura</p>
           <div class="card-tags">
-            <span class="tag tag-product">Product Design</span>
-            <span class="tag tag-strategy">Estrategia</span>
+            <span class="tag tag-product" data-i18n="tag-product">Product Design</span>
+            <span class="tag tag-strategy" data-i18n="tag-strategy">Estrategia</span>
           </div>
         </a>
         <a class="pub-card" href="ellie.html">
           <img class="card-thumb" src="assets/home-ellie.png" alt="" />
-          <h3>Acompañando a adultos mayores con IOT</h3>
-          <p class="card-read">4 min de lectura</p>
+          <h3 data-i18n="work-2-title">Acompañando a adultos mayores con IOT</h3>
+          <p class="card-read" data-i18n="work-2-read">4 min de lectura</p>
           <div class="card-tags">
-            <span class="tag tag-research">Investigación</span>
-            <span class="tag tag-strategy">Estrategia</span>
-            <span class="tag tag-service">Service Design</span>
-            <span class="tag tag-ux">UX</span>
+            <span class="tag tag-research" data-i18n="tag-research">Investigación</span>
+            <span class="tag tag-strategy" data-i18n="tag-strategy">Estrategia</span>
+            <span class="tag tag-service" data-i18n="tag-service">Service Design</span>
+            <span class="tag tag-ux" data-i18n="tag-ux">UX</span>
           </div>
         </a>
         <a class="pub-card" href="coalapay.html">
           <img class="card-thumb" src="assets/coalapay-hero.jpg" alt="" />
-          <h3>Cripto con impacto social</h3>
-          <p class="card-read">3 min de lectura</p>
+          <h3 data-i18n="work-3-title">Cripto con impacto social</h3>
+          <p class="card-read" data-i18n="work-3-read">3 min de lectura</p>
           <div class="card-tags">
-            <span class="tag tag-service">Service Design</span>
-            <span class="tag tag-product">Product Design</span>
-            <span class="tag tag-strategy">Estrategia</span>
+            <span class="tag tag-service" data-i18n="tag-service">Service Design</span>
+            <span class="tag tag-product" data-i18n="tag-product">Product Design</span>
+            <span class="tag tag-strategy" data-i18n="tag-strategy">Estrategia</span>
           </div>
         </a>
-        <a class="pub-card pub-more-card" href="index.html">Ver más <span class="arw">→</span></a>
+        <a class="pub-card pub-more-card" href="index.html"><span data-i18n="work-more">Ver más</span> <span class="arw">→</span></a>
       </div>
     </section>
 
     <!-- ═══════════════ CONTACT ═══════════════ -->
     <section class="sec contact">
-      <span class="eyebrow reveal">hablemos</span>
-      <p class="big reveal d1">Si has llegado hasta aquí, somos prácticamente amigos.</p>
-      <p class="friend-note reveal d1">Escríbeme y lo hacemos oficial.</p>
+      <span class="eyebrow reveal" data-i18n="contact-eyebrow">hablemos</span>
+      <p class="big reveal d1" data-i18n="contact-big">Si has llegado hasta aquí, somos prácticamente amigos.</p>
+      <p class="friend-note reveal d1" data-i18n="contact-friend">Escríbeme y lo hacemos oficial.</p>
       <div class="row reveal d2">
-        <a class="btn" href="mailto:martina.hsch@gmail.com"><span class="mi">✉</span> martina.hsch@gmail.com</a>
+        <button type="button" class="btn btn-copy" id="copyEmailBtn" data-email="hello@martina.com.ar">
+          hello@martina.com.ar
+          <svg class="copy-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <rect x="9" y="9" width="12" height="12" rx="2"/>
+            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+          </svg>
+          <span class="copy-toast" role="status" aria-live="polite" data-i18n="contact-copied">email copiado</span>
+        </button>
         <a class="btn ghost" href="https://www.linkedin.com/in/heymarts" target="_blank" rel="noopener">LinkedIn ↗</a>
-        <a class="btn ghost" href="assets/martina-hirschler-cv.pdf" target="_blank" rel="noopener">Descargar CV ↓</a>
+        <a class="btn ghost" href="assets/martina-hirschler-cv.pdf" target="_blank" rel="noopener"><span data-i18n="contact-cv">Descargar CV</span> ↓</a>
       </div>
-      <p class="avail reveal d3">Abierta a algo nuevo.</p>
+      <p class="avail reveal d3" data-i18n="contact-avail">Abierta a algo nuevo.</p>
     </section>
 
   </main>
   </div>
 
   <div class="mx-scrim"></div>
+
+  <script>
+    window.I18N = {
+      en: {
+        'hero-statement': 'I&rsquo;m <span class="selname" id="selname">Martina Hirschler.<span class="tag">Designer · Barcelona</span><span class="box"><i></i><i></i><i></i><i></i></span></span> I <span class="w-product u">research</span>, <span class="w-service u">map the system</span> and <span class="w-strategy u">facilitate the conversation</span> before anyone designs the first screen.',
+        'hero-sub': '<b>I&rsquo;ve been designing for ~12 years</b>: from <span class="uk">brands</span> and <span class="uk">interfaces</span> to <span class="uk">services</span>, <span class="uk">strategy</span> and <span class="uk">facilitation</span>.<br><br>Now I work where the problem doesn&rsquo;t have a shape yet.',
+        'hero-folder': 'cases',
+        'origin-eyebrow': 'where this comes from',
+        'origin-heading': 'At 8 years old, I made PowerPoint presentations <span class="v">for</span> <span class="v">fun</span><span class="dots-light">.........</span>',
+        'origin-after': 'Not much has changed. I&rsquo;m still organizing ideas so other people can understand them; it&rsquo;s just that now there are also <span class="gu">users</span>, <span class="gu">systems</span> and <span class="gu">teams</span> involved.',
+        'origin-bgnote': 'the more animations, the cooler',
+        'do-statement': 'I work best when the problem is still <span class="hot">messy</span>.',
+        'do-body': 'When several teams can&rsquo;t agree and someone has to figure out what the real problem is. I talk to people, map the <strong>system</strong> <strong>behind the experience</strong>, find <strong>patterns</strong>, and turn it into <strong>a direction</strong> the team can actually work with.',
+        'flow-t-1': 'Research', 'flow-g-1': 'listen to people',
+        'flow-t-2': 'Make sense', 'flow-g-2': 'find the pattern',
+        'flow-t-3': 'Align', 'flow-g-3': 'same room, same problem',
+        'flow-t-4': 'Strategy', 'flow-g-4': 'choose a direction',
+        'flow-t-5': 'Concept', 'flow-g-5': 'imagine the what',
+        'flow-t-6': 'Direction', 'flow-g-6': 'something actionable',
+        'flow-t-7': 'Design', 'flow-g-7': 'yes, I still do this',
+        'do-not': '(instead of ticket → screen → component → handoff)',
+        'gloss-eyebrow': 'skills, tools and ways of working',
+        'gloss-h2': 'GLOSSARY',
+        'g-t-01': 'Product UX', 'g-d-01': 'Flows, architecture, wireframes and low- to high-fidelity prototypes across web, mobile, iOS and Android. The final UI too, when it&rsquo;s needed. Execution in service of an idea.',
+        'g-t-02': 'Service Design', 'g-d-02': 'Designing what the person experiences, and also the systems, processes and roles that make it possible. Blueprints, ecosystem maps, frontstage and backstage.',
+        'g-t-03': 'Research', 'g-d-03': 'Interviews, qualitative usability testing, observation and synthesis. Turning what I hear into opportunities, not a report.',
+        'g-t-04': 'Design strategy', 'g-d-04': 'Translating insight and complexity into direction: principles, priorities, concept and a shared vision.',
+        'g-t-05': 'Information architecture', 'g-d-05': 'Organizing content, flows and navigation so a complex structure becomes easy to move through.',
+        'g-t-06': 'Systems thinking', 'g-d-06': 'Looking beyond the interface: dependencies, organization, channels, and where information actually lives.',
+        'g-t-07': 'Discovery and facilitation', 'g-d-07': 'Questioning the initial framing, finding the big opportunity behind a small request, and designing and running the workshops that unstick it: exercises, timeboxing, collaborative mapping and decisions at the end.',
+        'g-t-08': 'Creative prompting', 'g-d-08': 'Working with AI models to explore concepts, generate UI directions and synthesize research. Vibe coding to get to something tangible before opening Figma.',
+        'g-t-09': 'Visual design and branding', 'g-d-09': 'A graphic design foundation: hierarchy, identity, illustration and visual systems that make the abstract legible.',
+        'g-t-10': 'Communication and storytelling', 'g-d-10': 'Presenting, building an argument, and weaving evidence into a narrative instead of dumping findings.',
+        'g-t-11': 'Stakeholder management', 'g-d-11': 'Navigating resistance with evidence, building trust before forcing adoption, and working across markets and teams.',
+        'g-t-12': 'Coach-style leadership', 'g-d-12': 'Giving direction without controlling every detail, building feedback rituals, and supporting more junior people.',
+        'g-t-13': 'Translating between disciplines', 'g-d-13': 'Moving between business, technology and the user without needing to be the deepest specialist in every domain.',
+        'g-t-14': 'Ambiguity and autonomy', 'g-d-14': 'From running my own studio: scoping, ownership, client relationships and decisions made with incomplete information.',
+        'g-t-15': 'Humor on the team', 'g-d-15': 'For me, fun isn&rsquo;t separate from performance: it helps people participate and actually care about the work.',
+        'tools-h3': 'Tools',
+        'tool-adobe': 'Adobe Suite',
+        'lang-h3': 'Languages',
+        'lang-es-name': 'Spanish', 'lang-es-level': 'Native',
+        'lang-en-level': 'Professional',
+        'lang-de-level': 'Professional, with the occasional grammar mistake',
+        'lang-ca-level': 'Learning, just enough for a conversation',
+        'facil-say': 'Sometimes my favorite interface is a room reaching agreement.',
+        'truths-eyebrow': 'a few true things about me',
+        'truth-tag-1': 'work', 'truth-text-1': 'I lead like a coach, not a boss. I like giving ownership and getting out of the way.',
+        'truth-tag-2': 'context', 'truth-text-2': 'I founded and ran my own design studio for three years. I sold, hired, and pitched proposals.',
+        'truth-tag-3': 'life', 'truth-text-3': 'I share a coworking space with friends. The energy of a good group of creative people is my happy place.',
+        'truth-tag-4': 'lens', 'truth-text-4': 'I&rsquo;m fascinated by watching people in their own worlds: their codes, beliefs, rituals and ways of relating to each other.',
+        'truth-tag-5': 'off-screen', 'truth-text-5': 'Yoga, dancing, sun, and exploring nature. The analog world recharges me.',
+        'truth-tag-6': 'belief', 'truth-text-6': 'Metrics matter, but they don&rsquo;t tell the whole story. Some impact can be measured, and some can only be felt.',
+        'lean-text': 'I&rsquo;m drawn to <strong>social impact</strong>, education, care and accessibility.<br><br>Purpose can also come from making a service or a team work a lot better.',
+        'quotes-eyebrow': 'nice things people say about me',
+        'tcard-q-1': 'She is a great designer in every single challenge she faces, from research and discovery, to overall UX design, to a pixel perfect UI.',
+        'tcard-a-1': '<b>Juan María Sánchez Cruces</b>Product Designer &amp; Design Leader · first my teacher, later a colleague',
+        'tcard-q-2': 'Her ability to translate complex ideas into intuitive and beautiful designs is truly remarkable. She works exceptionally well with cross-functional teams.',
+        'tcard-a-2': '<b>Serkan Gökhan Bingöl</b>Product Owner · on the same team',
+        'tcard-q-3': 'A really inspiring moment in my career, thanks to her design and management skills. She has a way of giving design personality, and moves from branding to UX/UI with the same enthusiasm. Her feedback to more junior people is thoughtful, detailed and motivating.',
+        'tcard-a-3': '<b>Georgia Watt</b>Brand &amp; Design · was junior on my team',
+        'tcard-q-4': 'I love her passion and her drive to make things move forward. As an agile coach, I find an ally in her in our effort to improve the delivery of what matters. 🌻',
+        'tcard-a-4': '<b>Una Dinić</b>Agile Coach · on the same team',
+        'work-eyebrow': 'some of my projects',
+        'work-1-title': 'Redesigning navigation and handover for better shopping', 'work-1-read': '5 mins read',
+        'work-2-title': 'Supporting older adults&rsquo; autonomy shift with IoT', 'work-2-read': '4 mins read',
+        'work-3-title': 'Crypto with social impact', 'work-3-read': '3 mins read',
+        'tag-product': 'Product Design', 'tag-strategy': 'Strategy', 'tag-research': 'Research', 'tag-service': 'Service Design', 'tag-ux': 'UX',
+        'work-more': 'More projects',
+        'contact-eyebrow': 'let&rsquo;s talk',
+        'contact-big': 'If you&rsquo;ve made it this far, we&rsquo;re basically friends.',
+        'contact-friend': 'Email me and let&rsquo;s make it official.',
+        'contact-cv': 'Download CV',
+        'contact-avail': 'Open to something new.',
+        'contact-copied': 'email copied'
+      },
+      es: {
+        'hero-statement': 'Soy <span class="selname" id="selname">Martina Hirschler.<span class="tag">Diseñadora · Barcelona</span><span class="box"><i></i><i></i><i></i><i></i></span></span> <span class="w-product u">Investigo</span>, <span class="w-service u">mapeo el sistema</span> y <span class="w-strategy u">facilito la conversación</span> antes de diseñar la primera pantalla.',
+        'hero-sub': '<b>Hace ~12 años que diseño</b>: de <span class="uk">marcas</span> e <span class="uk">interfaces</span> a <span class="uk">servicios</span>, <span class="uk">estrategia</span> y <span class="uk">facilitación</span>.<br><br>Ahora trabajo donde el problema todavía no tiene forma.',
+        'hero-folder': 'casos',
+        'origin-eyebrow': 'de dónde viene esto',
+        'origin-heading': 'A los 8 años hacía presentaciones de PowerPoint <span class="v">por</span> <span class="v">diversión</span><span class="dots-light">.........</span>',
+        'origin-after': 'No ha cambiado tanto la cosa. Sigo ordenando ideas para que otras personas las entiendan; solo que ahora también hay <span class="gu">usuarios</span>, <span class="gu">sistemas</span> y <span class="gu">equipos</span> de por medio.',
+        'origin-bgnote': 'cuantas más animaciones, más cool',
+        'do-statement': 'Trabajo mejor cuando el problema todavía está <span class="hot">desordenado</span>.',
+        'do-body': 'Cuando varios equipos no se ponen de acuerdo y hay que descubrir cuál es el problema real. Hablo con la gente, dibujo el <strong>sistema</strong> que hay <strong>detrás de la experiencia</strong>, encuentro <strong>patrones</strong> y lo convierto en <strong>una dirección</strong> con la que se pueda trabajar.',
+        'flow-t-1': 'Investigar', 'flow-g-1': 'escuchar a las personas',
+        'flow-t-2': 'Dar sentido', 'flow-g-2': 'encontrar el patrón',
+        'flow-t-3': 'Alinear', 'flow-g-3': 'misma sala, mismo problema',
+        'flow-t-4': 'Estrategia', 'flow-g-4': 'elegir hacia dónde',
+        'flow-t-5': 'Concepto', 'flow-g-5': 'imaginar el qué',
+        'flow-t-6': 'Dirección', 'flow-g-6': 'algo accionable',
+        'flow-t-7': 'Diseñar', 'flow-g-7': 'que sí, todavía lo hago',
+        'do-not': '(en vez de ticket → pantalla → componente → handoff)',
+        'gloss-eyebrow': 'habilidades, herramientas y formas de trabajar',
+        'gloss-h2': 'GLOSARIO',
+        'g-t-01': 'UX de producto', 'g-d-01': 'Flujos, arquitectura, wireframes y prototipos de baja y alta fidelidad en web, móvil, iOS y Android. También la UI final cuando hace falta. Ejecución al servicio de una idea.',
+        'g-t-02': 'Service Design', 'g-d-02': 'Diseñar lo que la persona vive y también los sistemas, procesos y roles que lo hacen posible. Blueprints, mapas de ecosistema, frontstage y backstage.',
+        'g-t-03': 'Investigación', 'g-d-03': 'Entrevistas, tests de usabilidad cualitativos, observación y síntesis. Convertir lo que se escucha en oportunidades, no en un informe.',
+        'g-t-04': 'Estrategia de diseño', 'g-d-04': 'Traducir insight y complejidad en dirección: principios, prioridades, concepto y visión compartida.',
+        'g-t-05': 'Arquitectura de información', 'g-d-05': 'Ordenar contenido, flujos y navegación para que una estructura compleja se vuelva recorrible.',
+        'g-t-06': 'Systems thinking', 'g-d-06': 'Mirar más allá de la interfaz: dependencias, organización, canales y dónde vive de verdad la información.',
+        'g-t-07': 'Discovery y facilitación', 'g-d-07': 'Cuestionar el encuadre inicial, encontrar la oportunidad grande detrás de un pedido pequeño, y diseñar y conducir los workshops que lo destraban: ejercicios, timeboxing, mapeo colaborativo y decisiones al final.',
+        'g-t-08': 'Creative prompting', 'g-d-08': 'Trabajar con modelos de IA para explorar conceptos, generar direcciones de UI y sintetizar research. Vibe coding para llegar a algo tocable antes de abrir Figma.',
+        'g-t-09': 'Diseño visual y branding', 'g-d-09': 'Base de diseño gráfico: jerarquía, identidad, ilustración y sistemas visuales que hacen legible lo abstracto.',
+        'g-t-10': 'Comunicación y storytelling', 'g-d-10': 'Presentar, construir un argumento y meter la evidencia dentro de una narrativa en vez de volcar hallazgos.',
+        'g-t-11': 'Gestión de stakeholders', 'g-d-11': 'Navegar resistencias con evidencia, generar confianza antes de forzar la adopción y trabajar entre mercados y áreas.',
+        'g-t-12': 'Liderazgo coach', 'g-d-12': 'Dar dirección sin controlar cada detalle, crear rituales de feedback y acompañar a perfiles más junior.',
+        'g-t-13': 'Traducción entre disciplinas', 'g-d-13': 'Moverme entre negocio, tecnología y usuario sin necesidad de ser la especialista más profunda en cada dominio.',
+        'g-t-14': 'Ambigüedad y autonomía', 'g-d-14': 'De fundadora de estudio: scoping, ownership, relación con cliente y decisiones con información incompleta.',
+        'g-t-15': 'Humor en el equipo', 'g-d-15': 'Para mí lo divertido no está separado del rendimiento: ayuda a la gente a participar y a que le importe el trabajo.',
+        'tools-h3': 'Herramientas',
+        'tool-adobe': 'Suite Adobe',
+        'lang-h3': 'Idiomas',
+        'lang-es-name': 'Español', 'lang-es-level': 'Nativo',
+        'lang-en-level': 'Profesional',
+        'lang-de-level': 'Profesional, con alguna falta de gramática',
+        'lang-ca-level': 'Aprendiendo, lo justo para una conversación',
+        'facil-say': 'Mi interfaz favorita a veces es una sala poniéndose de acuerdo.',
+        'truths-eyebrow': 'algunas cosas que son ciertas sobre mí',
+        'truth-tag-1': 'trabajo', 'truth-text-1': 'Lidero como coach, no como jefa. Me gusta dar ownership y quitarme del medio.',
+        'truth-tag-2': 'contexto', 'truth-text-2': 'Fundé y llevé mi propio estudio de diseño durante tres años. Vendí, contraté y presenté propuestas.',
+        'truth-tag-3': 'vida', 'truth-text-3': 'Comparto un coworking con amigos. La energía de un buen grupo de gente creativa es mi lugar.',
+        'truth-tag-4': 'mirada', 'truth-text-4': 'Me fascina observar a la gente en sus propios mundos: sus códigos, creencias, rituales y formas de relacionarse.',
+        'truth-tag-5': 'fuera de pantalla', 'truth-text-5': 'Yoga, bailar, sol y explorar en la naturaleza. Lo analógico me recarga.',
+        'truth-tag-6': 'creencia', 'truth-text-6': 'Las métricas importan, pero no cuentan toda la historia. Hay impacto que se mide y hay impacto que se siente.',
+        'lean-text': 'Me atraen el <strong>impacto social</strong>, la educación, el cuidado y la accesibilidad.<br><br>El propósito también puede venir de hacer que un servicio o un equipo funcione mucho mejor.',
+        'quotes-eyebrow': 'cosas lindas que dicen sobre mí',
+        'tcard-q-1': 'Una gran diseñadora en cada desafío que enfrenta: del research y el discovery, al UX, a una UI pixel perfect.',
+        'tcard-a-1': '<b>Juan María Sánchez Cruces</b>Product Designer &amp; Design Leader · primero mi profe, después colega',
+        'tcard-q-2': 'Su capacidad de traducir ideas complejas en diseños intuitivos y bonitos es realmente notable. Trabaja excepcionalmente bien con equipos multidisciplinarios.',
+        'tcard-a-2': '<b>Serkan Gökhan Bingöl</b>Product Owner · en el mismo equipo',
+        'tcard-q-3': 'Un momento realmente inspirador en mi carrera, por sus skills de diseño y de gestión. Tiene una forma de meterle personalidad al diseño, y pasa del branding al UX/UI con el mismo entusiasmo. Su feedback a los perfiles más junior es cuidado, detallado y motivador.',
+        'tcard-a-3': '<b>Georgia Watt</b>Brand &amp; Design · fue junior en mi equipo',
+        'tcard-q-4': 'Me encanta su pasión y sus ganas de actuar y hacer que las cosas avancen. Como agile coach, encuentro en ella una aliada en nuestro esfuerzo por mejorar la entrega de lo que importa. 🌻',
+        'tcard-a-4': '<b>Una Dinić</b>Agile Coach · en el mismo equipo',
+        'work-eyebrow': 'algunos de mis proyectos',
+        'work-1-title': 'Mejorando la experiencia de compra de muebles online', 'work-1-read': '5 min de lectura',
+        'work-2-title': 'Acompañando a adultos mayores con IOT', 'work-2-read': '4 min de lectura',
+        'work-3-title': 'Cripto con impacto social', 'work-3-read': '3 min de lectura',
+        'tag-product': 'Product Design', 'tag-strategy': 'Estrategia', 'tag-research': 'Investigación', 'tag-service': 'Service Design', 'tag-ux': 'UX',
+        'work-more': 'Ver más',
+        'contact-eyebrow': 'hablemos',
+        'contact-big': 'Si has llegado hasta aquí, somos prácticamente amigos.',
+        'contact-friend': 'Escríbeme y lo hacemos oficial.',
+        'contact-cv': 'Descargar CV',
+        'contact-avail': 'Abierta a algo nuevo.',
+        'contact-copied': 'email copiado'
+      }
+    };
+    document.addEventListener('i18n:changed', function () {
+      var s = document.getElementById('selname');
+      if (s) s.classList.add('on');
+    });
+  </script>
+  <script src="i18n.js"></script>
 
   <script>
     /* ── MENÚ LATERAL ── */
@@ -945,6 +1125,43 @@
       });
       sideMenu.querySelectorAll('a').forEach(function (a) {
         a.addEventListener('click', closeMenu);
+      });
+    })();
+  </script>
+
+  <script>
+    /* ── COPIAR EMAIL ── */
+    (function () {
+      var btn = document.getElementById('copyEmailBtn');
+      if (!btn) return;
+      var toast = btn.querySelector('.copy-toast');
+      var hideTimer;
+
+      function showToast() {
+        clearTimeout(hideTimer);
+        toast.classList.add('show');
+        hideTimer = setTimeout(function () { toast.classList.remove('show'); }, 1800);
+      }
+
+      function fallbackCopy(text) {
+        var ta = document.createElement('textarea');
+        ta.value = text;
+        ta.style.position = 'fixed';
+        ta.style.opacity = '0';
+        document.body.appendChild(ta);
+        ta.focus(); ta.select();
+        try { document.execCommand('copy'); } catch (e) {}
+        document.body.removeChild(ta);
+      }
+
+      btn.addEventListener('click', function () {
+        var email = btn.getAttribute('data-email');
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(email).then(showToast, function () { fallbackCopy(email); showToast(); });
+        } else {
+          fallbackCopy(email);
+          showToast();
+        }
       });
     })();
   </script>

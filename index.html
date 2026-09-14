@@ -1118,12 +1118,10 @@
         if (target) {
           window.addEventListener('load', function () {
             layout();
-            requestAnimationFrame(function () {
-              var prev = document.documentElement.style.scrollBehavior;
-              document.documentElement.style.scrollBehavior = 'auto';
-              target.scrollIntoView();
-              document.documentElement.style.scrollBehavior = prev;
-            });
+            var prev = document.documentElement.style.scrollBehavior;
+            document.documentElement.style.scrollBehavior = 'auto';
+            target.scrollIntoView();
+            document.documentElement.style.scrollBehavior = prev;
           });
         }
       }

@@ -219,14 +219,15 @@
       line-height: 1.12; letter-spacing: -.03em;
     }
     .origin .big .v { color: var(--c-product); }
+    .origin .big .dots-light { font-weight: 300; }
     .origin .after { margin-top: 24px; font-size: 16px; line-height: 1.55; color: #4a443d; max-width: 46ch; }
+    .origin .after .gu { text-decoration: underline; text-decoration-color: #bdb4a6; text-decoration-thickness: 1.5px; text-underline-offset: 3px; }
     .origin .aside { position: relative; }
-    .origin .aside .photo { position: relative; z-index: 1; }
     .origin .bg-note {
-      position: absolute; z-index: 0; top: -22px; left: 2px;
-      width: min(268px, 92%);
-      color: #c7bfb0; font-size: 17px; font-weight: 700; line-height: 1.24;
-      transform: rotate(-2deg); pointer-events: none;
+      display: inline-block; margin: 0 0 16px 6px;
+      max-width: 190px;
+      color: #b3aa9b; font-size: 13px; font-weight: 700; line-height: 1.28;
+      transform: rotate(-15deg);
     }
 
     /* ═══════════════════ WHAT I DO ═══════════════════ */
@@ -247,7 +248,7 @@
       font-size: 12px; color: var(--dark); background: var(--cream); padding: 1px 0; z-index: 2;
     }
     .flow li:last-child::after { content: none; }
-    .do-not { margin-top: 16px; font-size: 13px; color: var(--mid); }
+    .do-not { margin-top: 16px; font-size: 13px; color: var(--mid); text-align: center; }
 
     /* ═══════════════════ GLOSARIO ═══════════════════ */
     .gloss-head h2 { font-weight: 800; font-size: clamp(28px, 4vw, 46px); letter-spacing: -.02em; }
@@ -269,7 +270,8 @@
     .gterm:nth-child(3n)   { border-right: none; }
     .gterm:nth-child(3n+1) { padding-left: 0; }
     .gterm .gn { font-size: 11px; color: var(--mid); font-weight: 600; padding-top: 4px; }
-    .gterm .gt { display: flex; flex-wrap: wrap; align-items: center; gap: 9px; }
+    .gterm .gt { display: grid; grid-template-columns: auto 1fr; column-gap: 9px; align-items: start; }
+    .gterm .gt .dot { margin-top: 5px; }
     .gterm .gt b { font-size: 15.5px; font-weight: 700; letter-spacing: -.01em; }
     .gterm .gd { grid-column: 2; font-size: 12.5px; line-height: 1.42; color: #6b6459; }
     .dot { width: 10px; height: 10px; border-radius: 50%; flex: none; display: inline-block; }
@@ -292,17 +294,14 @@
       object-fit: contain; background: #fff;
     }
 
-    /* idiomas — visual meter */
-    .langs { margin-top: 30px; border-top: 1px solid var(--hair); }
-    .lang {
-      display: grid; grid-template-columns: 120px 88px 1fr; align-items: center; gap: 18px;
-      padding: 15px 0; border-bottom: 1px solid var(--hair);
-    }
-    .lang .lname { font-size: 18px; font-weight: 700; letter-spacing: -.01em; }
+    /* idiomas — horizontal, sin tabla */
+    .langs { margin-top: 26px; display: flex; flex-wrap: wrap; gap: 32px 48px; }
+    .lang { display: flex; flex-direction: column; gap: 9px; min-width: 128px; }
+    .lang .lname { font-size: 19px; font-weight: 700; letter-spacing: -.01em; }
     .lang .lmeter { display: inline-flex; gap: 5px; }
     .lang .lmeter i { width: 9px; height: 9px; border-radius: 50%; border: 1.5px solid var(--dark); }
     .lang .lmeter i.on { background: var(--dark); }
-    .lang .llevel { font-size: 13px; color: #6b6459; }
+    .lang .llevel { font-size: 12.5px; color: #6b6459; max-width: 22ch; }
 
     /* ═══════════════════ FACILITATION ═══════════════════ */
     .facil { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(28px, 6vw, 76px); align-items: center; }
@@ -345,27 +344,22 @@
     .mx.expanded .mx-text { font-size: clamp(22px, 3.6vw, 34px); font-weight: 700; line-height: 1.2; }
 
     /* ═══════════════════ LEAN ═══════════════════ */
-    .lean { display: grid; grid-template-columns: 1fr auto; gap: 40px; align-items: center; }
-    .lean p { font-weight: 600; font-size: clamp(19px, 2.5vw, 29px); line-height: 1.34; letter-spacing: -.02em; max-width: 26ch; }
-    .lean p strong { color: var(--c-strategy); }
-    .lean .aside-note {
-      font-size: 13px; font-weight: 700; letter-spacing: .04em; text-transform: uppercase;
-      color: #3a352f; border: 1.5px solid var(--dark); border-radius: 40px / 60px;
-      padding: 14px 22px; white-space: nowrap; line-height: 1.3; text-align: center;
-    }
+    .lean-text { font-weight: 600; font-size: clamp(19px, 2.5vw, 29px); line-height: 1.34; letter-spacing: -.02em; max-width: 34ch; }
+    .lean-text strong { color: var(--c-strategy); }
 
     /* ═══════════════════ TESTIMONIALS — side scroll, full bleed ═══════════════════ */
     .quotes { max-width: none; padding-inline: 0; }
     .quotes .eyebrow { padding-inline: var(--pad); }
     .quotes-track {
-      margin-top: 40px;
+      margin-top: 28px;
       display: flex; gap: 30px;
       overflow-x: auto; scroll-snap-type: x proximity;
-      padding: 22px var(--pad) 24px;
+      padding: 14px var(--pad) 24px;
       -webkit-overflow-scrolling: touch;
       scrollbar-width: none;
     }
     .quotes-track::-webkit-scrollbar { display: none; }
+    .quotes-track .tcard:first-child { margin-left: 8px; }
     .tcard {
       flex: 0 0 clamp(238px, 58vw, 316px);
       scroll-snap-align: start;
@@ -466,8 +460,7 @@
       .hero-row { grid-template-columns: 1fr; }
       .hero-props { margin: 14px 0 44px; }
       .hero-props .folder { left: auto; right: -3%; top: 0; }
-      .origin, .facil, .lean { grid-template-columns: 1fr; }
-      .lean .aside-note { justify-self: start; }
+      .origin, .facil { grid-template-columns: 1fr; }
       .flow { grid-template-columns: repeat(2, 1fr); }
       .flow li { border-bottom: 1px solid var(--hair); }
       .flow li::after { content: none; }
@@ -614,7 +607,7 @@
     <section class="hero">
       <div class="hero-stage">
         <h1 class="hero-statement statement reveal">
-          Soy <span class="selname" id="selname">Martina Hirschler<span class="tag">Diseñadora · Barcelona</span><span class="box"><i></i><i></i><i></i><i></i></span></span>.
+          Soy <span class="selname" id="selname">Martina Hirschler.<span class="tag">Diseñadora · Barcelona</span><span class="box"><i></i><i></i><i></i><i></i></span></span>
           <span class="w-product u">Investigo</span>, <span class="w-service u">mapeo el sistema</span>
           y <span class="w-strategy u">facilito la conversación</span> antes de diseñar la primera pantalla.
         </h1>
@@ -651,15 +644,15 @@
         <div>
           <span class="eyebrow reveal">de dónde viene esto</span>
           <p class="big reveal d1">
-            A los 8 años hacía presentaciones de PowerPoint <span class="v">por</span> <span class="v">diversión</span>.........
+            A los 8 años hacía presentaciones de PowerPoint <span class="v">por</span> <span class="v">diversión</span><span class="dots-light">.........</span>
           </p>
-          <p class="after reveal d2">Así como escuchás. No ha cambiado tanto la cosa. Sigo ordenando ideas para que otras personas las entiendan; solo que ahora también hay usuarios, sistemas y equipos de por medio.</p>
+          <p class="after reveal d2">No ha cambiado tanto la cosa. Sigo ordenando ideas para que otras personas las entiendan; solo que ahora también hay <span class="gu">usuarios</span>, <span class="gu">sistemas</span> y <span class="gu">equipos</span> de por medio.</p>
         </div>
         <div class="aside reveal d2">
+          <p class="bg-note reveal d3">cuantas más animaciones, más cool</p>
           <figure class="photo tilt-l" style="width:100%; max-width:250px;">
             <img src="assets/perfil-infancia.jpg" alt="Martina de chica haciendo el signo de la paz" />
           </figure>
-          <p class="bg-note reveal d3">cuantas más animaciones, más cool</p>
         </div>
       </div>
     </section>
@@ -671,8 +664,8 @@
       </p>
 
       <p class="body do-body reveal d2">
-        Cuando varios equipos no se ponen de acuerdo, nadie tiene la foto completa y hay que descubrir cuál es
-        el problema real. Hablo con la gente, dibujo el <strong>sistema</strong> que hay <strong>detrás de la experiencia</strong>,
+        Cuando varios equipos no se ponen de acuerdo y hay que descubrir cuál es el problema real. Hablo con la gente,
+        dibujo el <strong>sistema</strong> que hay <strong>detrás de la experiencia</strong>,
         encuentro <strong>patrones</strong> y lo convierto en <strong>una dirección</strong> con la que se pueda trabajar.
       </p>
 
@@ -685,7 +678,7 @@
         <li><div class="n">06</div><div class="t">Dirección</div><div class="g">algo accionable</div></li>
         <li><div class="n">07</div><div class="t">Diseñar</div><div class="g">que sí, todavía lo hago</div></li>
       </ol>
-      <p class="do-not reveal">(en vez de ticket, pantalla, componente, handoff)</p>
+      <p class="do-not reveal">(en vez de ticket → pantalla → componente → handoff)</p>
     </section>
 
     <!-- ═══════════════ GLOSARIO ═══════════════ -->
@@ -747,7 +740,7 @@
           </div>
           <div class="lang">
             <span class="lname">English</span>
-            <span class="lmeter"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i></i></span>
+            <span class="lmeter"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></span>
             <span class="llevel">Profesional</span>
           </div>
           <div class="lang">
@@ -822,13 +815,10 @@
 
     <!-- ═══════════════ LEAN ═══════════════ -->
     <section class="sec">
-      <div class="lean">
-        <p class="reveal">
-          Me atraen el <strong>impacto social</strong>, la educación, el cuidado y la accesibilidad.
-          Pero el propósito también puede venir de hacer que un servicio o un equipo funcione mucho mejor.
-        </p>
-        <div class="aside-note reveal d1">una inclinación,<br/>no una etiqueta</div>
-      </div>
+      <p class="lean-text reveal">
+        Me atraen el <strong>impacto social</strong>, la educación, el cuidado y la accesibilidad.<br/><br/>
+        El propósito también puede venir de hacer que un servicio o un equipo funcione mucho mejor.
+      </p>
     </section>
 
     <!-- ═══════════════ TESTIMONIALS ═══════════════ -->
@@ -863,15 +853,15 @@
 
     <!-- ═══════════════ WORK ═══════════════ -->
     <section class="sec">
-      <div class="pub-track reveal">
-        <a class="pub-card" href="lutz-delivery.html">
-          <img class="card-thumb" src="assets/lutzdelivery-store.jpg" alt="" />
-          <h3>El problema no era la entrega</h3>
-          <p class="card-read">3 min de lectura</p>
+      <span class="eyebrow reveal">algunos de mis proyectos</span>
+      <div class="pub-track reveal d1">
+        <a class="pub-card" href="lutz.html">
+          <img class="card-thumb" src="assets/lutz-hero.png" alt="" />
+          <h3>Mejorando la experiencia de compra de muebles online</h3>
+          <p class="card-read">5 min de lectura</p>
           <div class="card-tags">
-            <span class="tag tag-service">Service Design</span>
+            <span class="tag tag-product">Product Design</span>
             <span class="tag tag-strategy">Estrategia</span>
-            <span class="tag tag-stakeholder">Gestión de Stakeholders</span>
           </div>
         </a>
         <a class="pub-card" href="ellie.html">

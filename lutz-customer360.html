@@ -215,6 +215,45 @@
       font-weight: 600;
     }
 
+    .post-it {
+      display: block;
+      width: fit-content;
+      max-width: 300px;
+      background: #FFF571;
+      color: #17140f;
+      font-weight: 600;
+      font-size: 20px;
+      line-height: 1.5;
+      letter-spacing: -0.01em;
+      padding: 26px 24px 24px;
+      margin: 20px auto 44px;
+      transform: rotate(-1.6deg);
+      border-radius: 2px 16px 4px 12px;
+      box-shadow: 2px 7px 16px -7px rgba(0,0,0,.3);
+      position: relative;
+    }
+    .post-it::before {
+      content: "";
+      position: absolute;
+      top: -11px;
+      left: 50%;
+      width: 66px;
+      height: 21px;
+      background: rgba(255,255,255,.55);
+      border: 1px solid rgba(0,0,0,.05);
+      transform: translateX(-50%) rotate(-5deg);
+    }
+
+    /* ── AI ICON — two-star sparkle, used wherever AI/IA is called out ── */
+    .ai-icon {
+      width: 0.8em;
+      height: 0.8em;
+      display: inline-block;
+      vertical-align: -0.02em;
+      margin-left: 7px;
+      fill: currentColor;
+    }
+
     .img-slot {
       margin: 40px 0 12px;
       width: 100%;
@@ -375,25 +414,25 @@
     <div class="body-copy">
       <p class="lede" data-i18n="lede">La personalización empieza entendiendo a las personas. Después, los sistemas. Y recién después entra la IA.</p>
 
-      <p data-i18n="p1">En XXXLutz, yo lideraba &ldquo;Assess&rdquo; (incluyendo la Product Detail Page), mientras que Paula lideraba &ldquo;Product Discovery&rdquo;. Un día, nos miramos y nos preguntamos: ¿cómo puede ser que, en pleno siglo de la IA, nuestras recomendaciones sean tan... aleatorias?</p>
-      <p data-i18n="p2">Había sliders titulados &ldquo;esto te va a interesar&rdquo;. Pero si mirabas una jarra de verano, te ofrecíamos un set de muebles de jardín... sin tener jardín.</p>
-      <p><span class="highlight" data-i18n="p2-highlight">Y ahí concluimos que hay solo una forma de hacer recomendaciones que tengan sentido para los usuarios. Necesitamos aprender sobre ellos y sus individualidades.</span></p>
+      <p data-i18n="p1">En XXXLutz, yo lideraba el UX en <em>ASSESS</em> (incluyendo la Product Detail Page), mientras que Paula lideraba <em>Product Discovery</em>. Un día, nos miramos y nos preguntamos: ¿cómo puede ser que, en pleno siglo de la IA, nuestras recomendaciones sean tan... aleatorias?</p>
+      <p data-i18n="p2">Había sliders titulados &ldquo;esto te va a interesar&rdquo;. Pero si mirabas una jarra de verano, te ofrecíamos un mueble de jardín sin tener jardín. Mucho no te interesaba.</p>
+      <p><span class="highlight" data-i18n="p2-highlight">Y ahí concluimos que hay solo una forma de hacer recomendaciones que tengan sentido para los usuarios. Necesitamos aprender profunda y sistemáticamente sobre ellos y sus individualidades.</span></p>
 
       <h2 data-i18n="h2-1">Smart Recommendations Workshop</h2>
-      <p data-i18n="p3"><strong>¿Qué necesitamos para que nuestras recomendaciones sean más inteligentes?</strong></p>
-      <p data-i18n="p4">Decidimos organizar y facilitar un workshop de cuatro días en nuestras oficinas de Barcelona para responder a esta pregunta. Reunimos a un arquitecto, dos Data Analysts, un especialista en AI y nosotras, dos Product Designers con sed de una mejor experiencia. Nuestro objetivo no era diseñar un slider que funcione mejor. <strong>Era diseñar un sistema de recomendaciones capaz de saber antes que tú lo que te vendría bien.</strong></p>
+      <p class="post-it" data-i18n="p3">¿Qué necesitamos para que nuestras recomendaciones sean más inteligentes?</p>
+      <p data-i18n="p4">Decidimos organizar y facilitar un workshop de cuatro días en nuestras oficinas de Barcelona para responder a esta pregunta. Reunimos a un <u>arquitecto</u>, dos <u>Data Analysts</u>, un <u>especialista en AI</u> y nosotras, dos <u>Product Designers</u> con sed de una mejor experiencia. Nuestro objetivo no era diseñar un slider que funcione mejor. <strong>Era diseñar un sistema capaz de predecir tus intereses.</strong></p>
 
       <div class="img-slot"><img src="assets/lutzc360-team.jpg" alt="Equipo del workshop trabajando alrededor de la mesa" onclick="openLightbox(this.src, this.alt)"/></div>
       <div class="img-caption" data-i18n="img1-caption">Cuatro días, un arquitecto, dos Data Analysts, un especialista en AI y dos Product Designers.</div>
 
-      <p data-i18n="p5">Teníamos que ser capaces de <strong>trasladar la experiencia de un buen vendedor a nuestra tienda virtual</strong>. Recordar qué compraste en el pasado, aprender qué colores y estilos te gustan, cómo es tu casa.</p>
-      <p data-i18n="p6">Por un lado <strong>necesitabamos toda la información que existía sobre nuestros productos</strong>: atributos, categorías, disponibilidad, estilos, relaciones entre artículos y los distintos sistemas donde vivía esa información. Por otro, todo <strong>lo que podíamos aprender de nuestros usuarios.</strong> Qué productos miraban, cuáles compraban, qué guardaban en favoritos, qué filtros utilizaban, qué buscaban y, sobre todo, qué patrones podíamos inferir a partir de ese comportamiento.</p>
+      <p data-i18n="p5">Uno de nuestros lemas en XXXLutz es <strong>trasladar lo mejor de la experiencia de un buen vendedor a nuestra tienda virtual</strong>. Eso implica recordar <u>qué compraste</u> en el pasado, aprender qué <u>colores</u> y <u>estilos</u> te gustan, cómo es tu casa.</p>
+      <p data-i18n="p6">Por un lado <strong>necesitabamos toda la información que existía sobre nuestros productos</strong>: atributos, categorías, disponibilidad, estilos, relaciones entre artículos y los distintos sistemas donde vivía esa información. Por otro, todo <strong>lo que podíamos aprender de nuestros usuarios.</strong> Qué productos <u>miraban</u>, cuáles <u>compraban</u>, qué guardaban en <u>favoritos</u>, qué <u>filtros</u> utilizaban, qué buscaban y, sobre todo, qué patrones podíamos inferir a partir de ese comportamiento.</p>
       <p data-i18n="p7">Comenzamos armando un mapa gigante de sistemas que contenían toda la información. Ya la estábamos almacenando, pero nunca nadie la había conectado entre sí.</p>
 
       <div class="img-slot"><img src="assets/lutzc360-journeymap.jpg" alt="Mapa de customer journey pegado en la pared, con post-its de hallazgos" onclick="openLightbox(this.src, this.alt)"/></div>
       <div class="img-caption" data-i18n="img2-caption">El mapa que armamos en el workshop, conectando sistemas que hasta ese momento vivían aislados.</div>
 
-      <h2 data-i18n="h2-2">Un uso de la IA que sí tiene sentido</h2>
+      <h2 data-i18n="h2-2">Un uso de la IA que sí tiene sentido<svg class="ai-icon" viewBox="0 0 90 90" aria-hidden="true"><path d="M72.1286 7.1055L69.4997 0L66.8708 7.1055C65.0231 12.0938 61.0935 16.0235 56.1048 17.8715L48.9993 20.5004L56.1048 23.1293C61.0931 24.977 65.0228 28.9066 66.8708 33.8953L69.4997 41.0008L72.1286 33.8953C73.9763 28.907 77.9059 24.9773 82.8946 23.1293L90.0001 20.5004L82.8946 17.8715C77.9063 16.0238 73.9766 12.0942 72.1286 7.1055Z" fill="black"/><path d="M38.9256 32.958L34.4998 21.001L30.074 32.958C26.9685 41.3525 20.3513 47.97 11.957 51.075L0 55.5008L11.957 59.9266C20.3515 63.0321 26.969 69.6493 30.074 78.0436L34.4998 90.0006L38.9256 78.0436C42.0311 69.6491 48.6483 63.0316 57.0426 59.9266L68.9996 55.5008L57.0426 51.075C48.6481 47.9695 42.0306 41.3523 38.9256 32.958Z" fill="black"/></svg></h2>
       <p><span class="highlight" data-i18n="p8">Hay algo para lo que la IA es extremadamente efectiva: recopilar tanta información y encontrar patrones para cada uno de nuestros usuarios.</span></p>
       <p data-i18n="p9">Si la IA ve que varios muebles que has comprado calificarían como diseño escandinavo, puede inferir que es un estilo que te gusta. Y así con más datos de tu comportamiento. Que probablemente no tengas jardín, que acabas de comprar una cama y ahora necesitas mesas de luz antes que otra cama.</p>
 
@@ -404,7 +443,7 @@
       <div class="img-caption" data-i18n="img3-caption">Cada proyecto sabía algo distinto de nuestros usuarios. Conectar esos puntos fue el primer paso.</div>
 
       <h2 data-i18n="h2-4">Paso a la acción</h2>
-      <p data-i18n="p11">El resto del workshop consistió en convertir esa estrategia en algo accionable. Definimos personas, escribimos decenas de <em>How Might We</em>, generamos hipótesis, priorizamos ideas en una matriz <em>Now, How, Wow</em> y asignamos cada iniciativa al equipo que podía convertirla en un experimento medible.</p>
+      <p data-i18n="p11">El resto del workshop consistió en convertir esa <u>estrategia en algo accionable</u>. Definimos personas, escribimos decenas de <em>How Might We</em>, generamos hipótesis, priorizamos ideas en una matriz <em>Now, How, Wow</em> y asignamos cada iniciativa al equipo que podía convertirla en un experimento medible.</p>
 
       <div class="img-slot"><img src="assets/lutzc360-roadmap.jpg" alt="Equipo completo trabajando con laptops junto a la pared llena de post-its" onclick="openLightbox(this.src, this.alt)"/></div>
       <div class="img-caption" data-i18n="img5-caption">Definiendo personas, hipótesis y dueños para cada iniciativa.</div>
@@ -464,14 +503,14 @@
         'p2': 'We had sliders called <em>&ldquo;You might also like this.&rdquo;</em> But if you looked at a summer jug, we’d happily recommend a complete garden furniture set... even if you didn’t have a garden.',
         'p2-highlight': 'That was the moment we realized there is only one way to build recommendations that actually make sense: we need to understand people as individuals.',
         'h2-1': 'Smart Recommendations Workshop',
-        'p3': '<strong>What would it take to make our recommendations truly intelligent?</strong>',
+        'p3': 'What would it take to make our recommendations truly intelligent?',
         'p4': 'To answer that question, we organized and facilitated a four-day workshop at our Barcelona office. We brought together a Solution Architect, two Data Analysts, an AI Specialist, and the two of us as Product Designers eager to create a better shopping experience. Our goal wasn’t to design a better recommendation slider. <strong>It was to design a recommendation system capable of understanding what you might need before you do.</strong>',
         'img1-caption': 'Four days, one Solution Architect, two Data Analysts, one AI Specialist and two Product Designers.',
         'p5': 'We wanted to <strong>bring the intuition of a great salesperson into our digital store</strong>. Someone who remembers what you’ve bought before, understands the colors and styles you prefer, knows what kind of home you have, and uses that knowledge to make genuinely helpful suggestions.',
         'p6': 'To do that, we first <strong>needed to understand everything we already knew about our products</strong>: attributes, categories, availability, styles, relationships between products, and the many systems where that information lived. Then we mapped <strong>everything we could learn about our users</strong>: the products they viewed, purchased, saved to favorites, the filters they used, what they searched for, and, most importantly, the patterns we could infer from all of those behaviors.',
         'p7': 'We started by creating a giant systems map showing where every piece of information existed. The data had always been there. No one had ever connected it.',
         'img2-caption': 'The map we built during the workshop, connecting systems that had lived in isolation until then.',
-        'h2-2': 'AI That Actually Makes Sense',
+        'h2-2': 'AI That Actually Makes Sense<svg class="ai-icon" viewBox="0 0 90 90" aria-hidden="true"><path d="M72.1286 7.1055L69.4997 0L66.8708 7.1055C65.0231 12.0938 61.0935 16.0235 56.1048 17.8715L48.9993 20.5004L56.1048 23.1293C61.0931 24.977 65.0228 28.9066 66.8708 33.8953L69.4997 41.0008L72.1286 33.8953C73.9763 28.907 77.9059 24.9773 82.8946 23.1293L90.0001 20.5004L82.8946 17.8715C77.9063 16.0238 73.9766 12.0942 72.1286 7.1055Z" fill="black"/><path d="M38.9256 32.958L34.4998 21.001L30.074 32.958C26.9685 41.3525 20.3513 47.97 11.957 51.075L0 55.5008L11.957 59.9266C20.3515 63.0321 26.969 69.6493 30.074 78.0436L34.4998 90.0006L38.9256 78.0436C42.0311 69.6491 48.6483 63.0316 57.0426 59.9266L68.9996 55.5008L57.0426 51.075C48.6481 47.9695 42.0306 41.3523 38.9256 32.958Z" fill="black"/></svg>',
         'p8': 'This is exactly the kind of problem where AI becomes genuinely valuable. Not because it replaces designers, but because it can process enormous amounts of information and detect patterns that humans would never be able to identify at scale.',
         'p9': 'If AI notices that you’ve bought many products with Scandi design, it can infer that’s probably a style you like. If you’ve never interacted with outdoor furniture, it can assume recommending a garden set is probably a waste. If you’ve just bought a bed, it might recognize that bedside tables are far more relevant than another bed. The more it learns, the more useful its recommendations become.',
         'h2-3': 'Different Projects, Same Direction',
@@ -495,25 +534,25 @@
         'dek': 'Cómo un workshop de Service Design preparó la empresa para la siguiente generación de experiencias personalizadas.',
         'byline-sub': 'Product Designer<span class="dot">·</span>3 min de lectura',
         'lede': 'La personalización empieza entendiendo a las personas. Después, los sistemas. Y recién después entra la IA.',
-        'p1': 'En XXXLutz, yo lideraba &ldquo;Assess&rdquo; (incluyendo la Product Detail Page), mientras que Paula lideraba &ldquo;Product Discovery&rdquo;. Un día, nos miramos y nos preguntamos: ¿cómo puede ser que, en pleno siglo de la IA, nuestras recomendaciones sean tan... aleatorias?',
-        'p2': 'Había sliders titulados &ldquo;esto te va a interesar&rdquo;. Pero si mirabas una jarra de verano, te ofrecíamos un set de muebles de jardín... sin tener jardín.',
-        'p2-highlight': 'Y ahí concluimos que hay solo una forma de hacer recomendaciones que tengan sentido para los usuarios. Necesitamos aprender sobre ellos y sus individualidades.',
+        'p1': 'En XXXLutz, yo lideraba el UX en <em>ASSESS</em> (incluyendo la Product Detail Page), mientras que Paula lideraba <em>Product Discovery</em>. Un día, nos miramos y nos preguntamos: ¿cómo puede ser que, en pleno siglo de la IA, nuestras recomendaciones sean tan... aleatorias?',
+        'p2': 'Había sliders titulados &ldquo;esto te va a interesar&rdquo;. Pero si mirabas una jarra de verano, te ofrecíamos un mueble de jardín sin tener jardín. Mucho no te interesaba.',
+        'p2-highlight': 'Y ahí concluimos que hay solo una forma de hacer recomendaciones que tengan sentido para los usuarios. Necesitamos aprender profunda y sistemáticamente sobre ellos y sus individualidades.',
         'h2-1': 'Smart Recommendations Workshop',
-        'p3': '<strong>¿Qué necesitamos para que nuestras recomendaciones sean más inteligentes?</strong>',
-        'p4': 'Decidimos organizar y facilitar un workshop de cuatro días en nuestras oficinas de Barcelona para responder a esta pregunta. Reunimos a un arquitecto, dos Data Analysts, un especialista en AI y nosotras, dos Product Designers con sed de una mejor experiencia. Nuestro objetivo no era diseñar un slider que funcione mejor. <strong>Era diseñar un sistema de recomendaciones capaz de saber antes que tú lo que te vendría bien.</strong>',
+        'p3': '¿Qué necesitamos para que nuestras recomendaciones sean más inteligentes?',
+        'p4': 'Decidimos organizar y facilitar un workshop de cuatro días en nuestras oficinas de Barcelona para responder a esta pregunta. Reunimos a un <u>arquitecto</u>, dos <u>Data Analysts</u>, un <u>especialista en AI</u> y nosotras, dos <u>Product Designers</u> con sed de una mejor experiencia. Nuestro objetivo no era diseñar un slider que funcione mejor. <strong>Era diseñar un sistema capaz de predecir tus intereses.</strong>',
         'img1-caption': 'Cuatro días, un arquitecto, dos Data Analysts, un especialista en AI y dos Product Designers.',
-        'p5': 'Teníamos que ser capaces de <strong>trasladar la experiencia de un buen vendedor a nuestra tienda virtual</strong>. Recordar qué compraste en el pasado, aprender qué colores y estilos te gustan, cómo es tu casa.',
-        'p6': 'Por un lado <strong>necesitabamos toda la información que existía sobre nuestros productos</strong>: atributos, categorías, disponibilidad, estilos, relaciones entre artículos y los distintos sistemas donde vivía esa información. Por otro, todo <strong>lo que podíamos aprender de nuestros usuarios.</strong> Qué productos miraban, cuáles compraban, qué guardaban en favoritos, qué filtros utilizaban, qué buscaban y, sobre todo, qué patrones podíamos inferir a partir de ese comportamiento.',
+        'p5': 'Uno de nuestros lemas en XXXLutz es <strong>trasladar lo mejor de la experiencia de un buen vendedor a nuestra tienda virtual</strong>. Eso implica recordar <u>qué compraste</u> en el pasado, aprender qué <u>colores</u> y <u>estilos</u> te gustan, cómo es tu casa.',
+        'p6': 'Por un lado <strong>necesitabamos toda la información que existía sobre nuestros productos</strong>: atributos, categorías, disponibilidad, estilos, relaciones entre artículos y los distintos sistemas donde vivía esa información. Por otro, todo <strong>lo que podíamos aprender de nuestros usuarios.</strong> Qué productos <u>miraban</u>, cuáles <u>compraban</u>, qué guardaban en <u>favoritos</u>, qué <u>filtros</u> utilizaban, qué buscaban y, sobre todo, qué patrones podíamos inferir a partir de ese comportamiento.',
         'p7': 'Comenzamos armando un mapa gigante de sistemas que contenían toda la información. Ya la estábamos almacenando, pero nunca nadie la había conectado entre sí.',
         'img2-caption': 'El mapa que armamos en el workshop, conectando sistemas que hasta ese momento vivían aislados.',
-        'h2-2': 'Un uso de la IA que sí tiene sentido',
+        'h2-2': 'Un uso de la IA que sí tiene sentido<svg class="ai-icon" viewBox="0 0 90 90" aria-hidden="true"><path d="M72.1286 7.1055L69.4997 0L66.8708 7.1055C65.0231 12.0938 61.0935 16.0235 56.1048 17.8715L48.9993 20.5004L56.1048 23.1293C61.0931 24.977 65.0228 28.9066 66.8708 33.8953L69.4997 41.0008L72.1286 33.8953C73.9763 28.907 77.9059 24.9773 82.8946 23.1293L90.0001 20.5004L82.8946 17.8715C77.9063 16.0238 73.9766 12.0942 72.1286 7.1055Z" fill="black"/><path d="M38.9256 32.958L34.4998 21.001L30.074 32.958C26.9685 41.3525 20.3513 47.97 11.957 51.075L0 55.5008L11.957 59.9266C20.3515 63.0321 26.969 69.6493 30.074 78.0436L34.4998 90.0006L38.9256 78.0436C42.0311 69.6491 48.6483 63.0316 57.0426 59.9266L68.9996 55.5008L57.0426 51.075C48.6481 47.9695 42.0306 41.3523 38.9256 32.958Z" fill="black"/></svg>',
         'p8': 'Hay algo para lo que la IA es extremadamente efectiva: recopilar tanta información y encontrar patrones para cada uno de nuestros usuarios.',
         'p9': 'Si la IA ve que varios muebles que has comprado calificarían como diseño escandinavo, puede inferir que es un estilo que te gusta. Y así con más datos de tu comportamiento. Que probablemente no tengas jardín, que acabas de comprar una cama y ahora necesitas mesas de luz antes que otra cama.',
         'h2-3': 'Varios proyectos tiraban hacia el mismo lado',
         'p10': 'Al hablar de esto empezaron a surgir menciones de otros proyectos en producción. La sorpresa: <strong>ya había proyectos en marcha que nos daban piezas.</strong> Bundles, Coveo, un botón visual... Proyectos que recopilaban, reinterpretaban o asociaban información de producto y de usuario, pero en pequeñas porciones. <strong>Solo faltaba conectar esas iniciativas en una misma estrategia.</strong>',
         'img3-caption': 'Cada proyecto sabía algo distinto de nuestros usuarios. Conectar esos puntos fue el primer paso.',
         'h2-4': 'Paso a la acción',
-        'p11': 'El resto del workshop consistió en convertir esa estrategia en algo accionable. Definimos personas, escribimos decenas de <em>How Might We</em>, generamos hipótesis, priorizamos ideas en una matriz <em>Now, How, Wow</em> y asignamos cada iniciativa al equipo que podía convertirla en un experimento medible.',
+        'p11': 'El resto del workshop consistió en convertir esa <u>estrategia en algo accionable</u>. Definimos personas, escribimos decenas de <em>How Might We</em>, generamos hipótesis, priorizamos ideas en una matriz <em>Now, How, Wow</em> y asignamos cada iniciativa al equipo que podía convertirla en un experimento medible.',
         'img5-caption': 'Definiendo personas, hipótesis y dueños para cada iniciativa.',
         'p12': 'Algunas eran nuevas funcionalidades; otras consistían en integraciones de backend para conectar sistemas que hasta ese momento trabajaban de forma aislada.',
         'img4-caption': 'De decenas de How Might We a una matriz de priorización con dueños asignados.',

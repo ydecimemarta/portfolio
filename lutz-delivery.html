@@ -40,6 +40,7 @@
     .container { max-width: var(--max-width); margin: 0 auto; padding-left: var(--pad-desktop); padding-right: var(--pad-desktop); }
     .section-label { font-size: var(--text-label); font-weight: 700; line-height: var(--lh-normal); text-transform: uppercase; letter-spacing: 0.08em; color: var(--mid); display: block; margin-bottom: 12px; }
     .section-title { font-size: var(--text-title); font-weight: 700; line-height: var(--lh-normal); color: #282828; margin-bottom: 20px; letter-spacing: -0.6px; }
+    .ai-icon { width: 0.8em; height: 0.8em; display: inline-block; vertical-align: -0.02em; margin-left: 7px; fill: currentColor; }
     .body-text { font-size: var(--text-body); font-weight: 400; line-height: 118%; letter-spacing: -0.6px; color: #2a2a2a; }
     .body-text strong { font-weight: 700; color: #000; }
     .body-text-sm { font-size: var(--text-body-sm); font-weight: 400; line-height: 118%; letter-spacing: -0.6px; color: #444; }
@@ -195,9 +196,10 @@
   </div>
   </div>
 
-  <!-- ══ SPRINT PHOTO — full bleed ══ -->
-  <div class="r" style="max-height:480px; overflow:hidden;">
-    <img src="assets/lutzdelivery-sprint.jpg" alt="Equipo trabajando en el Design Sprint" style="width:100%; display:block; object-fit:cover;"/>
+  <!-- ══ CLICK & COLLECT PHOTOS — stacked, full width, no gap/border ══ -->
+  <div class="container r">
+    <img src="assets/lutzdelivery-clickcollect.jpg" alt="Entrada del punto de Click &amp; Collect" style="width:100%; display:block;"/>
+    <img src="assets/lutzdelivery-pickup.jpg" alt="Retirando un pedido en Click &amp; Collect" style="width:100%; display:block;"/>
   </div>
 
   <!-- ══ INSIGHT ══ -->
@@ -227,7 +229,7 @@
     <div class="two-col r">
       <div>
         <span class="section-label" data-i18n="discovery-label">Discovery</span>
-        <h2 class="section-title" data-i18n="discovery-title">Un glosario compartido y traducciones con IA</h2>
+        <h2 class="section-title" data-i18n="discovery-title">Un glosario compartido y traducciones con IA<svg class="ai-icon" viewBox="0 0 90 90" aria-hidden="true"><path d="M72.1286 7.1055L69.4997 0L66.8708 7.1055C65.0231 12.0938 61.0935 16.0235 56.1048 17.8715L48.9993 20.5004L56.1048 23.1293C61.0931 24.977 65.0228 28.9066 66.8708 33.8953L69.4997 41.0008L72.1286 33.8953C73.9763 28.907 77.9059 24.9773 82.8946 23.1293L90.0001 20.5004L82.8946 17.8715C77.9063 16.0238 73.9766 12.0942 72.1286 7.1055Z" fill="black"/><path d="M38.9256 32.958L34.4998 21.001L30.074 32.958C26.9685 41.3525 20.3513 47.97 11.957 51.075L0 55.5008L11.957 59.9266C20.3515 63.0321 26.969 69.6493 30.074 78.0436L34.4998 90.0006L38.9256 78.0436C42.0311 69.6491 48.6483 63.0316 57.0426 59.9266L68.9996 55.5008L57.0426 51.075C48.6481 47.9695 42.0306 41.3523 38.9256 32.958Z" fill="black"/></svg></h2>
         <p class="body-text-sm" data-i18n="discovery-p">Cada equipo usaba términos distintos para lo mismo, generando inconsistencias entre mercados. Armé un glosario compartido y, con él, construimos un asistente de traducción y UX writing con IA que mantiene la consistencia en los 15 mercados.</p>
       </div>
       <div class="r d1">
@@ -245,8 +247,13 @@
   </div>
   </div>
 
+  <!-- ══ SPRINT PHOTO — full bleed ══ -->
+  <div class="r" style="max-height:480px; overflow:hidden;">
+    <img src="assets/lutzdelivery-sprint.jpg" alt="Equipo trabajando en el Design Sprint" style="width:100%; display:block; object-fit:cover;"/>
+  </div>
+
   <!-- ══ SOLUTION ══ -->
-  <div style="background:#F2F2F2; padding:96px 0;">
+  <div style="background:#F2F2F2; padding:0;">
   <div class="container">
     <div class="two-col r">
       <div>
@@ -257,9 +264,8 @@
           <p data-i18n="solution-quote">Ayudar a la gente a comprar muebles sin necesitar un doctorado en logística de muebles.</p>
         </div>
       </div>
-      <div class="placeholder" style="min-height:320px; border:2px dashed #D8D8D8; background:transparent;">
-        <span data-i18n="ph-generic">Visual a armar</span>
-        <p data-i18n="ph-solution">Muestra final de UI — disponibilidad, entrega, promociones y reserva.</p>
+      <div style="display:flex; align-items:center; justify-content:center; aspect-ratio:390/844; width:397px; margin:0 auto;">
+        <iframe style="width:100%; height:100%; display:block; border:none;" src="https://embed.figma.com/proto/4dmrFXOntYCVyJCnbQUuo8/Availability?node-id=1-960&page-id=0%3A1&starting-point-node-id=1%3A960&embed-host=share&footer=false&viewport-controls=false&hotspot-hints=false&hide-ui=1&device-frame=true&scaling=contain" allowfullscreen></iframe>
       </div>
     </div>
   </div>
@@ -336,7 +342,7 @@
         'ba3-before': 'Enter postcode first',
         'ba3-after': 'From €3.50 · by product',
         'discovery-label': 'Discovery',
-        'discovery-title': 'A shared glossary and AI-assisted translations',
+        'discovery-title': 'A shared glossary and AI-assisted translations<svg class="ai-icon" viewBox="0 0 90 90" aria-hidden="true"><path d="M72.1286 7.1055L69.4997 0L66.8708 7.1055C65.0231 12.0938 61.0935 16.0235 56.1048 17.8715L48.9993 20.5004L56.1048 23.1293C61.0931 24.977 65.0228 28.9066 66.8708 33.8953L69.4997 41.0008L72.1286 33.8953C73.9763 28.907 77.9059 24.9773 82.8946 23.1293L90.0001 20.5004L82.8946 17.8715C77.9063 16.0238 73.9766 12.0942 72.1286 7.1055Z" fill="black"/><path d="M38.9256 32.958L34.4998 21.001L30.074 32.958C26.9685 41.3525 20.3513 47.97 11.957 51.075L0 55.5008L11.957 59.9266C20.3515 63.0321 26.969 69.6493 30.074 78.0436L34.4998 90.0006L38.9256 78.0436C42.0311 69.6491 48.6483 63.0316 57.0426 59.9266L68.9996 55.5008L57.0426 51.075C48.6481 47.9695 42.0306 41.3523 38.9256 32.958Z" fill="black"/></svg>',
         'discovery-p': 'Different teams used different terms for the same concepts, creating inconsistencies across markets. I built a shared glossary and, on top of it, we created an AI translation and UX writing assistant that keeps things consistent across 15 markets.',
         'tr-lang-en': 'English',
         'tr-note-en': 'Source — written by product team',
@@ -350,8 +356,6 @@
         'solution-title': 'Designing for decisions, not for explaining the system',
         'solution-p': 'Instead of asking how to explain the system, we started asking what decision the customer was trying to make. That shift reordered reservations, delivery, promotions and availability across the whole experience.',
         'solution-quote': 'Help people buy furniture without needing a PhD in furniture logistics.',
-        'ph-generic': 'Visual coming soon',
-        'ph-solution': 'Final UI showcase — availability, delivery, promotions and reservation.',
         'outcome-label': 'Outcome',
         'outcome-title': 'Rolled out across 16 markets — and quickly forgotten, which is the point',
         'outcome-p': 'The solution was deployed across all XXXLutz markets. The stakeholders who were most sceptical became the ones pushing for it, and a service that once felt fragmented started to behave like a coherent experience.',
@@ -392,7 +396,7 @@
         'ba3-before': 'Pedir código postal primero',
         'ba3-after': 'Desde €3,50 · por producto',
         'discovery-label': 'Discovery',
-        'discovery-title': 'Un glosario compartido y traducciones con IA',
+        'discovery-title': 'Un glosario compartido y traducciones con IA<svg class="ai-icon" viewBox="0 0 90 90" aria-hidden="true"><path d="M72.1286 7.1055L69.4997 0L66.8708 7.1055C65.0231 12.0938 61.0935 16.0235 56.1048 17.8715L48.9993 20.5004L56.1048 23.1293C61.0931 24.977 65.0228 28.9066 66.8708 33.8953L69.4997 41.0008L72.1286 33.8953C73.9763 28.907 77.9059 24.9773 82.8946 23.1293L90.0001 20.5004L82.8946 17.8715C77.9063 16.0238 73.9766 12.0942 72.1286 7.1055Z" fill="black"/><path d="M38.9256 32.958L34.4998 21.001L30.074 32.958C26.9685 41.3525 20.3513 47.97 11.957 51.075L0 55.5008L11.957 59.9266C20.3515 63.0321 26.969 69.6493 30.074 78.0436L34.4998 90.0006L38.9256 78.0436C42.0311 69.6491 48.6483 63.0316 57.0426 59.9266L68.9996 55.5008L57.0426 51.075C48.6481 47.9695 42.0306 41.3523 38.9256 32.958Z" fill="black"/></svg>',
         'discovery-p': 'Cada equipo usaba términos distintos para lo mismo, generando inconsistencias entre mercados. Armé un glosario compartido y, con él, construimos un asistente de traducción y UX writing con IA que mantiene la consistencia en los 15 mercados.',
         'tr-lang-en': 'Inglés',
         'tr-note-en': 'Fuente — escrito por el equipo de producto',
@@ -406,8 +410,6 @@
         'solution-title': 'Diseñar para decisiones, no para explicar el sistema',
         'solution-p': 'En vez de preguntarnos cómo explicar el sistema, empezamos a preguntarnos qué decisión estaba tratando de tomar el usuario. Esa idea reordenó reservas, entregas, promociones y disponibilidad en toda la experiencia.',
         'solution-quote': 'Ayudar a la gente a comprar muebles sin necesitar un doctorado en logística de muebles.',
-        'ph-generic': 'Visual a armar',
-        'ph-solution': 'Muestra final de UI — disponibilidad, entrega, promociones y reserva.',
         'outcome-label': 'Resultado',
         'outcome-title': 'Implementado en 16 mercados — y rápidamente olvidado, que es el punto',
         'outcome-p': 'La solución se desplegó en todos los mercados de XXXLutz. Los stakeholders más escépticos terminaron siendo quienes más la impulsaron, y un servicio que se sentía fragmentado empezó a comportarse como una experiencia coherente.',

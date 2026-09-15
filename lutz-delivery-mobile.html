@@ -45,6 +45,7 @@
     /* SECTIONS */
     .section-label { font-size: 12px; font-weight: 700; line-height: 1.3; text-transform: uppercase; letter-spacing: 0.08em; color: var(--mid); display: block; margin-bottom: 10px; }
     .section-title { font-size: 24px; font-weight: 700; line-height: 1.22; color: #282828; margin-bottom: 14px; letter-spacing: -0.5px; }
+    .ai-icon { width: 0.8em; height: 0.8em; display: inline-block; vertical-align: -0.02em; margin-left: 7px; fill: currentColor; }
     .body-text { font-size: 16px; font-weight: 400; line-height: 1.5; letter-spacing: -0.2px; color: #2a2a2a; }
     .body-text-sm { font-size: 14px; font-weight: 400; line-height: 1.5; letter-spacing: -0.2px; color: #444; }
     .block { padding: 40px 24px; }
@@ -136,7 +137,10 @@
     </div>
   </div>
 
-  <img class="full-photo" src="assets/lutzdelivery-sprint.jpg" alt="Equipo trabajando en el Design Sprint"/>
+  <div style="padding:0 24px;">
+    <img src="assets/lutzdelivery-clickcollect.jpg" alt="Entrada del punto de Click &amp; Collect" style="width:100%; display:block;"/>
+    <img src="assets/lutzdelivery-pickup.jpg" alt="Retirando un pedido en Click &amp; Collect" style="width:100%; display:block;"/>
+  </div>
 
   <div class="band block">
     <span class="section-label" data-i18n="insight-label">Insight</span>
@@ -154,7 +158,7 @@
 
   <div class="block">
     <span class="section-label" data-i18n="discovery-label">Discovery</span>
-    <h2 class="section-title" data-i18n="discovery-title">Un glosario compartido y traducciones con IA</h2>
+    <h2 class="section-title" data-i18n="discovery-title">Un glosario compartido y traducciones con IA<svg class="ai-icon" viewBox="0 0 90 90" aria-hidden="true"><path d="M72.1286 7.1055L69.4997 0L66.8708 7.1055C65.0231 12.0938 61.0935 16.0235 56.1048 17.8715L48.9993 20.5004L56.1048 23.1293C61.0931 24.977 65.0228 28.9066 66.8708 33.8953L69.4997 41.0008L72.1286 33.8953C73.9763 28.907 77.9059 24.9773 82.8946 23.1293L90.0001 20.5004L82.8946 17.8715C77.9063 16.0238 73.9766 12.0942 72.1286 7.1055Z" fill="black"/><path d="M38.9256 32.958L34.4998 21.001L30.074 32.958C26.9685 41.3525 20.3513 47.97 11.957 51.075L0 55.5008L11.957 59.9266C20.3515 63.0321 26.969 69.6493 30.074 78.0436L34.4998 90.0006L38.9256 78.0436C42.0311 69.6491 48.6483 63.0316 57.0426 59.9266L68.9996 55.5008L57.0426 51.075C48.6481 47.9695 42.0306 41.3523 38.9256 32.958Z" fill="black"/></svg></h2>
     <p class="body-text-sm" data-i18n="discovery-p">Cada equipo usaba términos distintos para lo mismo, generando inconsistencias entre mercados. Armé un glosario compartido y, con él, construimos un asistente de traducción y UX writing con IA que mantiene la consistencia en los 15 mercados.</p>
     <div class="tr-flow">
       <div class="tr-row"><span class="tr-lang" data-i18n="tr-lang-en">Inglés</span><span class="tr-note" data-i18n="tr-note-en">Fuente — escrito por el equipo de producto</span></div>
@@ -166,6 +170,8 @@
       <div class="tr-row"><span class="tr-lang" data-i18n="tr-lang-customer">Usuario</span><span class="tr-note red" data-i18n="tr-note-customer">Lee algo que nadie escribió realmente</span></div>
     </div>
   </div>
+
+  <img class="full-photo" src="assets/lutzdelivery-sprint.jpg" alt="Equipo trabajando en el Design Sprint"/>
 
   <div class="band block">
     <span class="section-label" data-i18n="solution-label">Solución</span>
@@ -238,7 +244,7 @@
         'ba3-before': 'Enter postcode first',
         'ba3-after': 'From €3.50 · by product',
         'discovery-label': 'Discovery',
-        'discovery-title': 'A shared glossary and AI-assisted translations',
+        'discovery-title': 'A shared glossary and AI-assisted translations<svg class="ai-icon" viewBox="0 0 90 90" aria-hidden="true"><path d="M72.1286 7.1055L69.4997 0L66.8708 7.1055C65.0231 12.0938 61.0935 16.0235 56.1048 17.8715L48.9993 20.5004L56.1048 23.1293C61.0931 24.977 65.0228 28.9066 66.8708 33.8953L69.4997 41.0008L72.1286 33.8953C73.9763 28.907 77.9059 24.9773 82.8946 23.1293L90.0001 20.5004L82.8946 17.8715C77.9063 16.0238 73.9766 12.0942 72.1286 7.1055Z" fill="black"/><path d="M38.9256 32.958L34.4998 21.001L30.074 32.958C26.9685 41.3525 20.3513 47.97 11.957 51.075L0 55.5008L11.957 59.9266C20.3515 63.0321 26.969 69.6493 30.074 78.0436L34.4998 90.0006L38.9256 78.0436C42.0311 69.6491 48.6483 63.0316 57.0426 59.9266L68.9996 55.5008L57.0426 51.075C48.6481 47.9695 42.0306 41.3523 38.9256 32.958Z" fill="black"/></svg>',
         'discovery-p': 'Different teams used different terms for the same concepts, creating inconsistencies across markets. I built a shared glossary and, on top of it, we created an AI translation and UX writing assistant that keeps things consistent across 15 markets.',
         'tr-lang-en': 'English',
         'tr-note-en': 'Source — written by product team',
@@ -292,7 +298,7 @@
         'ba3-before': 'Pedir código postal primero',
         'ba3-after': 'Desde €3,50 · por producto',
         'discovery-label': 'Discovery',
-        'discovery-title': 'Un glosario compartido y traducciones con IA',
+        'discovery-title': 'Un glosario compartido y traducciones con IA<svg class="ai-icon" viewBox="0 0 90 90" aria-hidden="true"><path d="M72.1286 7.1055L69.4997 0L66.8708 7.1055C65.0231 12.0938 61.0935 16.0235 56.1048 17.8715L48.9993 20.5004L56.1048 23.1293C61.0931 24.977 65.0228 28.9066 66.8708 33.8953L69.4997 41.0008L72.1286 33.8953C73.9763 28.907 77.9059 24.9773 82.8946 23.1293L90.0001 20.5004L82.8946 17.8715C77.9063 16.0238 73.9766 12.0942 72.1286 7.1055Z" fill="black"/><path d="M38.9256 32.958L34.4998 21.001L30.074 32.958C26.9685 41.3525 20.3513 47.97 11.957 51.075L0 55.5008L11.957 59.9266C20.3515 63.0321 26.969 69.6493 30.074 78.0436L34.4998 90.0006L38.9256 78.0436C42.0311 69.6491 48.6483 63.0316 57.0426 59.9266L68.9996 55.5008L57.0426 51.075C48.6481 47.9695 42.0306 41.3523 38.9256 32.958Z" fill="black"/></svg>',
         'discovery-p': 'Cada equipo usaba términos distintos para lo mismo, generando inconsistencias entre mercados. Armé un glosario compartido y, con él, construimos un asistente de traducción y UX writing con IA que mantiene la consistencia en los 15 mercados.',
         'tr-lang-en': 'Inglés',
         'tr-note-en': 'Fuente — escrito por el equipo de producto',

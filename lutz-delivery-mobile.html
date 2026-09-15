@@ -9,7 +9,7 @@
       window.location.replace('lutz-delivery.html');
     }
   </script>
-  <title>El problema no era la entrega — Martina Hirschler</title>
+  <title>El problema no era el delivery — Martina Hirschler</title>
   <link href="https://fonts.googleapis.com/css2?family=Karla:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -21,8 +21,8 @@
       --divider:  #E0E0E0;
       --c-strategy:    #F06554;
       --c-stakeholder: #FFADA3;
-      --c-service:     #B8E4D8;
-      --c-omni:        #FFE4A0;
+      --c-service:     #EEA91A;
+      --c-omni:        #B8E4D8;
     }
     html { scroll-behavior: smooth; }
     body { font-family: 'Karla', sans-serif; background: var(--cream); color: var(--dark); -webkit-font-smoothing: antialiased; overflow-x: hidden; }
@@ -38,7 +38,7 @@
     /* HERO — matches ellie-mobile.html sizing */
     .hero { position: relative; height: 100svh; overflow: hidden; }
     .hero-bg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center; }
-    .hero-overlay { position: absolute; inset: 0; background: rgba(30,30,30,0.55); }
+    .hero-overlay { position: absolute; inset: 0; background: rgba(30,30,30,0.72); }
     .hero-title { position: absolute; top: 26px; left: 0; right: 0; text-align: center; font-size: clamp(32px, 9vw, 52px); font-weight: 800; color: #fff; line-height: 0.88; letter-spacing: -1px; padding: 0 24px; z-index: 1; }
     .hero-sub { position: absolute; bottom: 26px; left: 0; right: 0; text-align: center; font-size: clamp(18px, 5vw, 28px); font-weight: 600; letter-spacing: -0.3px; color: #fff; line-height: 1.1; padding: 0 24px; z-index: 1; }
 
@@ -48,46 +48,66 @@
     .ai-icon { width: 0.8em; height: 0.8em; display: inline-block; vertical-align: -0.02em; margin-left: 7px; fill: currentColor; }
     .body-text { font-size: 16px; font-weight: 400; line-height: 1.5; letter-spacing: -0.2px; color: #2a2a2a; }
     .body-text-sm { font-size: 14px; font-weight: 400; line-height: 1.5; letter-spacing: -0.2px; color: #444; }
+    .underline-soft { font-weight: 400; text-decoration: underline; text-decoration-color: #A8A8A8; text-decoration-thickness: 2px; text-underline-offset: 3px; }
     .block { padding: 40px 24px; }
     .band { background: var(--cards-bg); }
     .full-photo { width: 100%; display: block; }
     .rounded-img { border-radius: 16px; border: 1px solid #E4E4E4; overflow: hidden; }
     .rounded-img img { width: 100%; display: block; }
 
+    /* MOSAIC — two square photos side by side */
+    .mosaic-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .mosaic-cell { aspect-ratio: 1 / 1; overflow: hidden; border-radius: 16px; }
+    .mosaic-cell img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
     /* ROLE */
     .role-lead { font-size: 20px; font-weight: 700; line-height: 1.3; letter-spacing: -0.4px; color: #282828; margin-bottom: 28px; }
     .role-cols { display: flex; flex-direction: column; gap: 22px; }
+    .role-col svg { width: 24px; height: 24px; margin-bottom: 10px; display: block; }
     .role-col h4 { font-size: 16px; font-weight: 700; letter-spacing: -0.3px; color: #282828; margin-bottom: 6px; }
     .role-col p { font-size: 14px; line-height: 1.5; letter-spacing: -0.2px; color: #444; }
+    .role-col p strong { font-weight: 700; color: #282828; }
 
-    /* PULLQUOTE */
-    .pullquote { border-left: 3px solid #282828; padding: 4px 0 4px 18px; margin-top: 20px; }
-    .pullquote p { font-size: 17px; font-weight: 700; line-height: 1.35; letter-spacing: -0.3px; color: #282828; }
+    /* POST-IT */
+    .post-it {
+      display: block;
+      width: fit-content;
+      max-width: 280px;
+      background: #FFE3B0;
+      color: #17140f;
+      font-weight: 600;
+      font-size: 18px;
+      line-height: 1.5;
+      letter-spacing: -0.01em;
+      padding: 24px 20px 20px;
+      margin: 28px auto 0;
+      transform: rotate(-1.6deg);
+      border-radius: 2px 16px 4px 12px;
+      box-shadow: 2px 7px 16px -7px rgba(0,0,0,.3);
+      position: relative;
+    }
+    .post-it::before {
+      content: "";
+      position: absolute;
+      top: -11px;
+      left: 50%;
+      width: 60px;
+      height: 19px;
+      background: rgba(255,255,255,.55);
+      border: 1px solid rgba(0,0,0,.05);
+      transform: translateX(-50%) rotate(-5deg);
+    }
+    .post-it-label { display: block; font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 8px; opacity: 0.6; }
 
     /* PLACEHOLDER */
     .placeholder { background: #F2F2F2; border-radius: 16px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; padding: 32px 20px; text-align: center; min-height: 200px; }
     .placeholder span { font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #C0C0C0; }
     .placeholder p { font-size: 13px; color: #C8C8C8; line-height: 1.5; max-width: 240px; }
 
-    /* BA CARDS */
-    .ba-grid { display: flex; flex-direction: column; gap: 10px; margin-top: 20px; }
-    .ba-card { background: var(--cards-bg); border-radius: 14px; padding: 16px 18px; }
-    .ba-label { font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--mid); display: block; margin-bottom: 8px; }
-    .ba-before { font-size: 14px; font-weight: 700; color: #C8C8C8; text-decoration: line-through; margin-bottom: 6px; letter-spacing: -0.3px; }
-    .ba-after  { font-size: 14px; font-weight: 700; color: #282828; letter-spacing: -0.3px; }
-
-    /* TRANSLATION FLOW */
-    .tr-flow { background: var(--cards-bg); border-radius: 16px; padding: 22px 20px; margin-top: 20px; }
-    .tr-row { display: flex; flex-direction: column; gap: 2px; padding: 12px 0; border-bottom: 1px solid var(--divider); }
-    .tr-row:last-child { border-bottom: none; }
-    .tr-lang { font-size: 15px; font-weight: 700; color: #282828; letter-spacing: -0.3px; }
-    .tr-note { font-size: 13px; color: var(--mid); font-style: italic; letter-spacing: -0.2px; }
-    .tr-note.red { color: #F06554; font-style: normal; font-weight: 700; }
-    .tr-arrow { color: var(--divider); font-size: 16px; font-weight: 700; padding: 2px 0; }
-
     /* LEARNINGS */
     .learnings { display: flex; flex-direction: column; gap: 14px; margin-top: 28px; }
     .learning-card { background: var(--cards-bg); border-radius: 16px; padding: 22px 20px; }
+    .learning-card svg { width: 24px; height: 24px; margin-bottom: 12px; display: block; }
     .learning-card h4 { font-size: 17px; font-weight: 700; margin-bottom: 8px; line-height: 1.3; letter-spacing: -0.3px; }
     .learning-card p { font-size: 14px; line-height: 1.5; letter-spacing: -0.2px; color: #444; }
 
@@ -102,105 +122,122 @@
   <section class="hero">
     <img class="hero-bg" src="assets/lutzdelivery-store.jpg" alt="Tienda XXXLutz"/>
     <div class="hero-overlay"></div>
-    <h1 class="hero-title" data-i18n="hero-title">El problema<br>no era la entrega</h1>
-    <p class="hero-sub" data-i18n="hero-sub">Service Design en 16 mercados</p>
+    <h1 class="hero-title" data-i18n="hero-title">El problema<br>no era el delivery</h1>
+    <p class="hero-sub" data-i18n="hero-sub">Usando Service Design para conectar la experiencia online<br>con tiendas físicas en 16 mercados</p>
   </section>
 
   <div class="block">
     <div class="tags-row" style="margin-bottom:20px;">
       <span class="tag tag-service" data-i18n="tag-service">Service Design</span>
-      <span class="tag tag-omni" data-i18n="tag-omni">Omnicanalidad</span>
+      <span class="tag tag-omni" data-i18n="tag-omni">Omnichannel</span>
       <span class="tag tag-stakeholder" data-i18n="tag-stakeholder">Gestión de Stakeholders</span>
       <span class="tag tag-strategy" data-i18n="tag-content-strategy">Estrategia de Contenido</span>
     </div>
     <h2 class="section-title" data-i18n="intro-title">Comprar un mueble online generaba más preguntas que respuestas</h2>
-    <p class="body-text" data-i18n="intro-body">En XXXLutz, comprar un mueble online disparaba las mismas dudas en 16 mercados: ¿cuándo lo tengo en casa?, ¿lo puedo retirar?, ¿cuánto cuesta el envío? Esas preguntas sin resolver generaban llamados a soporte, usuarios confundidos y empleados de tienda frustrados.</p>
+    <p class="body-text" data-i18n="intro-body">En XXXLutz, comprar un mueble online disparaba las mismas dudas en 16 mercados: <strong>¿cuándo me llegaría a casa?, ¿lo puedo retirar?, ¿cuánto cuesta el envío?</strong> Esas preguntas sin resolver generaban llamados a <span class="underline-soft">soporte</span>, <span class="underline-soft">usuarios confundidos</span> y <span class="underline-soft">empleados de tienda frustrados</span>.</p>
   </div>
 
-  <img class="full-photo" src="assets/lutzdelivery-store.jpg" alt="Tienda XXXLutz"/>
+  <img class="full-photo" src="assets/lutzdelivery-storefront.jpg" alt="Tienda XXXLutz"/>
 
   <div class="block">
     <p class="role-lead" data-i18n="role-lead">Fui lead designer del proyecto en el equipo Assess durante 6 meses, trabajando con producto e ingeniería en los 16 mercados de XXXLutz.</p>
     <div class="role-cols">
       <div class="role-col">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#282828" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"/><line x1="8" y1="2" x2="8" y2="18"/><line x1="16" y1="6" x2="16" y2="22"/></svg>
         <h4 data-i18n="role1-h">Descubrimiento</h4>
-        <p data-i18n="role1-p">Mapeé el servicio de punta a punta: entrega, reserva, Click &amp; Collect y soporte.</p>
+        <p data-i18n="role1-p">Mapeé el servicio de punta a punta: <strong>entrega, reserva, Click &amp; Collect y soporte</strong>.</p>
       </div>
       <div class="role-col">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#282828" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/></svg>
         <h4 data-i18n="role2-h">Diseño</h4>
-        <p data-i18n="role2-p">Rediseñé cómo se comunica la disponibilidad y la información de envío en la página de producto.</p>
+        <p data-i18n="role2-p">Rediseñé cómo se comunica <strong>la disponibilidad y la información de envío</strong> en la página de producto.</p>
       </div>
       <div class="role-col">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#282828" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
         <h4 data-i18n="role3-h">Facilitación</h4>
-        <p data-i18n="role3-p">Organicé y lideré un Design Sprint con producto e ingeniería para alinear a todo el equipo.</p>
+        <p data-i18n="role3-p">Organicé y lideré un <strong>Design Sprint</strong> con producto e ingeniería para <strong>alinear a todo el equipo</strong>.</p>
       </div>
     </div>
   </div>
 
-  <div style="padding:0 24px;">
+  <div class="r">
     <img src="assets/lutzdelivery-clickcollect.jpg" alt="Entrada del punto de Click &amp; Collect" style="width:100%; display:block;"/>
     <img src="assets/lutzdelivery-pickup.jpg" alt="Retirando un pedido en Click &amp; Collect" style="width:100%; display:block;"/>
   </div>
 
+  <div class="block">
+    <span class="section-label" data-i18n="enfoque-label">Enfoque</span>
+    <h2 class="section-title" data-i18n="enfoque-title">Había que mirar más allá de la interfaz</h2>
+    <p class="body-text" data-i18n="enfoque-p1">Lo que empezó como una mejora de la información de delivery rápidamente <strong>reveló un problema mayor</strong>.</p>
+    <p class="body-text" style="margin-top:14px;" data-i18n="enfoque-p2">Organicé y facilité un <span class="underline-soft">Design Sprint</span> para mapear <strong>el servicio completo</strong>: delivery, reservas, Click &amp; Collect, marketplace, tiendas, Customer Support y los sistemas que los conectaban.</p>
+    <p class="body-text" style="margin-top:14px;" data-i18n="enfoque-p3"><strong>La Product Detail Page era solo el frontstage. La mayor parte de la complejidad vivía en el backstage.</strong></p>
+  </div>
+
+  <div style="border-radius:16px; overflow:hidden; margin:0 24px 40px; aspect-ratio:4/3;">
+    <img src="assets/lutzdelivery-sprint.jpg" alt="Equipo trabajando en el Design Sprint" style="width:100%; height:100%; object-fit:cover; display:block;"/>
+  </div>
+
   <div class="band block">
     <span class="section-label" data-i18n="insight-label">Insight</span>
-    <h2 class="section-title" data-i18n="insight-title">Hablábamos en términos de sistema, no de personas</h2>
-    <p class="body-text" data-i18n="insight-p">La información estaba redactada desde la perspectiva del sistema, no la del usuario: técnicamente correcta, pero poco útil para decidir. Comunicábamos en negativo, pedíamos el código postal antes de aportar valor, y la info de entrega quedaba lejos del producto.</p>
-    <div class="rounded-img" style="margin-top:24px;">
-      <img src="assets/lutzdelivery-problems.svg" alt="Diagrama de problemas detectados"/>
-    </div>
-    <div class="ba-grid">
-      <div class="ba-card"><span class="ba-label" data-i18n="ba-before-label">Antes</span><p class="ba-before" data-i18n="ba1-before">"Solo online"</p><p class="ba-after" data-i18n="ba1-after">Disponible para envío a domicilio</p></div>
-      <div class="ba-card"><span class="ba-label" data-i18n="ba-before-label">Antes</span><p class="ba-before" data-i18n="ba2-before">Badge de estado</p><p class="ba-after" data-i18n="ba2-after">Reservá sin costo</p></div>
-      <div class="ba-card"><span class="ba-label" data-i18n="ba-before-label">Antes</span><p class="ba-before" data-i18n="ba3-before">Pedir código postal primero</p><p class="ba-after" data-i18n="ba3-after">Desde €3,50 · por producto</p></div>
+    <h2 class="section-title" data-i18n="insight-title">Estábamos hablando en idioma sistema, no en idioma humano.</h2>
+    <p class="body-text" data-i18n="insight-p1"><strong>La información estaba redactada desde la perspectiva del sistema, no la del usuario</strong>: técnicamente correcta, pero poco útil para decidir. Conceptos como <span class="underline-soft">Online Only</span>, <span class="underline-soft">los costes de envío</span> o <span class="underline-soft">las reservas</span> tenían sentido desde la lógica interna, pero <strong>llevaban a conclusiones equivocadas para las personas</strong>.</p>
+    <p class="body-text" style="margin-top:14px;" data-i18n="insight-p2"><strong>En lugar de explicar mejor el sistema, rediseñamos la experiencia alrededor de las decisiones que los usuarios realmente intentaban tomar.</strong></p>
+    <div class="post-it">
+      <span class="post-it-label" data-i18n="objetivo-label">Objetivo</span>
+      <span data-i18n="objetivo-quote">Ayudar a la gente a comprar muebles sin necesitar un doctorado en logística.</span>
     </div>
   </div>
 
   <div class="block">
-    <span class="section-label" data-i18n="discovery-label">Discovery</span>
-    <h2 class="section-title" data-i18n="discovery-title">Un glosario compartido y traducciones con IA<svg class="ai-icon" viewBox="0 0 90 90" aria-hidden="true"><path d="M72.1286 7.1055L69.4997 0L66.8708 7.1055C65.0231 12.0938 61.0935 16.0235 56.1048 17.8715L48.9993 20.5004L56.1048 23.1293C61.0931 24.977 65.0228 28.9066 66.8708 33.8953L69.4997 41.0008L72.1286 33.8953C73.9763 28.907 77.9059 24.9773 82.8946 23.1293L90.0001 20.5004L82.8946 17.8715C77.9063 16.0238 73.9766 12.0942 72.1286 7.1055Z" fill="black"/><path d="M38.9256 32.958L34.4998 21.001L30.074 32.958C26.9685 41.3525 20.3513 47.97 11.957 51.075L0 55.5008L11.957 59.9266C20.3515 63.0321 26.969 69.6493 30.074 78.0436L34.4998 90.0006L38.9256 78.0436C42.0311 69.6491 48.6483 63.0316 57.0426 59.9266L68.9996 55.5008L57.0426 51.075C48.6481 47.9695 42.0306 41.3523 38.9256 32.958Z" fill="black"/></svg></h2>
-    <p class="body-text-sm" data-i18n="discovery-p">Cada equipo usaba términos distintos para lo mismo, generando inconsistencias entre mercados. Armé un glosario compartido y, con él, construimos un asistente de traducción y UX writing con IA que mantiene la consistencia en los 15 mercados.</p>
-    <div class="tr-flow">
-      <div class="tr-row"><span class="tr-lang" data-i18n="tr-lang-en">Inglés</span><span class="tr-note" data-i18n="tr-note-en">Fuente — escrito por el equipo de producto</span></div>
-      <div class="tr-arrow">↓</div>
-      <div class="tr-row"><span class="tr-lang" data-i18n="tr-lang-de">Alemán</span><span class="tr-note" data-i18n="tr-note-de">Traducción 1</span></div>
-      <div class="tr-arrow">↓</div>
-      <div class="tr-row"><span class="tr-lang" data-i18n="tr-lang-markets">15 mercados</span><span class="tr-note" data-i18n="tr-note-markets">Traducción 2 — fragmentos de distintos sistemas</span></div>
-      <div class="tr-arrow">↓</div>
-      <div class="tr-row"><span class="tr-lang" data-i18n="tr-lang-customer">Usuario</span><span class="tr-note red" data-i18n="tr-note-customer">Lee algo que nadie escribió realmente</span></div>
+    <div class="placeholder" style="aspect-ratio:4/3; min-height:0; margin-bottom:24px;">
+      <span data-i18n="ph-generic">Visual a armar</span>
+      <p data-i18n="ph-glossary">Ilustración o diagrama del glosario compartido / traducciones con IA.</p>
     </div>
+    <span class="section-label" data-i18n="glossary-label">Glossary</span>
+    <h2 class="section-title" data-i18n="glossary-title">Definimos un lenguaje y un sistema de traducciones con IA<svg class="ai-icon" viewBox="0 0 90 90" aria-hidden="true"><path d="M72.1286 7.1055L69.4997 0L66.8708 7.1055C65.0231 12.0938 61.0935 16.0235 56.1048 17.8715L48.9993 20.5004L56.1048 23.1293C61.0931 24.977 65.0228 28.9066 66.8708 33.8953L69.4997 41.0008L72.1286 33.8953C73.9763 28.907 77.9059 24.9773 82.8946 23.1293L90.0001 20.5004L82.8946 17.8715C77.9063 16.0238 73.9766 12.0942 72.1286 7.1055Z" fill="black"/><path d="M38.9256 32.958L34.4998 21.001L30.074 32.958C26.9685 41.3525 20.3513 47.97 11.957 51.075L0 55.5008L11.957 59.9266C20.3515 63.0321 26.969 69.6493 30.074 78.0436L34.4998 90.0006L38.9256 78.0436C42.0311 69.6491 48.6483 63.0316 57.0426 59.9266L68.9996 55.5008L57.0426 51.075C48.6481 47.9695 42.0306 41.3523 38.9256 32.958Z" fill="black"/></svg></h2>
+    <p class="body-text" data-i18n="glossary-p1">Cada equipo usaba términos distintos para lo mismo, generando <span class="underline-soft">inconsistencias entre mercados</span>. Los traductores generaban wording aislado de su uso, sin entender el contexto. <strong>El wording era un caos.</strong></p>
+    <p class="body-text" style="margin-top:14px;" data-i18n="glossary-p2"><strong>Armé un glosario compartido y construí un AI assistant de traducción y UX writing que traduce y mantiene la consistencia en 13 idiomas.</strong></p>
   </div>
-
-  <img class="full-photo" src="assets/lutzdelivery-sprint.jpg" alt="Equipo trabajando en el Design Sprint"/>
 
   <div class="band block">
     <span class="section-label" data-i18n="solution-label">Solución</span>
     <h2 class="section-title" data-i18n="solution-title">Diseñar para decisiones, no para explicar el sistema</h2>
-    <p class="body-text-sm" data-i18n="solution-p">En vez de preguntarnos cómo explicar el sistema, empezamos a preguntarnos qué decisión estaba tratando de tomar el usuario. Esa idea reordenó reservas, entregas, promociones y disponibilidad en toda la experiencia.</p>
-    <div class="pullquote">
-      <p data-i18n="solution-quote">Ayudar a la gente a comprar muebles sin necesitar un doctorado en logística de muebles.</p>
-    </div>
+    <p class="body-text" data-i18n="solution-p">En vez de preguntarnos cómo explicar el sistema, empezamos a preguntarnos <span class="underline-soft">qué decisión estaba tratando de tomar el usuario</span>. Esa idea reordenó <span class="underline-soft">reservas, entregas, promociones y disponibilidad</span> en toda la experiencia.</p>
     <div class="placeholder" style="margin-top:20px; border:2px dashed #D8D8D8; background:transparent;">
       <span data-i18n="ph-generic">Visual a armar</span>
       <p data-i18n="ph-solution">Muestra final de UI — disponibilidad, entrega, promociones y reserva.</p>
     </div>
   </div>
 
-  <div class="block" style="padding-top:56px; padding-bottom:56px;">
+  <div class="band block">
+    <div class="mosaic-2">
+      <div class="mosaic-cell">
+        <img src="assets/lutzdelivery-user1.jpg" alt="Empleado de tienda XXXLutz"/>
+      </div>
+      <div class="mosaic-cell">
+        <img src="assets/lutzdelivery-user2.jpg" alt="Usuario navegando XXXLutz desde su casa"/>
+      </div>
+    </div>
+  </div>
+
+  <div class="block" style="padding-top:0; padding-bottom:56px;">
     <span class="section-label" data-i18n="outcome-label">Resultado</span>
-    <h2 class="section-title" data-i18n="outcome-title">Implementado en 16 mercados — y rápidamente olvidado, que es el punto</h2>
-    <p class="body-text-sm" style="margin-top:12px;" data-i18n="outcome-p">La solución se desplegó en todos los mercados de XXXLutz. Los stakeholders más escépticos terminaron siendo quienes más la impulsaron, y un servicio que se sentía fragmentado empezó a comportarse como una experiencia coherente.</p>
+    <h2 class="section-title" data-i18n="outcome-title">Implementado en 16 mercados</h2>
+    <p class="body-text-sm" style="margin-top:12px;" data-i18n="outcome-p">La solución se desplegó en todos los mercados de XXXLutz. Pero el mayor resultado fue otro: <strong>conseguimos que Producto, Ingeniería y Negocio compartieran una misma comprensión del servicio.</strong> Los <span class="underline-soft">stakeholders más escépticos</span> terminaron siendo quienes más la impulsaron, y un servicio que se sentía fragmentado empezó a comportarse como una experiencia coherente.</p>
 
     <div class="learnings">
       <div class="learning-card">
-        <h4 data-i18n="learn1-h">16 mercados</h4>
-        <p data-i18n="learn1-p">Desplegado en todos los mercados de ecommerce de XXXLutz en la UE.</p>
+        <svg viewBox="0 0 24 24" fill="none" stroke="#282828" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
+        <h4 data-i18n="learn1-h">29% de aumento en ease of use</h4>
+        <p data-i18n="learn1-p">Reportado en surveys y tests de usabilidad.</p>
       </div>
       <div class="learning-card">
-        <h4 data-i18n="learn2-h">Un solo Design Sprint</h4>
-        <p data-i18n="learn2-p">Alcanzó para destapar años de excepciones que nadie había mapeado antes.</p>
+        <svg viewBox="0 0 24 24" fill="none" stroke="#282828" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+        <h4 data-i18n="learn2-h">52% menos llamadas a Customer Service</h4>
+        <p data-i18n="learn2-p">En todo lo relacionado a delivery, Click &amp; Collect y reservas.</p>
       </div>
       <div class="learning-card">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#282828" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>
         <h4 data-i18n="learn3-h">Service design &gt; ajuste de UX</h4>
         <p data-i18n="learn3-p">Un problema de wording terminó siendo un rediseño completo del servicio.</p>
       </div>
@@ -218,109 +255,97 @@
   <script>
     window.I18N = {
       en: {
-        'hero-title': 'The problem<br>wasn\'t delivery',
-        'hero-sub': 'Service Design across 16 markets',
+        'hero-title': 'The problem<br>wasn\'t the delivery',
+        'hero-sub': 'Using Service Design to connect the online experience<br>with physical stores across 16 markets',
         'tag-service': 'Service Design',
         'tag-omni': 'Omnichannel',
         'tag-stakeholder': 'Stakeholder Management',
         'tag-content-strategy': 'Content Strategy',
         'intro-title': 'Buying furniture online raised more questions than it answered',
-        'intro-body': 'At XXXLutz, buying furniture online triggered the same doubts across 16 markets: when will I get it home? Can I pick it up? How much does delivery cost? Those unanswered questions were generating support calls, confused customers and frustrated store staff.',
+        'intro-body': 'At XXXLutz, buying furniture online triggered the same doubts across 16 markets: <strong>when would it arrive home? Can I pick it up? How much does delivery cost?</strong> Those unanswered questions were generating <span class="underline-soft">support calls</span>, <span class="underline-soft">confused customers</span> and <span class="underline-soft">frustrated store staff</span>.',
         'role-lead': 'I was lead designer on this project within Team Assess for 6 months, working with product and engineering across XXXLutz\'s 16 markets.',
         'role1-h': 'Discovery',
-        'role1-p': 'Mapped the service end to end: delivery, reservations, Click &amp; Collect and support.',
+        'role1-p': 'Mapped the service end to end: <strong>delivery, reservations, Click &amp; Collect and support</strong>.',
         'role2-h': 'Design',
-        'role2-p': 'Redesigned how availability and delivery information is communicated on the product page.',
+        'role2-p': 'Redesigned how <strong>availability and delivery information</strong> is communicated on the product page.',
         'role3-h': 'Facilitation',
-        'role3-p': 'Organised and ran a Design Sprint with product and engineering to align the whole team.',
+        'role3-p': 'Organised and ran a <strong>Design Sprint</strong> with product and engineering to <strong>align the whole team</strong>.',
+        'enfoque-label': 'Approach',
+        'enfoque-title': 'We needed to look beyond the interface',
+        'enfoque-p1': 'What started as an improvement to delivery information quickly <strong>revealed a bigger problem</strong>.',
+        'enfoque-p2': 'I organised and facilitated a <span class="underline-soft">Design Sprint</span> to map <strong>the entire service</strong>: delivery, reservations, Click &amp; Collect, marketplace, stores, Customer Support and the systems connecting them.',
+        'enfoque-p3': '<strong>The Product Detail Page was only the frontstage. Most of the complexity lived backstage.</strong>',
+        'objetivo-label': 'Goal',
+        'objetivo-quote': 'Help people buy furniture without needing a PhD in logistics.',
         'insight-label': 'Insight',
-        'insight-title': 'We were speaking system, not human',
-        'insight-p': 'Information was written from the system\'s perspective, not the customer\'s — technically correct, but not helpful for deciding. We communicated in negatives, asked for a postcode before offering any value, and delivery info sat far from the product.',
-        'ba-before-label': 'Before',
-        'ba1-before': '"Online only"',
-        'ba1-after': 'Available for home delivery',
-        'ba2-before': 'Status badge',
-        'ba2-after': 'Reserve free of charge',
-        'ba3-before': 'Enter postcode first',
-        'ba3-after': 'From €3.50 · by product',
-        'discovery-label': 'Discovery',
-        'discovery-title': 'A shared glossary and AI-assisted translations<svg class="ai-icon" viewBox="0 0 90 90" aria-hidden="true"><path d="M72.1286 7.1055L69.4997 0L66.8708 7.1055C65.0231 12.0938 61.0935 16.0235 56.1048 17.8715L48.9993 20.5004L56.1048 23.1293C61.0931 24.977 65.0228 28.9066 66.8708 33.8953L69.4997 41.0008L72.1286 33.8953C73.9763 28.907 77.9059 24.9773 82.8946 23.1293L90.0001 20.5004L82.8946 17.8715C77.9063 16.0238 73.9766 12.0942 72.1286 7.1055Z" fill="black"/><path d="M38.9256 32.958L34.4998 21.001L30.074 32.958C26.9685 41.3525 20.3513 47.97 11.957 51.075L0 55.5008L11.957 59.9266C20.3515 63.0321 26.969 69.6493 30.074 78.0436L34.4998 90.0006L38.9256 78.0436C42.0311 69.6491 48.6483 63.0316 57.0426 59.9266L68.9996 55.5008L57.0426 51.075C48.6481 47.9695 42.0306 41.3523 38.9256 32.958Z" fill="black"/></svg>',
-        'discovery-p': 'Different teams used different terms for the same concepts, creating inconsistencies across markets. I built a shared glossary and, on top of it, we created an AI translation and UX writing assistant that keeps things consistent across 15 markets.',
-        'tr-lang-en': 'English',
-        'tr-note-en': 'Source — written by product team',
-        'tr-lang-de': 'German',
-        'tr-note-de': 'Translation 1',
-        'tr-lang-markets': '15 markets',
-        'tr-note-markets': 'Translation 2 — fragments from different systems',
-        'tr-lang-customer': 'Customer',
-        'tr-note-customer': 'Reads something nobody actually wrote',
+        'insight-title': 'We were speaking system language, not human language.',
+        'insight-p1': '<strong>Information was written from the system\'s perspective, not the customer\'s</strong>: technically correct, but not helpful for deciding. Concepts like <span class="underline-soft">Online Only</span>, <span class="underline-soft">delivery costs</span> or <span class="underline-soft">reservations</span> made sense from the internal logic, but <strong>led people to the wrong conclusions</strong>.',
+        'insight-p2': '<strong>Instead of explaining the system better, we redesigned the experience around the decisions users were actually trying to make.</strong>',
+        'glossary-label': 'Glossary',
+        'glossary-title': 'We defined a shared language and an AI-powered translation system<svg class="ai-icon" viewBox="0 0 90 90" aria-hidden="true"><path d="M72.1286 7.1055L69.4997 0L66.8708 7.1055C65.0231 12.0938 61.0935 16.0235 56.1048 17.8715L48.9993 20.5004L56.1048 23.1293C61.0931 24.977 65.0228 28.9066 66.8708 33.8953L69.4997 41.0008L72.1286 33.8953C73.9763 28.907 77.9059 24.9773 82.8946 23.1293L90.0001 20.5004L82.8946 17.8715C77.9063 16.0238 73.9766 12.0942 72.1286 7.1055Z" fill="black"/><path d="M38.9256 32.958L34.4998 21.001L30.074 32.958C26.9685 41.3525 20.3513 47.97 11.957 51.075L0 55.5008L11.957 59.9266C20.3515 63.0321 26.969 69.6493 30.074 78.0436L34.4998 90.0006L38.9256 78.0436C42.0311 69.6491 48.6483 63.0316 57.0426 59.9266L68.9996 55.5008L57.0426 51.075C48.6481 47.9695 42.0306 41.3523 38.9256 32.958Z" fill="black"/></svg>',
+        'glossary-p1': 'Different teams used different terms for the same concepts, creating <span class="underline-soft">inconsistencies across markets</span>. Translators produced wording in isolation, without understanding its context. <strong>The wording was chaos.</strong>',
+        'glossary-p2': '<strong>I built a shared glossary and created an AI translation and UX writing assistant that translates and keeps things consistent across 13 languages.</strong>',
+        'ph-glossary': 'Illustration or diagram of the shared glossary / AI-assisted translations.',
         'solution-label': 'Solution',
         'solution-title': 'Designing for decisions, not for explaining the system',
-        'solution-p': 'Instead of asking how to explain the system, we started asking what decision the customer was trying to make. That shift reordered reservations, delivery, promotions and availability across the whole experience.',
-        'solution-quote': 'Help people buy furniture without needing a PhD in furniture logistics.',
+        'solution-p': 'Instead of asking how to explain the system, we started asking <span class="underline-soft">what decision the customer was trying to make</span>. That shift reordered <span class="underline-soft">reservations, delivery, promotions and availability</span> across the whole experience.',
         'ph-generic': 'Visual coming soon',
         'ph-solution': 'Final UI showcase — availability, delivery, promotions and reservation.',
         'outcome-label': 'Outcome',
-        'outcome-title': 'Rolled out across 16 markets — and quickly forgotten, which is the point',
-        'outcome-p': 'The solution was deployed across all XXXLutz markets. The stakeholders who were most sceptical became the ones pushing for it, and a service that once felt fragmented started to behave like a coherent experience.',
-        'learn1-h': '16 markets',
-        'learn1-p': 'Deployed across all XXXLutz ecommerce markets in the EU.',
-        'learn2-h': 'One design sprint',
-        'learn2-p': 'Was enough to surface years of exceptions nobody had mapped before.',
+        'outcome-title': 'Rolled out across 16 markets',
+        'outcome-p': 'The solution was deployed across all XXXLutz markets. But the bigger outcome was different: <strong>Product, Engineering and Business ended up sharing the same understanding of the service.</strong> The <span class="underline-soft">stakeholders who were most sceptical</span> became the ones pushing for it, and a service that once felt fragmented started to behave like a coherent experience.',
+        'learn1-h': '29% increase in ease of use',
+        'learn1-p': 'Reported across surveys and usability tests.',
+        'learn2-h': '52% fewer Customer Service calls',
+        'learn2-p': 'Across everything related to delivery, Click &amp; Collect and reservations.',
         'learn3-h': 'Service design &gt; UX fix',
         'learn3-p': 'A wording issue turned into a full service redesign.',
         'footer-more': 'More projects'
       },
       es: {
-        'hero-title': 'El problema<br>no era la entrega',
-        'hero-sub': 'Service Design en 16 mercados',
+        'hero-title': 'El problema<br>no era el delivery',
+        'hero-sub': 'Usando Service Design para conectar la experiencia online<br>con tiendas físicas en 16 mercados',
         'tag-service': 'Service Design',
-        'tag-omni': 'Omnicanalidad',
+        'tag-omni': 'Omnichannel',
         'tag-stakeholder': 'Gestión de Stakeholders',
         'tag-content-strategy': 'Estrategia de Contenido',
         'intro-title': 'Comprar un mueble online generaba más preguntas que respuestas',
-        'intro-body': 'En XXXLutz, comprar un mueble online disparaba las mismas dudas en 16 mercados: ¿cuándo lo tengo en casa?, ¿lo puedo retirar?, ¿cuánto cuesta el envío? Esas preguntas sin resolver generaban llamados a soporte, usuarios confundidos y empleados de tienda frustrados.',
+        'intro-body': 'En XXXLutz, comprar un mueble online disparaba las mismas dudas en 16 mercados: <strong>¿cuándo me llegaría a casa?, ¿lo puedo retirar?, ¿cuánto cuesta el envío?</strong> Esas preguntas sin resolver generaban llamados a <span class="underline-soft">soporte</span>, <span class="underline-soft">usuarios confundidos</span> y <span class="underline-soft">empleados de tienda frustrados</span>.',
         'role-lead': 'Fui lead designer del proyecto en el equipo Assess durante 6 meses, trabajando con producto e ingeniería en los 16 mercados de XXXLutz.',
         'role1-h': 'Descubrimiento',
-        'role1-p': 'Mapeé el servicio de punta a punta: entrega, reserva, Click &amp; Collect y soporte.',
+        'role1-p': 'Mapeé el servicio de punta a punta: <strong>entrega, reserva, Click &amp; Collect y soporte</strong>.',
         'role2-h': 'Diseño',
-        'role2-p': 'Rediseñé cómo se comunica la disponibilidad y la información de envío en la página de producto.',
+        'role2-p': 'Rediseñé cómo se comunica <strong>la disponibilidad y la información de envío</strong> en la página de producto.',
         'role3-h': 'Facilitación',
-        'role3-p': 'Organicé y lideré un Design Sprint con producto e ingeniería para alinear a todo el equipo.',
+        'role3-p': 'Organicé y lideré un <strong>Design Sprint</strong> con producto e ingeniería para <strong>alinear a todo el equipo</strong>.',
+        'enfoque-label': 'Enfoque',
+        'enfoque-title': 'Había que mirar más allá de la interfaz',
+        'enfoque-p1': 'Lo que empezó como una mejora de la información de delivery rápidamente <strong>reveló un problema mayor</strong>.',
+        'enfoque-p2': 'Organicé y facilité un <span class="underline-soft">Design Sprint</span> para mapear <strong>el servicio completo</strong>: delivery, reservas, Click &amp; Collect, marketplace, tiendas, Customer Support y los sistemas que los conectaban.',
+        'enfoque-p3': '<strong>La Product Detail Page era solo el frontstage. La mayor parte de la complejidad vivía en el backstage.</strong>',
+        'objetivo-label': 'Objetivo',
+        'objetivo-quote': 'Ayudar a la gente a comprar muebles sin necesitar un doctorado en logística.',
         'insight-label': 'Insight',
-        'insight-title': 'Hablábamos en términos de sistema, no de personas',
-        'insight-p': 'La información estaba redactada desde la perspectiva del sistema, no la del usuario: técnicamente correcta, pero poco útil para decidir. Comunicábamos en negativo, pedíamos el código postal antes de aportar valor, y la info de entrega quedaba lejos del producto.',
-        'ba-before-label': 'Antes',
-        'ba1-before': '"Solo online"',
-        'ba1-after': 'Disponible para envío a domicilio',
-        'ba2-before': 'Badge de estado',
-        'ba2-after': 'Reservá sin costo',
-        'ba3-before': 'Pedir código postal primero',
-        'ba3-after': 'Desde €3,50 · por producto',
-        'discovery-label': 'Discovery',
-        'discovery-title': 'Un glosario compartido y traducciones con IA<svg class="ai-icon" viewBox="0 0 90 90" aria-hidden="true"><path d="M72.1286 7.1055L69.4997 0L66.8708 7.1055C65.0231 12.0938 61.0935 16.0235 56.1048 17.8715L48.9993 20.5004L56.1048 23.1293C61.0931 24.977 65.0228 28.9066 66.8708 33.8953L69.4997 41.0008L72.1286 33.8953C73.9763 28.907 77.9059 24.9773 82.8946 23.1293L90.0001 20.5004L82.8946 17.8715C77.9063 16.0238 73.9766 12.0942 72.1286 7.1055Z" fill="black"/><path d="M38.9256 32.958L34.4998 21.001L30.074 32.958C26.9685 41.3525 20.3513 47.97 11.957 51.075L0 55.5008L11.957 59.9266C20.3515 63.0321 26.969 69.6493 30.074 78.0436L34.4998 90.0006L38.9256 78.0436C42.0311 69.6491 48.6483 63.0316 57.0426 59.9266L68.9996 55.5008L57.0426 51.075C48.6481 47.9695 42.0306 41.3523 38.9256 32.958Z" fill="black"/></svg>',
-        'discovery-p': 'Cada equipo usaba términos distintos para lo mismo, generando inconsistencias entre mercados. Armé un glosario compartido y, con él, construimos un asistente de traducción y UX writing con IA que mantiene la consistencia en los 15 mercados.',
-        'tr-lang-en': 'Inglés',
-        'tr-note-en': 'Fuente — escrito por el equipo de producto',
-        'tr-lang-de': 'Alemán',
-        'tr-note-de': 'Traducción 1',
-        'tr-lang-markets': '15 mercados',
-        'tr-note-markets': 'Traducción 2 — fragmentos de distintos sistemas',
-        'tr-lang-customer': 'Usuario',
-        'tr-note-customer': 'Lee algo que nadie escribió realmente',
+        'insight-title': 'Estábamos hablando en idioma sistema, no en idioma humano.',
+        'insight-p1': '<strong>La información estaba redactada desde la perspectiva del sistema, no la del usuario</strong>: técnicamente correcta, pero poco útil para decidir. Conceptos como <span class="underline-soft">Online Only</span>, <span class="underline-soft">los costes de envío</span> o <span class="underline-soft">las reservas</span> tenían sentido desde la lógica interna, pero <strong>llevaban a conclusiones equivocadas para las personas</strong>.',
+        'insight-p2': '<strong>En lugar de explicar mejor el sistema, rediseñamos la experiencia alrededor de las decisiones que los usuarios realmente intentaban tomar.</strong>',
+        'glossary-label': 'Glossary',
+        'glossary-title': 'Definimos un lenguaje y un sistema de traducciones con IA<svg class="ai-icon" viewBox="0 0 90 90" aria-hidden="true"><path d="M72.1286 7.1055L69.4997 0L66.8708 7.1055C65.0231 12.0938 61.0935 16.0235 56.1048 17.8715L48.9993 20.5004L56.1048 23.1293C61.0931 24.977 65.0228 28.9066 66.8708 33.8953L69.4997 41.0008L72.1286 33.8953C73.9763 28.907 77.9059 24.9773 82.8946 23.1293L90.0001 20.5004L82.8946 17.8715C77.9063 16.0238 73.9766 12.0942 72.1286 7.1055Z" fill="black"/><path d="M38.9256 32.958L34.4998 21.001L30.074 32.958C26.9685 41.3525 20.3513 47.97 11.957 51.075L0 55.5008L11.957 59.9266C20.3515 63.0321 26.969 69.6493 30.074 78.0436L34.4998 90.0006L38.9256 78.0436C42.0311 69.6491 48.6483 63.0316 57.0426 59.9266L68.9996 55.5008L57.0426 51.075C48.6481 47.9695 42.0306 41.3523 38.9256 32.958Z" fill="black"/></svg>',
+        'glossary-p1': 'Cada equipo usaba términos distintos para lo mismo, generando <span class="underline-soft">inconsistencias entre mercados</span>. Los traductores generaban wording aislado de su uso, sin entender el contexto. <strong>El wording era un caos.</strong>',
+        'glossary-p2': '<strong>Armé un glosario compartido y construí un AI assistant de traducción y UX writing que traduce y mantiene la consistencia en 13 idiomas.</strong>',
+        'ph-glossary': 'Ilustración o diagrama del glosario compartido / traducciones con IA.',
         'solution-label': 'Solución',
         'solution-title': 'Diseñar para decisiones, no para explicar el sistema',
-        'solution-p': 'En vez de preguntarnos cómo explicar el sistema, empezamos a preguntarnos qué decisión estaba tratando de tomar el usuario. Esa idea reordenó reservas, entregas, promociones y disponibilidad en toda la experiencia.',
-        'solution-quote': 'Ayudar a la gente a comprar muebles sin necesitar un doctorado en logística de muebles.',
+        'solution-p': 'En vez de preguntarnos cómo explicar el sistema, empezamos a preguntarnos <span class="underline-soft">qué decisión estaba tratando de tomar el usuario</span>. Esa idea reordenó <span class="underline-soft">reservas, entregas, promociones y disponibilidad</span> en toda la experiencia.',
         'ph-generic': 'Visual a armar',
         'ph-solution': 'Muestra final de UI — disponibilidad, entrega, promociones y reserva.',
         'outcome-label': 'Resultado',
-        'outcome-title': 'Implementado en 16 mercados — y rápidamente olvidado, que es el punto',
-        'outcome-p': 'La solución se desplegó en todos los mercados de XXXLutz. Los stakeholders más escépticos terminaron siendo quienes más la impulsaron, y un servicio que se sentía fragmentado empezó a comportarse como una experiencia coherente.',
-        'learn1-h': '16 mercados',
-        'learn1-p': 'Desplegado en todos los mercados de ecommerce de XXXLutz en la UE.',
-        'learn2-h': 'Un solo Design Sprint',
-        'learn2-p': 'Alcanzó para destapar años de excepciones que nadie había mapeado antes.',
+        'outcome-title': 'Implementado en 16 mercados',
+        'outcome-p': 'La solución se desplegó en todos los mercados de XXXLutz. Pero el mayor resultado fue otro: <strong>conseguimos que Producto, Ingeniería y Negocio compartieran una misma comprensión del servicio.</strong> Los <span class="underline-soft">stakeholders más escépticos</span> terminaron siendo quienes más la impulsaron, y un servicio que se sentía fragmentado empezó a comportarse como una experiencia coherente.',
+        'learn1-h': '29% de aumento en ease of use',
+        'learn1-p': 'Reportado en surveys y tests de usabilidad.',
+        'learn2-h': '52% menos llamadas a Customer Service',
+        'learn2-p': 'En todo lo relacionado a delivery, Click &amp; Collect y reservas.',
         'learn3-h': 'Service design &gt; ajuste de UX',
         'learn3-p': 'Un problema de wording terminó siendo un rediseño completo del servicio.',
         'footer-more': 'Más proyectos'

@@ -212,6 +212,8 @@
       padding: 40px;
     }
     .feature-split-media-dotted img { max-width: 85%; max-height: 85%; width: auto; height: auto; object-fit: contain; display: block; }
+    .feature-split-media-video { background: #EFEFEF; display: flex; align-items: center; justify-content: center; }
+    .feature-split-media-video video { width: 100%; height: 100%; object-fit: contain; display: block; }
 
     /* ── 7. OVERLAP DUO ── */
     .overlap-duo {
@@ -403,10 +405,11 @@
   </div>
 
   <div class="feature-split" style="padding-top: var(--space-35); padding-bottom: var(--space-35);">
-    <div class="feature-split-media">
-      <div class="placeholder-img">
-        <span class="placeholder-label" data-i18n="revenue-ph">Screenshot — Payment Flow</span>
-      </div>
+    <div class="feature-split-media feature-split-media-video">
+      <video autoplay loop muted playsinline>
+        <source src="assets/coalapay-payment-flow.webm" type="video/webm">
+        <source src="assets/coalapay-payment-flow.mp4" type="video/mp4">
+      </video>
     </div>
     <div class="feature-split-text">
       <span class="eyebrow" data-i18n="revenue-label">Revenue</span>

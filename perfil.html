@@ -154,11 +154,11 @@
     }
     .hero-sub {
       position: relative; z-index: 3;
-      font-size: 15px; line-height: 1.7; color: #4a443d;
-      max-width: 44ch;
+      font-size: clamp(19px, 2.5vw, 29px); line-height: 1.5; color: #4a443d;
+      max-width: 30ch;
     }
-    .hero-sub b { color: var(--dark); font-weight: 700; }
-    .hero-sub .uk { text-decoration: underline; text-decoration-color: #bdb4a6; text-decoration-thickness: 1.5px; text-underline-offset: 3px; }
+    .hero-sub b { color: var(--dark); font-weight: 400; }
+    .hero-sub .uk { font-weight: 700; color: var(--dark); }
 
     .hero-props { position: relative; width: 340px; flex: none; }
     .hero-props .frame { position: relative; z-index: 2; width: 100%; }
@@ -170,7 +170,7 @@
       .hero-stage { min-height: 470px; }
       .hero-statement { max-width: 48%; }
       .hero-props { position: absolute; top: 8px; right: 0; width: clamp(340px, 32vw, 460px); }
-      .hero-sub { max-width: 44ch; }
+      .hero-sub { max-width: 30ch; }
     }
 
     .folder {
@@ -631,8 +631,7 @@
 
         <div class="hero-row">
           <p class="hero-sub reveal d1" data-i18n="hero-sub">
-            <b>Hace ~12 años que diseño</b>: de <span class="uk">marcas</span> e <span class="uk">interfaces</span> a <span class="uk">servicios</span>, <span class="uk">estrategia</span> y <span class="uk">facilitación</span>.<br/><br/>
-            Ahora trabajo donde el problema todavía no tiene forma.
+            <b>Hace ~12 años que diseño</b>: con una base sólida en <span class="uk">Product Design</span>, me expandí de <span class="uk">interfaces</span> a <span class="uk">servicios</span>, <span class="uk">estrategia</span> y <span class="uk">facilitación</span>.
           </p>
 
           <div class="hero-props reveal d1">
@@ -934,8 +933,8 @@
   <script>
     window.I18N = {
       en: {
-        'hero-statement': 'I&rsquo;m <span class="selname" id="selname">Martina Hirschler.<span class="tag">Designer · Barcelona</span><span class="box"><i></i><i></i><i></i><i></i></span></span> I <span class="w-product u">research</span>, <span class="w-service u">map the system</span> and <span class="w-strategy u">facilitate the conversation</span> before anyone designs the first screen.',
-        'hero-sub': '<b>I&rsquo;ve been designing for ~12 years</b>: from <span class="uk">brands</span> and <span class="uk">interfaces</span> to <span class="uk">services</span>, <span class="uk">strategy</span> and <span class="uk">facilitation</span>.<br><br>Now I work where the problem doesn&rsquo;t have a shape yet.',
+        'hero-statement': 'I&rsquo;m <span class="selname" id="selname">Martina Hirschler.<span class="tag">Designer · Barcelona</span><span class="box"><i></i><i></i><i></i><i></i></span></span> I <span class="w-product u">research</span>, <span class="w-service u">map the system</span> and <span class="w-strategy u">facilitate the conversation</span> before designing the first screen.',
+        'hero-sub': '<b>I&rsquo;ve been designing for ~12 years</b>: with a strong foundation in <span class="uk">Product design</span>, I&rsquo;ve expanded from <span class="uk">interfaces</span> to <span class="uk">services</span>, <span class="uk">strategy</span> and <span class="uk">facilitation</span>.',
         'hero-folder': 'cases',
         'origin-eyebrow': 'where this comes from',
         'origin-heading': 'At 8 years old, I made PowerPoint presentations <span class="v">for</span> <span class="v">fun</span><span class="dots-light">.........</span>',
@@ -1008,7 +1007,7 @@
       },
       es: {
         'hero-statement': 'Soy <span class="selname" id="selname">Martina Hirschler.<span class="tag">Diseñadora · Barcelona</span><span class="box"><i></i><i></i><i></i><i></i></span></span> <span class="w-product u">Investigo</span>, <span class="w-service u">mapeo el sistema</span> y <span class="w-strategy u">facilito la conversación</span> antes de diseñar la primera pantalla.',
-        'hero-sub': '<b>Hace ~12 años que diseño</b>: de <span class="uk">marcas</span> e <span class="uk">interfaces</span> a <span class="uk">servicios</span>, <span class="uk">estrategia</span> y <span class="uk">facilitación</span>.<br><br>Ahora trabajo donde el problema todavía no tiene forma.',
+        'hero-sub': '<b>Hace ~12 años que diseño</b>: con una base sólida en <span class="uk">Product Design</span>, me expandí de <span class="uk">interfaces</span> a <span class="uk">servicios</span>, <span class="uk">estrategia</span> y <span class="uk">facilitación</span>.',
         'hero-folder': 'casos',
         'origin-eyebrow': 'de dónde viene esto',
         'origin-heading': 'A los 8 años hacía presentaciones de PowerPoint <span class="v">por</span> <span class="v">diversión</span><span class="dots-light">.........</span>',

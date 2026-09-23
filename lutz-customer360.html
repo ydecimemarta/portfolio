@@ -487,13 +487,23 @@
     }
     .lightbox-close:hover { background: rgba(255, 255, 255, 0.22); }
 
+    /* ── PROJECT NAV: prev/next bar shown above the footer on mobile instead
+       of the fixed side tabs, which would sit on top of scrolling article
+       text on a narrow screen ── */
+    .project-nav { display: none; }
+    .project-nav a { flex: 1; display: flex; align-items: center; gap: 10px; padding: 22px 24px; text-decoration: none; color: var(--dark); }
+    .project-nav a:first-child { justify-content: flex-start; border-right: 1.5px solid var(--divider); }
+    .project-nav a:last-child { justify-content: flex-end; text-align: right; }
+    .project-nav-label { font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--mid); }
+
     /* ── RESPONSIVE ── */
     @media (max-width: 900px) {
       .nav-back, .nav-next { display: none; }
+      .project-nav { display: flex; border-top: 1.5px solid var(--divider); }
     }
     @media (max-width: 700px) {
       .hero { height: 80vh; }
-      .hero-title { font-size: clamp(32px, 9vw, 52px); top: 32px; padding: 0 20px; line-height: 0.9; }
+      .hero-title { font-size: clamp(32px, 9vw, 52px); top: 78px; padding: 0 20px; line-height: 0.9; }
       .hero-bottom { bottom: 32px; padding: 0 20px; }
       .hero-tag { font-size: 12px; margin-bottom: 14px; }
       .hero-sub { font-size: clamp(18px, 5vw, 28px); }
@@ -649,6 +659,23 @@
     </div>
 
   </article>
+
+  <nav class="project-nav" aria-label="Project navigation">
+    <a href="lutz-mobile.html">
+      <svg class="nav-arrow" width="16" height="11" viewBox="0 0 20 13" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <path d="M1 6.5H19" stroke="#282828" stroke-width="1.8" stroke-linecap="round"/>
+        <path d="M6.5 1L1 6.5L6.5 12" stroke="#282828" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <span class="project-nav-label" data-i18n="nav-prev">Previous project</span>
+    </a>
+    <a href="lutz-delivery-mobile.html">
+      <span class="project-nav-label" data-i18n="nav-next">Next project</span>
+      <svg class="nav-arrow" width="16" height="11" viewBox="0 0 20 13" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <path d="M1 6.5H19" stroke="#282828" stroke-width="1.8" stroke-linecap="round"/>
+        <path d="M13.5 1L19 6.5L13.5 12" stroke="#282828" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </a>
+  </nav>
 
   <footer>
     <a href="https://linkedin.com" target="_blank">LinkedIn</a>

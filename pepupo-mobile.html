@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link rel="icon" type="image/png" href="favicon.png"/>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
+  <script>
+    if (window.innerWidth > 768 && !/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
+      window.location.replace('pepupo.html');
+    }
+  </script>
+  <title>Play Without Labels — Martina Hirschler</title>
+  <link href="https://fonts.googleapis.com/css2?family=Karla:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --cream:    #F5F5F5;
+      --dark:     #000000;
+      --mid:      #A2A2A2;
+      --divider:  #ECECEC;
+      --c-research: #ECDFCD;
+      --c-ux:       #A79BF3;
+      --c-visuals:  #D8D2FF;
+
+      --home-cream: #FFF9F1;
+      --home-line:  #3F3F3F;
+      --home-beige: #F9F0E8;
+      --home-red:   #EE6D3B;
+    }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Karla', sans-serif; background: var(--cream); color: var(--dark); -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+
+    /* TAGS */
+    .tags-row { display: flex; flex-wrap: wrap; gap: 8px; }
+    .tag { font-size: 11px; font-weight: 700; letter-spacing: 0.07em; text-transform: uppercase; padding: 5px 13px; border-radius: 100px; color: #000; }
+    .tag-research { background: var(--c-research); }
+    .tag-ux       { background: var(--c-ux); }
+    .tag-visuals  { background: var(--c-visuals); }
+
+    /* MENU TRIGGER */
+    .menu-trigger { position: fixed; top: 16px; left: 16px; z-index: 90; background: #fff; border: none; border-radius: 100px; cursor: pointer; padding: 13px; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 10px rgba(0,0,0,0.12); }
+    .menu-trigger svg { display: block; }
+
+    /* SIDE MENU */
+    .menu-backdrop { position: fixed; inset: 0; z-index: 150; background: rgba(0,0,0,0.28); opacity: 0; transition: opacity 0.3s ease; }
+    .menu-backdrop.is-open { opacity: 1; }
+    .side-menu {
+      position: fixed; top: 0; left: 0; bottom: 0; z-index: 160;
+      width: min(340px, 86vw); background: var(--home-red); border-right: 1.5px solid var(--home-line);
+      color: var(--home-line); display: flex; flex-direction: column; padding: 18px 0 24px;
+      transform: translateX(-100%); transition: transform 0.38s cubic-bezier(0.4,0,0.1,1);
+      overflow-y: auto; overscroll-behavior: contain;
+    }
+    .side-menu.is-open { transform: translateX(0); }
+    .menu-close { background: none; border: none; cursor: pointer; width: 40px; height: 40px; margin-left: 18px; display: flex; align-items: center; justify-content: center; flex: 0 0 auto; }
+    .menu-close svg { display: block; }
+    .side-menu .lang-switch { position: absolute; top: 20px; right: 22px; display: flex; align-items: center; gap: 10px; padding: 0; background: none; border-radius: 0; }
+    .side-menu .lang-switch button { background: none; border: none; cursor: pointer; font-family: 'Karla', sans-serif; font-size: 13px; font-weight: 700; letter-spacing: 0.04em; color: rgba(63,63,63,0.5); padding: 4px 2px; }
+    .side-menu .lang-switch button.active { color: var(--home-line); text-decoration: underline; text-underline-offset: 4px; text-decoration-thickness: 1.5px; }
+    .side-menu .lang-sep { color: rgba(63,63,63,0.35); font-size: 12px; }
+    .menu-nav { display: flex; flex-direction: column; margin-top: 10px; border-top: 1.5px solid var(--home-line); }
+    .menu-item { display: flex; align-items: center; gap: 12px; padding: 18px 24px; font-size: 22px; font-weight: 400; color: var(--home-line); text-decoration: none; border-bottom: 1.5px solid var(--home-line); }
+    .menu-nav--secondary { margin-top: auto; border-top: none; display: flex; flex-direction: column; }
+    .menu-item--sec { padding: 8px 24px; font-size: 12px; font-weight: 600; letter-spacing: 0.01em; border-bottom: none; }
+    .menu-item--sec svg { width: 13px; height: 13px; opacity: 0.9; flex: 0 0 auto; }
+
+    /* PROJECT NAV */
+    .project-nav { display: flex; border-top: 1.5px solid var(--divider); background: var(--cream); }
+    .project-nav a { flex: 1; display: flex; align-items: center; gap: 10px; padding: 22px 24px; text-decoration: none; color: #282828; }
+    .project-nav a:first-child { justify-content: flex-start; border-right: 1.5px solid var(--divider); }
+    .project-nav a:last-child { justify-content: flex-end; text-align: right; }
+    .project-nav-label { font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--mid); }
+    .nav-arrow { display: block; flex: 0 0 auto; }
+
+    /* HERO */
+    .hero { position: relative; height: 100svh; overflow: hidden; }
+    .hero-bg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center; }
+    .hero-overlay { position: absolute; inset: 0; background: rgba(54,50,37,0.44); }
+    .hero-title { position: absolute; top: 26px; left: 0; right: 0; text-align: center; font-size: clamp(32px, 9vw, 52px); font-weight: 800; color: #fff; line-height: 0.88; letter-spacing: -1px; padding: 0 24px; z-index: 1; }
+    .hero-sub { position: absolute; bottom: 26px; left: 0; right: 0; text-align: center; font-size: clamp(18px, 5vw, 28px); font-weight: 600; letter-spacing: -0.3px; color: #fff; line-height: 1.1; padding: 0 24px; z-index: 1; }
+
+    /* SECTIONS */
+    .eyebrow { display: inline-block; font-size: 12px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--mid); margin-bottom: 14px; }
+    .section-title { font-size: 24px; font-weight: 700; line-height: 1.22; color: #282828; margin-bottom: 14px; letter-spacing: -0.5px; }
+    .body-text { font-size: 16px; font-weight: 400; line-height: 1.5; letter-spacing: -0.2px; color: #2a2a2a; }
+    .body-text strong { font-weight: 700; color: #000; }
+    .body-text-sm { font-size: 14px; font-weight: 400; line-height: 1.5; letter-spacing: -0.2px; color: #444; }
+    .body-text p + p { margin-top: 16px; }
+    .intro-lead { font-size: 20px; font-weight: 600; line-height: 1.35; letter-spacing: -0.3px; color: #282828; margin-bottom: 24px; }
+    .block { padding: 40px 24px; }
+
+    /* ICON MEDIA — contained illustration on a light panel */
+    .icon-media { background: #fff; border-radius: 16px; display: flex; align-items: center; justify-content: center; padding: 28px; margin-bottom: 24px; }
+    .icon-media img { max-width: 100%; max-height: 260px; width: auto; height: auto; object-fit: contain; display: block; }
+
+    /* RESEARCH CARDS (image w/ text overlay) */
+    .research-stack { display: flex; flex-direction: column; gap: 16px; margin-top: 20px; }
+    .research-card { position: relative; border-radius: 16px; overflow: hidden; aspect-ratio: 4 / 3; }
+    .research-card > img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+    .research-card::after { content: ""; position: absolute; inset: 0; }
+    .research-card-parent::after { background: linear-gradient(180deg, #201C19 0%, rgba(32,28,25,0) 42%); opacity: 0.72; }
+    .research-card-child::after { background: linear-gradient(180deg, #17150F 15%, rgba(23,21,15,0.22) 52%, rgba(23,21,15,0) 100%); opacity: 0.88; }
+    .research-card-body { position: relative; z-index: 1; padding: 22px 22px; color: #fff; }
+    .research-card-body h3 { font-size: 18px; font-weight: 700; line-height: 1.2; letter-spacing: -0.4px; margin-bottom: 6px; }
+    .research-card-body p { font-size: 13px; line-height: 1.35; letter-spacing: -0.2px; max-width: 30ch; }
+
+    /* LEARNINGS PANEL */
+    .learnings-panel { background: #fff; border-radius: 20px; padding: 28px 22px; text-align: center; }
+    .learnings-panel img { width: 100%; height: auto; display: block; margin-top: 20px; }
+
+    /* STAT CARDS */
+    .stats-stack { display: flex; flex-direction: column; gap: 16px; }
+    .stat-card { background: #fff; border-radius: 20px; padding: 32px 24px; text-align: center; }
+    .stat-figure { display: flex; align-items: center; justify-content: center; gap: 10px; margin-bottom: 16px; }
+    .stat-figure img { height: 40px; width: auto; display: block; }
+    .stat-number { font-size: 44px; font-weight: 800; letter-spacing: -1.5px; line-height: 1; color: #111; }
+    .stat-prefix { font-size: 13px; font-weight: 500; color: var(--mid); }
+    .stat-card p { font-size: 14px; line-height: 1.4; letter-spacing: -0.2px; color: #2a2a2a; }
+
+    /* CONTENT CREATION CAROUSEL — full-bleed drag/swipe strip, kept as-is:
+       horizontal scroll strips are a native mobile pattern */
+    .cc-characters { margin-top: 28px; width: 100vw; position: relative; left: 50%; transform: translateX(-50%); overflow-x: auto; overflow-y: hidden; scrollbar-width: none; -webkit-overflow-scrolling: touch; }
+    .cc-characters::-webkit-scrollbar { display: none; }
+    .cc-track { display: flex; gap: 8px; width: max-content; padding: 0 24px; }
+    .cc-track img { flex: none; width: 46vw; min-width: 160px; height: auto; display: block; user-select: none; -webkit-user-drag: none; }
+
+    /* GAME SCREEN */
+    .game-screen { background: #fff; border-radius: 16px; padding: 28px; display: flex; align-items: center; justify-content: center; margin-bottom: 24px; }
+    .game-screen img { max-width: 100%; max-height: 320px; width: auto; height: auto; object-fit: contain; display: block; }
+
+    /* VISUALS */
+    .visuals-hero { width: 100%; height: auto; display: block; border-radius: 16px; }
+    .visuals-grid { display: grid; grid-template-columns: 1fr 1fr; width: 100vw; position: relative; left: 50%; transform: translateX(-50%); margin-top: 24px; }
+    .visuals-grid img { width: 100%; height: auto; display: block; }
+
+    /* DATA — horizontal side-scroll row, kept as-is */
+    .results-scroller { margin-top: 20px; width: 100vw; position: relative; left: 50%; transform: translateX(-50%); overflow-x: auto; overflow-y: hidden; scrollbar-width: none; -webkit-overflow-scrolling: touch; }
+    .results-scroller::-webkit-scrollbar { display: none; }
+    .results-grid { display: flex; gap: 14px; width: max-content; padding: 0 24px; }
+    .results-card { flex: none; width: 220px; background: #fff; border-radius: 16px; padding: 24px 22px; display: flex; flex-direction: column; align-items: flex-start; min-height: 220px; box-sizing: border-box; }
+    .results-icon { width: 24px; height: 24px; display: block; margin-bottom: 24px; flex: none; }
+    .results-card h4 { font-size: 16px; font-weight: 700; line-height: 1.25; letter-spacing: -0.3px; color: #282828; margin: 0 0 8px; }
+    .results-card p { font-size: 13px; line-height: 1.4; letter-spacing: -0.2px; color: #444; }
+
+    footer { background: #000; padding: 32px 24px; display: flex; align-items: center; justify-content: center; gap: 18px; border-radius: 20px 20px 0 0; }
+    footer a { color: #fff; text-decoration: none; font-size: 11px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; opacity: 0.7; }
+    footer .sep { color: rgba(255,255,255,0.3); }
+  </style>
+</head>
+<body>
+
+  <button class="menu-trigger" id="menuBtn" aria-label="Open menu" aria-expanded="false" aria-controls="sideMenu">
+    <svg width="18" height="13" viewBox="0 0 20 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M1 1.5H19" stroke="#3F3F3F" stroke-width="1.8" stroke-linecap="round"/>
+      <path d="M1 7.5H19" stroke="#3F3F3F" stroke-width="1.8" stroke-linecap="round"/>
+      <path d="M1 13.5H19" stroke="#3F3F3F" stroke-width="1.8" stroke-linecap="round"/>
+    </svg>
+  </button>
+
+  <div class="menu-backdrop" id="menuBackdrop" hidden></div>
+
+  <aside class="side-menu" id="sideMenu" aria-label="Main menu" aria-hidden="true">
+    <button class="menu-close" id="menuClose" aria-label="Close menu">
+      <svg width="20" height="20" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M2 2L20 20M20 2L2 20" stroke="#3F3F3F" stroke-width="1.8" stroke-linecap="round"/>
+      </svg>
+    </button>
+
+    <div class="lang-switch" role="group" aria-label="Language">
+      <button type="button" data-lang="es">ES</button>
+      <span class="lang-sep" aria-hidden="true">/</span>
+      <button type="button" data-lang="en">EN</button>
+    </div>
+
+    <nav class="menu-nav" aria-label="Sections">
+      <a class="menu-item" href="index.html#intro">Intro</a>
+      <a class="menu-item" href="index.html#work">Work</a>
+      <a class="menu-item" href="perfil.html">About me</a>
+    </nav>
+
+    <div class="menu-nav menu-nav--secondary">
+      <a class="menu-item menu-item--sec" href="https://www.linkedin.com/in/heymarts" target="_blank" rel="noopener">
+        <span>LinkedIn</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M14 4h6v6"/><path d="M20 4l-9 9"/><path d="M18 13v5a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h5"/>
+        </svg>
+      </a>
+      <a class="menu-item menu-item--sec" href="assets/martina-hirschler-cv.pdf" download>
+        <span>Curriculum Vitae</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M12 3v12"/><path d="M7 12l5 5 5-5"/><path d="M5 21h14"/>
+        </svg>
+      </a>
+    </div>
+  </aside>
+
+  <!-- 1. HERO -->
+  <section class="hero">
+    <img class="hero-bg" src="assets/pepupo-hero.png" alt="Pepupo app — phone mockups and character badges"/>
+    <div class="hero-overlay"></div>
+    <h1 class="hero-title" data-i18n="hero-title">Play Without Labels</h1>
+    <p class="hero-sub" data-i18n="hero-sub">Breaking gender stereotypes through play</p>
+  </section>
+
+  <!-- 2. INTRO SPLIT -->
+  <div class="block">
+    <div class="tags-row" style="margin-bottom:20px;">
+      <span class="tag tag-research" data-i18n="tag-research">Research</span>
+      <span class="tag tag-ux" data-i18n="tag-ux">UX Design</span>
+      <span class="tag tag-visuals" data-i18n="tag-visuals">Visuals</span>
+    </div>
+    <p class="intro-lead" data-i18n="intro-lead">Gender roles still quietly shape the worlds children imagine for themselves.</p>
+    <div class="body-text">
+      <p data-i18n="intro-p1">Motivated by a shared vision, we formed a voluntary <strong>collective of designers, educators, and developers</strong> in 2022 to design a game that introduces kids aged 3–6 to professions, fostering creativity, skills, and equality.</p>
+      <p data-i18n="intro-p2"><strong>Pepupo is where play meets possibility, opening doors to a future free from stereotypes.</strong></p>
+    </div>
+  </div>
+
+  <!-- 3. THE PROBLEM -->
+  <div class="block" style="background:#fff; padding-top:0;">
+    <div class="icon-media">
+      <img src="assets/pepupo-problem-photos.png" alt="A girl holding a cupcake beside a toy kitchen, and a boy running a science experiment"/>
+    </div>
+    <span class="eyebrow" data-i18n="problem-label">The problem</span>
+    <h2 class="section-title" data-i18n="problem-title">Parents want to free their kids from the gender roles they grew up with</h2>
+    <div class="body-text">
+      <p data-i18n="problem-p1">Many parents grew up with messages pushing <strong>girls toward beauty and service</strong>, and <strong>boys toward power and leadership, leaving little room for vulnerability or care.</strong></p>
+      <p data-i18n="problem-p2">Now, they want something different for their kids. Yet, children today still absorb subtle gender stereotypes from media, toys, and daily life. Breaking these patterns starts with awareness and the right tools early on.</p>
+    </div>
+  </div>
+
+  <!-- 4. HOW WE RESEARCHED -->
+  <div class="block">
+    <h2 class="section-title" data-i18n="research-title">How we researched</h2>
+    <div class="research-stack">
+      <div class="research-card research-card-parent">
+        <img src="assets/pepupo-research-interviews.png" alt="A parent standing in a living room during an interview"/>
+        <div class="research-card-body">
+          <h3 data-i18n="research-c1-h">Interviews and surveys to parents</h3>
+          <p data-i18n="research-c1-p">I explored parents' concerns about gender stereotypes and their educational goals</p>
+        </div>
+      </div>
+      <div class="research-card research-card-child">
+        <img src="assets/pepupo-research-observation.png" alt="A child playing with a wooden toy kitchen, seen from above"/>
+        <div class="research-card-body">
+          <h3 data-i18n="research-c2-h">Child-Behavioral Observation</h3>
+          <p data-i18n="research-c2-p">I observed children interacting with existing apps and toys</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 5. LEARNINGS -->
+  <div class="block" style="padding-top:0;">
+    <div class="learnings-panel">
+      <span class="eyebrow" data-i18n="learn-label">Learnings</span>
+      <h2 class="section-title" data-i18n="learn-title">Designing for Little Hands (and big dreams)</h2>
+      <p class="body-text" data-i18n="learn-sub">Creating an app for 3- to 6-year-olds means understanding their world.</p>
+      <img src="assets/pepupo-learnings-badges.svg" alt="Six traits of young children: short attention spans, developing motor skills, eagerness to explore, simple intuitive interfaces, large buttons, colorful visuals"/>
+    </div>
+  </div>
+
+  <!-- 6. STAT CARDS -->
+  <div class="block" style="padding-top:0;">
+    <div class="stats-stack">
+      <div class="stat-card">
+        <div class="stat-figure">
+          <img src="assets/pepupo-stat-spark.svg" alt=""/>
+          <span class="stat-number" data-i18n="stat1-num">80%</span>
+        </div>
+        <p data-i18n="stat1-p">of young children engage better with interactive, story-driven content that sparks curiosity while aiding learning.</p>
+      </div>
+      <div class="stat-card">
+        <div class="stat-figure">
+          <img src="assets/pepupo-stat-star.svg" alt=""/>
+          <span class="stat-prefix" data-i18n="stat2-prefix">at age</span>
+          <span class="stat-number" data-i18n="stat2-num">4</span>
+        </div>
+        <p data-i18n="stat2-p">children's perceptions of gender roles are already forming, influencing how they see themselves and others.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 7. CONTENT CREATION -->
+  <div class="block" style="padding-bottom:0;">
+    <span class="eyebrow" data-i18n="cc-label">Content Creation</span>
+    <h2 class="section-title" data-i18n="cc-title">Using research insights to build the stories</h2>
+    <p class="body-text" data-i18n="cc-p">We crafted stories, games, and activities with diverse characters with a focus on challenging gender stereotypes, sparking curiosity and promoting gender equality.</p>
+  </div>
+  <div class="cc-characters" id="ccCarousel">
+    <div class="cc-track" id="ccTrack">
+      <img src="assets/pepupo-character-athlete.svg" alt="Illustrated character: a child wearing a headband"/>
+      <img src="assets/pepupo-character-glasses.svg" alt="Illustrated character: a child wearing glasses"/>
+      <img src="assets/pepupo-character-builder.svg" alt="Illustrated character: a child in a builder's helmet and overalls"/>
+      <img src="assets/pepupo-character-scientist.svg" alt="Illustrated character: a child in a lab coat"/>
+    </div>
+  </div>
+
+  <!-- 8. AND A GAME STRUCTURE -->
+  <div class="block">
+    <div class="game-screen">
+      <img src="assets/pepupo-screen-ready.svg" alt="App start screen reading &ldquo;Ready to play?&rdquo; with a Start button"/>
+    </div>
+    <span class="eyebrow" data-i18n="game-label">UX and educational design</span>
+    <h2 class="section-title" data-i18n="game-title">And a game structure</h2>
+    <div class="body-text">
+      <p data-i18n="game-p">We started by conceptualizing the app's core features and content, focusing on simplicity, interactivity, and age-appropriate design to cater to the needs of young children.</p>
+    </div>
+  </div>
+
+  <!-- 9. VISUALS BAND -->
+  <div class="block" style="padding-top:0;">
+    <img class="visuals-hero" src="assets/pepupo-visuals-phones.png" alt="Three phones showing Pepupo screens: a character, the category menu, and another character"/>
+    <span class="tag tag-visuals" style="margin-top:20px; display:inline-block;" data-i18n="tag-visuals">Visuals</span>
+  </div>
+
+  <!-- 10. VISUALS DETAIL -->
+  <div class="visuals-grid">
+    <img src="assets/pepupo-visuals-logo.svg" alt="The Pepupo logo with sticker badges"/>
+    <img src="assets/pepupo-visuals-badge-starburst.svg" alt="A character badge on a starburst"/>
+    <img src="assets/pepupo-visuals-mosaic.svg" alt="A grid of abstract shapes from the app's visual language"/>
+    <img src="assets/pepupo-visuals-screen-ropa.svg" alt="A game screen for choosing a character's clothes"/>
+  </div>
+
+  <!-- 11. DATA -->
+  <div class="block">
+    <span class="eyebrow" data-i18n="data-label">Data</span>
+    <h2 class="section-title" data-i18n="data-title">How we measured success</h2>
+  </div>
+  <div class="results-scroller">
+    <div class="results-grid">
+      <div class="results-card">
+        <img class="results-icon" src="assets/pepupo-data-clock.svg" alt=""/>
+        <h4 data-i18n="data-c1-h">Session Length</h4>
+        <p data-i18n="data-c1-p">The average amount of time a child spends using the app in one session.</p>
+      </div>
+      <div class="results-card">
+        <img class="results-icon" src="assets/pepupo-data-chat.svg" alt=""/>
+        <h4 data-i18n="data-c2-h">Parent Feedback on Engagement</h4>
+        <p data-i18n="data-c2-p">Qualitative feedback from parents about how engaged their child seems while using the app.</p>
+      </div>
+      <div class="results-card">
+        <img class="results-icon" src="assets/pepupo-data-check.svg" alt=""/>
+        <h4 data-i18n="data-c3-h">Task Completion Rate</h4>
+        <p data-i18n="data-c3-p">The percentage of games that children successfully complete within the app.</p>
+      </div>
+      <div class="results-card">
+        <img class="results-icon" src="assets/pepupo-data-target.svg" alt=""/>
+        <h4 data-i18n="data-c4-h">Engagement with Specific Content</h4>
+        <p data-i18n="data-c4-p">The amount of time spent on particular features or activities within the app.</p>
+      </div>
+      <div class="results-card">
+        <img class="results-icon" src="assets/pepupo-data-return.svg" alt=""/>
+        <h4 data-i18n="data-c5-h">Return Rate</h4>
+        <p data-i18n="data-c5-p">The percentage of users who return to the app after their first session.</p>
+      </div>
+    </div>
+  </div>
+
+  <div style="height:40px;"></div>
+
+  <nav class="project-nav" aria-label="Project navigation">
+    <a href="lutz-reservation.html">
+      <svg class="nav-arrow" width="16" height="11" viewBox="0 0 20 13" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <path d="M1 6.5H19" stroke="#282828" stroke-width="1.8" stroke-linecap="round"/>
+        <path d="M6.5 1L1 6.5L6.5 12" stroke="#282828" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <span class="project-nav-label" data-i18n="nav-prev">Previous project</span>
+    </a>
+    <a href="lutz-mobile.html">
+      <span class="project-nav-label" data-i18n="nav-next">Next project</span>
+      <svg class="nav-arrow" width="16" height="11" viewBox="0 0 20 13" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <path d="M1 6.5H19" stroke="#282828" stroke-width="1.8" stroke-linecap="round"/>
+        <path d="M13.5 1L19 6.5L13.5 12" stroke="#282828" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </a>
+  </nav>
+
+  <footer>
+    <a href="https://linkedin.com" target="_blank">LinkedIn</a>
+    <span class="sep">|</span>
+    <a href="#">CV</a>
+    <span class="sep">|</span>
+    <a href="index.html" data-i18n="footer-more">More projects</a>
+  </footer>
+
+  <script>
+    window.I18N = {
+      en: {
+        'nav-prev': 'Previous project',
+        'nav-next': 'Next project',
+        'hero-title': 'Play Without Labels',
+        'hero-sub': 'Breaking gender stereotypes through play',
+        'tag-research': 'Research',
+        'tag-ux': 'UX Design',
+        'tag-visuals': 'Visuals',
+        'intro-lead': 'Gender roles still quietly shape the worlds children imagine for themselves.',
+        'intro-p1': 'Motivated by a shared vision, we formed a voluntary <strong>collective of designers, educators, and developers</strong> in 2022 to design a game that introduces kids aged 3–6 to professions, fostering creativity, skills, and equality.',
+        'intro-p2': '<strong>Pepupo is where play meets possibility, opening doors to a future free from stereotypes.</strong>',
+        'problem-label': 'The problem',
+        'problem-title': 'Parents want to free their kids from the gender roles they grew up with',
+        'problem-p1': 'Many parents grew up with messages pushing <strong>girls toward beauty and service</strong>, and <strong>boys toward power and leadership, leaving little room for vulnerability or care.</strong>',
+        'problem-p2': 'Now, they want something different for their kids. Yet, children today still absorb subtle gender stereotypes from media, toys, and daily life. Breaking these patterns starts with awareness and the right tools early on.',
+        'research-title': 'How we researched',
+        'research-c1-h': 'Interviews and surveys to parents',
+        'research-c1-p': "I explored parents' concerns about gender stereotypes and their educational goals",
+        'research-c2-h': 'Child-Behavioral Observation',
+        'research-c2-p': 'I observed children interacting with existing apps and toys',
+        'learn-label': 'Learnings',
+        'learn-title': 'Designing for Little Hands (and big dreams)',
+        'learn-sub': 'Creating an app for 3- to 6-year-olds means understanding their world.',
+        'stat1-num': '80%',
+        'stat1-p': 'of young children engage better with interactive, story-driven content that sparks curiosity while aiding learning.',
+        'stat2-prefix': 'at age',
+        'stat2-num': '4',
+        'stat2-p': "children's perceptions of gender roles are already forming, influencing how they see themselves and others.",
+        'cc-label': 'Content Creation',
+        'cc-title': 'Using research insights to build the stories',
+        'cc-p': 'We crafted stories, games, and activities with diverse characters with a focus on challenging gender stereotypes, sparking curiosity and promoting gender equality.',
+        'game-label': 'UX and educational design',
+        'game-title': 'And a game structure',
+        'game-p': "We started by conceptualizing the app's core features and content, focusing on simplicity, interactivity, and age-appropriate design to cater to the needs of young children.",
+        'data-label': 'Data',
+        'data-title': 'How we measured success',
+        'data-c1-h': 'Session Length',
+        'data-c1-p': 'The average amount of time a child spends using the app in one session.',
+        'data-c2-h': 'Parent Feedback on Engagement',
+        'data-c2-p': 'Qualitative feedback from parents about how engaged their child seems while using the app.',
+        'data-c3-h': 'Task Completion Rate',
+        'data-c3-p': 'The percentage of games that children successfully complete within the app.',
+        'data-c4-h': 'Engagement with Specific Content',
+        'data-c4-p': 'The amount of time spent on particular features or activities within the app.',
+        'data-c5-h': 'Return Rate',
+        'data-c5-p': 'The percentage of users who return to the app after their first session.',
+        'footer-more': 'More projects'
+      },
+      es: {
+        'nav-prev': 'Proyecto anterior',
+        'nav-next': 'Siguiente proyecto',
+        'hero-title': 'Jugar sin etiquetas',
+        'hero-sub': 'Rompiendo estereotipos de género a través del juego',
+        'tag-research': 'Investigación',
+        'tag-ux': 'UX Design',
+        'tag-visuals': 'Visuales',
+        'intro-lead': 'Los roles de género todavía moldean en silencio los mundos que los niños imaginan para sí mismos.',
+        'intro-p1': 'Con una visión compartida, en 2022 formamos un <strong>colectivo voluntario de diseñadoras, educadores y desarrolladores</strong> para crear un juego que acerca a chicos de 3 a 6 años a distintas profesiones, fomentando la creatividad, las habilidades y la igualdad.',
+        'intro-p2': '<strong>Pepupo es donde el juego se encuentra con la posibilidad, y abre puertas a un futuro libre de estereotipos.</strong>',
+        'problem-label': 'El problema',
+        'problem-title': 'Los padres quieren liberar a sus hijos de los roles de género con los que crecieron',
+        'problem-p1': 'Muchos padres crecieron con mensajes que empujaban a <strong>las nenas hacia la belleza y el servicio a los demás</strong>, y a <strong>los varones hacia el poder y el liderazgo, dejando poco lugar para la vulnerabilidad o el cuidado.</strong>',
+        'problem-p2': 'Hoy quieren algo distinto para sus hijos. Pero los chicos siguen absorbiendo estereotipos de género sutiles de los medios, los juguetes y la vida cotidiana. Romper esos patrones empieza por la conciencia y las herramientas adecuadas desde temprano.',
+        'research-title': 'Cómo investigamos',
+        'research-c1-h': 'Entrevistas y encuestas a madres y padres',
+        'research-c1-p': 'Indagué en las preocupaciones de las familias sobre los estereotipos de género y sus objetivos educativos',
+        'research-c2-h': 'Observación del comportamiento infantil',
+        'research-c2-p': 'Observé a chicos interactuando con apps y juguetes que ya existían',
+        'learn-label': 'Aprendizajes',
+        'learn-title': 'Diseñar para manos pequeñas (y grandes sueños)',
+        'learn-sub': 'Crear una app para chicos de 3 a 6 años implica entender su mundo.',
+        'stat1-num': '80%',
+        'stat1-p': 'de los chicos se enganchan más con contenido interactivo y narrativo que despierta la curiosidad mientras acompaña el aprendizaje.',
+        'stat2-prefix': 'a los',
+        'stat2-num': '4 años',
+        'stat2-p': 'las percepciones de los chicos sobre los roles de género ya se están formando, y moldean cómo se ven a sí mismos y a los demás.',
+        'cc-label': 'Creación de contenido',
+        'cc-title': 'Usar los insights de la investigación para construir las historias',
+        'cc-p': 'Creamos historias, juegos y actividades con personajes diversos, con el foco puesto en desafiar los estereotipos de género, estimular la curiosidad y promover la igualdad de género.',
+        'game-label': 'UX y diseño educativo',
+        'game-title': 'Y una estructura de juego',
+        'game-p': 'Empezamos por conceptualizar las funcionalidades principales y el contenido de la app, con foco en la simplicidad, la interactividad y un diseño adecuado a la edad para responder a las necesidades de los más chicos.',
+        'data-label': 'Datos',
+        'data-title': 'Cómo medimos el éxito',
+        'data-c1-h': 'Duración de sesión',
+        'data-c1-p': 'El tiempo promedio que un chico usa la app en una sola sesión.',
+        'data-c2-h': 'Feedback de las familias sobre el engagement',
+        'data-c2-p': 'Comentarios cualitativos de las familias sobre qué tan enganchado se ve su hijo mientras usa la app.',
+        'data-c3-h': 'Tasa de finalización de tareas',
+        'data-c3-p': 'El porcentaje de juegos que los chicos completan con éxito dentro de la app.',
+        'data-c4-h': 'Engagement con contenido específico',
+        'data-c4-p': 'El tiempo dedicado a funciones o actividades puntuales dentro de la app.',
+        'data-c5-h': 'Tasa de retorno',
+        'data-c5-p': 'El porcentaje de usuarios que vuelven a la app después de su primera sesión.',
+        'footer-more': 'Más proyectos'
+      }
+    };
+  </script>
+  <script src="i18n.js"></script>
+
+  <!-- Content-creation infinite character carousel -->
+  <script>
+    (function () {
+      var wrap = document.getElementById('ccCarousel');
+      var track = document.getElementById('ccTrack');
+      if (!wrap || !track) return;
+
+      var GAP = 8;
+      var SETS = 7;
+      var base = Array.prototype.slice.call(track.children);
+      for (var s = 1; s < SETS; s++) {
+        base.forEach(function (img) { track.appendChild(img.cloneNode(true)); });
+      }
+
+      var setWidth = 0;
+      function measure() {
+        var w = 0;
+        for (var i = 0; i < base.length; i++) {
+          w += track.children[i].getBoundingClientRect().width + GAP;
+        }
+        setWidth = w;
+        wrap.scrollLeft = setWidth * 3;
+      }
+
+      var ticking = false;
+      wrap.addEventListener('scroll', function () {
+        if (ticking || !setWidth) return;
+        ticking = true;
+        requestAnimationFrame(function () {
+          if (wrap.scrollLeft < setWidth) wrap.scrollLeft += setWidth;
+          else if (wrap.scrollLeft > setWidth * (SETS - 2)) wrap.scrollLeft -= setWidth;
+          ticking = false;
+        });
+      });
+
+      var down = false, startX = 0, startLeft = 0, moved = false;
+      wrap.addEventListener('pointerdown', function (e) {
+        down = true; moved = false; startX = e.clientX; startLeft = wrap.scrollLeft;
+      });
+      window.addEventListener('pointermove', function (e) {
+        if (!down) return;
+        var dx = e.clientX - startX;
+        if (Math.abs(dx) > 3) moved = true;
+        wrap.scrollLeft = startLeft - dx;
+      });
+      window.addEventListener('pointerup', function () { down = false; });
+      wrap.addEventListener('click', function (e) { if (moved) e.preventDefault(); }, true);
+
+      if (document.readyState === 'complete') measure();
+      else window.addEventListener('load', measure);
+      var rt;
+      window.addEventListener('resize', function () { clearTimeout(rt); rt = setTimeout(measure, 150); });
+    })();
+  </script>
+
+  <script>
+    (function () {
+      var menuBtn   = document.getElementById('menuBtn');
+      var sideMenu  = document.getElementById('sideMenu');
+      var backdrop  = document.getElementById('menuBackdrop');
+      var menuClose = document.getElementById('menuClose');
+      var closeTimer;
+
+      function openMenu() {
+        clearTimeout(closeTimer);
+        backdrop.hidden = false;
+        void backdrop.offsetWidth;
+        sideMenu.classList.add('is-open');
+        backdrop.classList.add('is-open');
+        sideMenu.setAttribute('aria-hidden', 'false');
+        menuBtn.setAttribute('aria-expanded', 'true');
+        document.body.style.overflow = 'hidden';
+      }
+
+      function closeMenu() {
+        sideMenu.classList.remove('is-open');
+        backdrop.classList.remove('is-open');
+        sideMenu.setAttribute('aria-hidden', 'true');
+        menuBtn.setAttribute('aria-expanded', 'false');
+        document.body.style.overflow = '';
+        closeTimer = setTimeout(function () { backdrop.hidden = true; }, 400);
+      }
+
+      menuBtn.addEventListener('click', openMenu);
+      menuClose.addEventListener('click', closeMenu);
+      backdrop.addEventListener('click', closeMenu);
+      document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape' && sideMenu.classList.contains('is-open')) closeMenu();
+      });
+
+      sideMenu.querySelectorAll('a').forEach(function (a) {
+        a.addEventListener('click', closeMenu);
+      });
+    })();
+  </script>
+
+</body>
+</html>

@@ -309,6 +309,12 @@
          porque su lógica de 3 fases está pensada para el pin/scrub de 200vh del intro,
          que tampoco corre acá. El snap nativo del navegador alcanza y se siente bien
          apenas cada sección mide un viewport completo (ver .intro-collage más abajo). */
+      /* mandatory: #s2 → #work tiene que sentirse como un fix, no como un
+         scroll intermedio a medio camino entre las dos secciones. #work
+         vuelve a ser un snap point válido (ver .work-section más abajo) —
+         una vez que el usuario ya está adentro de la galería, el scroll
+         hacia abajo sigue libre porque no hay ningún snap point más allá
+         de #work compitiendo por "más cercano". */
       html { scroll-snap-type: y mandatory; }
 
       .intro-section { height: auto; }
@@ -496,6 +502,9 @@
       gap: 10px;
       padding: 22px 40px;
     }
+    /* wrapper que en mobile se vuelve la tira scrolleable de label+tags (ver
+       @media 860px) — en desktop no debe existir como caja, solo agrupa */
+    .filters-scroll { display: contents; }
     .filter-label {
       font-size: 13px;
       font-weight: 700;
@@ -535,12 +544,11 @@
       padding: 24px 24px 40px;
     }
     @media (max-width: 560px) {
-      :root { --rail-w: 48px; }
+      /* --rail-w, .cards-grid y .filters para este ancho los define el bloque
+         @media 860px de más abajo (mobile-nativo) — no repetirlos acá */
       .topbar { padding: 0 22px; }
-      .cards-grid { margin: 24px 22px 28px; padding: 18px 18px 28px; }
       .page-title { padding: 32px 22px 16px; }
       .hero-text { padding: 0 22px 24px; }
-      .filters { padding: 18px 22px; }
       footer { padding: 22px 22px 32px; }
       .intro-placeholder { padding: 56px 32px; }
       .menu-close { margin-left: 16px; }
@@ -758,9 +766,12 @@
       flex: 0 0 auto;
     }
 
-    /* ══ NAV MOBILE — patrón nativo (un solo botón hamburguesa flotante) en vez del
-       rail vertical + topbar del desktop. Mismo #sideMenu de siempre; solo cambia
-       el disparador. Sigue apareciendo recién al llegar a #work (mismo observer). ══ */
+    /* ══ NAV MOBILE — patrón nativo: el botón hamburguesa vive DENTRO de la
+       franja de filtros (una sola tira arriba, como el tab bar de Pinterest)
+       en vez de flotar separado y del rail vertical + topbar del desktop.
+       Mismo #sideMenu de siempre; solo cambia el disparador. Al vivir adentro
+       de #work ya no hace falta ningún IntersectionObserver para mostrarlo/
+       esconderlo: aparece solo (y quiere sticky) cuando #work entra en flujo. ══ */
     .menu-trigger-mobile { display: none; }
     /* oculto por default: en desktop el idioma se cambia desde la topbar, no desde el panel */
     .side-menu .lang-switch { display: none; }
@@ -772,24 +783,22 @@
       :root { --rail-w: 0px; --topbar-h: 0px; }
       .left-rail, .topbar { display: none; }
 
+      /* #work mantiene su scroll-snap-align: start (heredado de la regla base)
+         para que #s2 → #work se sienta como un fix real. min-height asegura
+         que la barra de filtros (sticky) siempre tenga un viewport entero de
+         alto para quedarse pegada arriba, incluso si un filtro deja muy pocas
+         cards y el grid se queda corto. */
+      .work-section { min-height: 100svh; }
+
       .menu-trigger-mobile {
         display: flex;
-        position: fixed;
-        top: 16px;
-        left: 16px;
-        z-index: 90;
-        background: #fff;
+        flex: 0 0 auto;
+        background: none;
         border: none;
-        border-radius: 100px;
-        padding: 13px;
+        padding: 9px;
         align-items: center;
         justify-content: center;
-        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.12);
-        opacity: 0;
-        pointer-events: none;
-        transition: opacity 0.35s ease;
       }
-      .menu-trigger-mobile.is-visible { opacity: 1; pointer-events: auto; }
 
       /* el lang-switch vivía solo en la topbar (ahora oculta) — se reubica arriba
          a la derecha del panel, mismo lenguaje que el resto de las mobile del sitio */
@@ -815,21 +824,63 @@
         text-decoration-thickness: 1.5px;
       }
 
-      /* filtros: fila horizontal con scroll/slide táctil en vez de wrap.
-         top/padding-top dejan lugar al botón hamburguesa flotante (fixed,
-         46px), que si no queda pisando el primer filtro apenas se snapea a #work */
+      /* franja única: botón de menú + filtros, todo en una sola fila sticky
+         (como el tab bar de Pinterest). El botón queda fijo a la izquierda;
+         solo el label + las tags scrollean horizontalmente adentro. */
       .filters {
         flex-wrap: nowrap;
-        overflow-x: auto;
-        -webkit-overflow-scrolling: touch;
-        scrollbar-width: none;
-        padding: 16px 20px;
-        padding-top: 76px;
+        gap: 10px;
+        padding: 14px 20px;
         top: 0;
       }
-      .filters::-webkit-scrollbar { display: none; }
+      .filters-scroll {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        overflow-x: auto;
+        overflow-y: visible;
+        /* el outline del filtro activo (2px + 2px de offset) sale del
+           borde del botón — sin este aire vertical, overflow-x:auto en
+           Safari/iOS recorta igual el overflow en Y aunque diga "visible" */
+        padding: 5px 0;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+      }
+      .filters-scroll::-webkit-scrollbar { display: none; }
       .filter-label { flex: 0 0 auto; }
       .filter-tag { flex: 0 0 auto; white-space: nowrap; }
+
+      /* masonry a 2 columnas (estilo Pinterest) con menos aire que en desktop */
+      .cards-grid { margin: 16px 16px 24px; padding: 0; }
+
+      /* cards con foto estilo Pinterest: la imagen ocupa todo el ancho de la
+         card, sin marco blanco ni padding — el texto (título chico haciendo
+         de descripción + tags discretos) va afuera, debajo, sobre el fondo
+         de la página. Se excluyen las --flat (sin foto, título grande sobre
+         fondo de color), que mantienen su propio padding interno. */
+      .pub-card:not(.pub-card--flat) {
+        background: transparent;
+        padding: 0 0 22px;
+        gap: 6px;
+      }
+      .pub-card--flat { padding: 24px 14px 16px; }
+
+      .card-thumb { border-radius: 12px; }
+
+      /* el tiempo de lectura no va en mobile, la referencia de Marti no lo usa */
+      .card-read { display: none; }
+
+      .pub-card h3 { font-size: 13px; font-weight: 600; line-height: 1.3; letter-spacing: -0.01em; }
+      .pub-card--flat h3 { font-size: 18px; }
+      .bg-lutzres h3, .bg-lutzc360 h3 { font-size: 16px; }
+
+      /* la bajada de los artículos quedaba del mismo tamaño que el título de
+         las otras cards (14px vs 13px) — tiene que leerse claramente como
+         texto secundario, más chica que cualquier título de la grilla */
+      .card-subtitle { font-size: 11px; line-height: 1.4; }
+
+      .card-tags { gap: 4px; }
+      .tag { font-size: 8px; padding: 3px 7px; letter-spacing: 0.04em; }
     }
   </style>
 </head>
@@ -845,14 +896,6 @@
     </button>
   </nav>
 
-  <!-- disparador mobile: un solo botón flotante en vez del rail + topbar del desktop -->
-  <button class="menu-trigger-mobile" id="menuBtnMobile" aria-label="Abrir menú" aria-expanded="false" aria-controls="sideMenu">
-    <svg width="18" height="13" viewBox="0 0 20 15" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M1 1.5H19" stroke="#3F3F3F" stroke-width="1.8" stroke-linecap="round"/>
-      <path d="M1 7.5H19" stroke="#3F3F3F" stroke-width="1.8" stroke-linecap="round"/>
-      <path d="M1 13.5H19" stroke="#3F3F3F" stroke-width="1.8" stroke-linecap="round"/>
-    </svg>
-  </button>
 
   <!-- ══ SIDE MENU ══ -->
   <div class="menu-backdrop" id="menuBackdrop" hidden></div>
@@ -951,13 +994,23 @@
     <section id="work" class="work-section">
       <main class="content">
         <div class="filters">
-          <span class="filter-label" data-i18n="filter-label">FILTRAR POR</span>
-          <button class="filter-tag" data-tag="product" data-i18n="tag-product">Product Design</button>
-          <button class="filter-tag" data-tag="strategy" data-i18n="tag-strategy">Estrategia</button>
-          <button class="filter-tag" data-tag="research" data-i18n="tag-research">Investigación</button>
-          <button class="filter-tag" data-tag="service" data-i18n="tag-service">Service Design</button>
-          <button class="filter-tag" data-tag="visuals" data-i18n="tag-visuals">Visuales</button>
-          <button class="filter-tag" data-tag="stakeholder" data-i18n="tag-stakeholder">Gestión de Stakeholders</button>
+          <!-- solo visible en mobile (ver CSS) — en desktop el menú vive en el rail -->
+          <button class="menu-trigger-mobile" id="menuBtnMobile" aria-label="Abrir menú" aria-expanded="false" aria-controls="sideMenu">
+            <svg width="16" height="12" viewBox="0 0 20 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M1 1.5H19" stroke="#3F3F3F" stroke-width="1.8" stroke-linecap="round"/>
+              <path d="M1 7.5H19" stroke="#3F3F3F" stroke-width="1.8" stroke-linecap="round"/>
+              <path d="M1 13.5H19" stroke="#3F3F3F" stroke-width="1.8" stroke-linecap="round"/>
+            </svg>
+          </button>
+          <div class="filters-scroll">
+            <span class="filter-label" data-i18n="filter-label">FILTRAR POR</span>
+            <button class="filter-tag" data-tag="product" data-i18n="tag-product">Product Design</button>
+            <button class="filter-tag" data-tag="strategy" data-i18n="tag-strategy">Estrategia</button>
+            <button class="filter-tag" data-tag="research" data-i18n="tag-research">Investigación</button>
+            <button class="filter-tag" data-tag="service" data-i18n="tag-service">Service Design</button>
+            <button class="filter-tag" data-tag="visuals" data-i18n="tag-visuals">Visuales</button>
+            <button class="filter-tag" data-tag="stakeholder" data-i18n="tag-stakeholder">Gestión de Stakeholders</button>
+          </div>
         </div>
 
         <div class="cards-grid" id="gallery">
@@ -1128,24 +1181,23 @@
       window.addEventListener('resize', setDocW);
     })();
 
-    /* ── TOPBAR + RAIL (desktop) / botón flotante (mobile): ocultos en intro y
-       sección 2; aparecen recién al llegar a #work ── */
+    /* ── TOPBAR + RAIL (desktop): ocultos en intro y sección 2; aparecen recién
+       al llegar a #work. En mobile no hace falta este observer para el botón
+       de menú: ahora vive adentro de la franja de filtros (dentro de #work),
+       así que aparece solo al llegar ahí, por flujo normal del documento. ── */
     (function () {
       var topbar = document.getElementById('topbar');
       var rail   = document.querySelector('.left-rail');
-      var mobileTrigger = document.getElementById('menuBtnMobile');
       var work   = document.getElementById('work');
       if (!('IntersectionObserver' in window)) {
         topbar.classList.add('is-visible');
         rail.classList.add('is-visible');
-        mobileTrigger.classList.add('is-visible');
         return;
       }
       var io = new IntersectionObserver(function (entries) {
         entries.forEach(function (en) {
           topbar.classList.toggle('is-visible', en.isIntersecting);
           rail.classList.toggle('is-visible', en.isIntersecting);
-          mobileTrigger.classList.toggle('is-visible', en.isIntersecting);
         });
       }, { threshold: 0, rootMargin: '0px 0px -45% 0px' });   /* work tiene que subir ~45% del viewport para contar */
       io.observe(work);
@@ -1361,17 +1413,19 @@
     (function () {
       var grid = document.querySelector('.cards-grid');
       var allCards = Array.prototype.slice.call(grid.querySelectorAll('.pub-card'));
-      var GAP = 28;
 
       function columnCount() {
         var w = grid.clientWidth;
         if (w > 860) return 3;
-        if (w > 560) return 2;
-        return 1;
+        return 2; // mobile y tablet: siempre 2 columnas, estilo Pinterest
       }
+      /* gap más chico en mobile — con 28px y una columna angosta se comía
+         demasiado ancho útil de cada card */
+      function gapSize() { return grid.clientWidth <= 860 ? 14 : 28; }
 
       function layout() {
         var cols = columnCount();
+        var GAP = gapSize();
         var colWidth = (grid.clientWidth - GAP * (cols - 1)) / cols;
         var colHeights = new Array(cols).fill(0);
         var visible = allCards.filter(function (c) { return c.style.display !== 'none'; });

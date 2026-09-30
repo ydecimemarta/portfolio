@@ -1,6 +1,12 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
+  <script>
+    /* el navegador restaura la posición de scroll de la última visita a esta URL
+       (ej. si quedó en #s2 y recargás) — eso hacía que la página pareciera "arrancar"
+       en la sección 2 en vez de la intro. Forzamos que siempre arranque en 0. */
+    if ('scrollRestoration' in history) { history.scrollRestoration = 'manual'; }
+  </script>
   <link rel="icon" type="image/png" href="favicon.png"/>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -176,10 +182,26 @@
       z-index: 1;            /* debajo de las fotos: al apilarse lo tapan */
       text-align: center;
       font-size: clamp(24px, 3.6vw, 46px);
-      font-weight: 500;
-      letter-spacing: -1px;
+      /* mismo peso/interletra que .hero-title de los case studies (800 / -3px), pero en negro en vez de blanco */
+      font-weight: 800;
+      letter-spacing: -3px;
       line-height: 1.22;
+      /* oculto hasta que el JS envuelve las palabras y lo revela — si no, un cambio de idioma
+         (que reemplaza el innerHTML y vuelve a armar los spans) se ve como un blink de texto plano
+         antes de que arranque el reveal; mismo criterio que .s2-headline */
+      opacity: 0;
     }
+    /* reveal palabra por palabra (fade + desenfoque), inspirado en meetcleo.com */
+    .reveal-word {
+      display: inline-block;
+      opacity: 0;
+      filter: blur(6px);
+      animation:
+        reveal-word-opacity 1.2s var(--delay, 0s) cubic-bezier(.75, 0, .25, 1) forwards,
+        reveal-word-blur 1.2s calc(var(--delay, 0s) + .2s) cubic-bezier(.75, 0, .25, 1) forwards;
+    }
+    @keyframes reveal-word-opacity { to { opacity: 1; } }
+    @keyframes reveal-word-blur { to { filter: blur(0); } }
     .intro-photos { display: contents; }
     .iphoto {
       position: absolute;
@@ -196,6 +218,49 @@
     /* --edge-gap = margen crema a cada lado cuando el collage llega a su max-width (0 si el viewport es ≤1280).
        Lo setea el JS con el clientWidth real; el fallback con 100vw sirve para el primer paint. */
     .ip-5, .ip-6, .ip-8 { --edge-gap: max(0px, (var(--doc-w, 100vw) - 1280px) / 2); }
+    /* entrada de las fotos — pensada para que se sienta "movida por una mano" (investigado: arcos en
+       vez de línea recta, ease-out puro, stagger de 40-120ms entre elementos — ver memoria del
+       proyecto para las fuentes; se probó overshoot al asentarse pero Marti lo sacó, quedaba mal).
+       Arranca recién cuando el título TERMINA (2.00s: última palabra, delay 0.6s + 1.2s opacity +
+       hasta 2.0s de blur).
+       Sin fade real: un objeto físico no se desvanece, aparece ya sólido y se mueve — por eso la
+       opacity salta a 1 casi instantáneo (3% del timeline) en vez de ir de la mano del transform;
+       queda oculta hasta ese instante (si sacáramos opacity del todo, se vería la foto quieta y mal
+       ubicada durante los 2s que dura el título, antes de que le toque moverse).
+       OJO — nunca dejar esta animación "viva" indefinidamente: el scroll-scrub de la animación de
+       apilado (más abajo) escribe `element.style.transform` inline por JS en cuanto se scrollea, y
+       una animación CSS activa sobre `transform` gana por encima de un inline style normal — se
+       comería el apilado. Por eso el JS más abajo hace `style.animation = 'none'` en cuanto cada
+       entrada termina (`animationend`), soltando `transform` de vuelta al scroll-scrub. */
+    @media (prefers-reduced-motion: no-preference) {
+      .iphoto {
+        opacity: 0;
+        animation-name: iphoto-slide-in;
+        /* ease-out puro (sin tramo de ease-in): arranca rápido, como si la mano ya la soltó en
+           movimiento, y frena suave al llegar — más realista que ease-in-out para algo que entra */
+        animation-timing-function: cubic-bezier(.16, 1, .3, 1);
+        animation-fill-mode: forwards;
+      }
+      @keyframes iphoto-slide-in {
+        0%   { opacity: 0; transform: translate(var(--fx, 0px), var(--fy, 0px)); }
+        3%   { opacity: 1; }
+        100% { opacity: 1; transform: translate(0, 0); }
+      }
+      /* --fx/--fy: punto de partida (dirección + ángulo). Un solo tramo de inicio a fin, sin punto
+         intermedio: el arco (keyframe al 55%) se sacó porque, al tener su propia curva de easing
+         dentro de cada segmento, se sentía como si la foto llegara y después se "reacomodara" en
+         un segundo movimiento — se veía raro. Mejor un solo movimiento continuo. Timing propio por
+         foto, con stagger de 40-70ms entre una y la siguiente. */
+      .ip-9 { --fx: -20px; --fy: -58px; animation-duration: 0.52s; animation-delay: 2.00s; }  /* arriba, girl phone */
+      .ip-7 { --fx: 18px;  --fy: 56px;  animation-duration: 0.54s; animation-delay: 2.05s; }  /* abajo, tazas */
+      .ip-2 { --fx: 64px;  --fy: -14px; animation-duration: 0.58s; animation-delay: 2.11s; }  /* derecha, tacho */
+      .ip-1 { --fx: 16px;  --fy: -62px; animation-duration: 0.60s; animation-delay: 2.16s; }  /* arriba, manos */
+      .ip-8 { --fx: 66px;  --fy: -18px; animation-duration: 0.50s; animation-delay: 2.23s; }  /* derecha, smartwatch */
+      .ip-3 { --fx: -58px; --fy: 16px;  animation-duration: 0.64s; animation-delay: 2.28s; }  /* izquierda, pies */
+      .ip-4 { --fx: -14px; --fy: 64px;  animation-duration: 0.66s; animation-delay: 2.35s; }  /* abajo, abuela */
+      .ip-6 { --fx: 58px;  --fy: 10px;  animation-duration: 0.68s; animation-delay: 2.41s; }  /* derecha, Paula */
+      .ip-5 { --fx: -70px; --fy: -12px; animation-duration: 0.56s; animation-delay: 2.48s; }  /* izquierda, charla */
+    }
     /* placeholder gris para las fotos que Marti todavía no pasó */
     .iphoto--ph {
       background: #E8E8E8;
@@ -216,29 +281,103 @@
 
     /* Coordenadas exactas leídas del Figma (frame 1280×832). left/top/width en %, aspect-ratio = w/h de cada foto.
        z-index = orden de apilado del frame final (2 = más abajo … 10 = arriba de todo). */
-    .ip-1 { left: 31.41%;  top: 17.67%; width: 8.83%;  aspect-ratio: 113 / 97;  z-index: 8;  }  /* manos dándose la mano */
-    .ip-2 { left: 81.41%;  top: 36.06%; width: 12.66%; aspect-ratio: 162 / 164; z-index: 4;  }  /* tacho de basura */
-    .ip-3 { left: 12.73%;  top: 78.85%; width: 10.39%; aspect-ratio: 133 / 137; z-index: 3;  }  /* pies vistos por debajo */
-    .ip-4 { left: 68.83%;  top: 81.01%; width: 16.95%; aspect-ratio: 217 / 221; z-index: 2;  }  /* abuela con el mapa (la más grande) */
+    /* +10% de tamaño, 2da vuelta (2026-09-29) — otro +10% sobre el tamaño ya agrandado, mismo criterio:
+       centro de cada foto preservado recalculando left/top junto con width */
+    .ip-1 { left: 30.48%;  top: 16.45%; width: 10.68%; aspect-ratio: 113 / 97;  z-index: 8;  }  /* manos dándose la mano */
+    .ip-2 { left: 80.08%;  top: 33.99%; width: 15.32%; aspect-ratio: 162 / 164; z-index: 4;  }  /* tacho de basura */
+    .ip-3 { left: 11.64%;  top: 77.12%; width: 12.57%; aspect-ratio: 133 / 137; z-index: 3;  }  /* pies vistos por debajo */
+    .ip-4 { left: 67.05%;  top: 78.22%; width: 20.52%; aspect-ratio: 217 / 221; z-index: 2;  }  /* abuela con el mapa (la más grande) */
     /* charla: SIEMPRE pegada al borde izquierdo de la pantalla, ~30% escondida detrás */
-    .ip-5 { top: 28%; width: 15.63%; aspect-ratio: 200 / 133; z-index: 5;
-            left: calc(-4.69% - var(--edge-gap)); }
+    .ip-5 { top: 26.32%; width: 18.91%; aspect-ratio: 200 / 133; z-index: 5;
+            left: calc(-6.33% - var(--edge-gap)); }
     /* Paula + post-its: SIEMPRE pegada al borde derecho de la pantalla, entera */
-    .ip-6 { top: 5.77%; width: 6.88%; aspect-ratio: 1 / 1; z-index: 6;
-            left: auto; right: calc(0px - var(--edge-gap)); }
-    .ip-7 { left: 26.17%;  top: 72.48%; width: 6.02%;  aspect-ratio: 1 / 1;  z-index: 10; }  /* tazas + útiles (flatlay) */
+    .ip-6 { top: 4.66%; width: 8.33%; aspect-ratio: 1 / 1; z-index: 6;
+            left: auto; right: calc(-0.72% - var(--edge-gap)); }
+    .ip-7 { left: 25.54%;  top: 71.51%; width: 7.28%;  aspect-ratio: 1 / 1;  z-index: 10; }  /* tazas + útiles (flatlay) */
     /* smartwatch: SIEMPRE pegada al borde derecho de la pantalla, entera */
-    .ip-8 { top: 70.67%; width: 5.94%; aspect-ratio: 1 / 1; z-index: 7;
-            left: auto; right: calc(0px - var(--edge-gap)); }
-    .ip-9 { left: 37.81%;  top: 3.13%;  width: 9.77%;  aspect-ratio: 125 / 151; z-index: 9;  }  /* girl phone (arriba, vertical) */
+    .ip-8 { top: 69.71%; width: 7.18%; aspect-ratio: 1 / 1; z-index: 7;
+            left: auto; right: calc(-0.63% - var(--edge-gap)); }
+    .ip-9 { left: 36.78%;  top: 1.22%;  width: 11.83%; aspect-ratio: 125 / 151; z-index: 9;  }  /* girl phone (arriba, vertical) */
 
+    /* mobile: collage de 6 fotos + frase centrada + flechita de scroll, layout
+       de referencia (captura "Blind Barber 10 Year Review" compartida por
+       Martina) — posiciones y tamaños leídos en % de esa captura. ip-6/ip-7/ip-8
+       (los 3 cuadrados que sobran) se ocultan; el resto se reubica. */
     @media (max-width: 860px) {
+      /* snap nativo entre secciones — en desktop el snap "de verdad" lo hace el JS
+         (ver comentario de más abajo), pero ese IIFE se desactiva por completo en mobile
+         porque su lógica de 3 fases está pensada para el pin/scrub de 200vh del intro,
+         que tampoco corre acá. El snap nativo del navegador alcanza y se siente bien
+         apenas cada sección mide un viewport completo (ver .intro-collage más abajo). */
+      html { scroll-snap-type: y mandatory; }
+
       .intro-section { height: auto; }
-      .intro-sticky { display: contents; }   /* el wrapper desaparece: el collage vuelve a la grilla simple */
-      .intro-collage { position: static; aspect-ratio: auto; display: flex; flex-direction: column; align-items: center; gap: 28px; padding: 8vh 20px 40px; }
-      .intro-photos { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; max-width: 460px; }
-      .iphoto { position: static !important; left: auto !important; right: auto !important; top: auto !important; width: 46% !important; aspect-ratio: 1 / 1 !important; transform: none !important; }
-      .intro-statement { position: static; left: auto; top: auto; width: 100%; transform: none; padding: 0 12px; order: 99; }
+      .intro-sticky { display: contents; }
+      .intro-collage {
+        position: relative;
+        width: 100%;
+        max-width: 480px;
+        /* alto real del viewport (no un aspect-ratio derivado del ancho) — así el
+           collage, la frase y la flecha quedan siempre ancladas a la pantalla real,
+           sea cual sea su alto (notch, barra de navegación, etc.) */
+        height: 100svh;
+        margin: 0 auto;
+        padding: 0;
+      }
+      .intro-photos { display: contents; }
+      /* posición libre, pero SIN pisar el aspect-ratio real de cada foto (el de
+         arriba, .ip-N { aspect-ratio: ... }) — forzar width+height independientes
+         las recortaba de manera pareja, algunas mucho (el tacho, las manos, la
+         charla). Con solo el ancho controlado, el alto sale solo de la proporción
+         real de la imagen y no hay crop de más. */
+      .iphoto { position: absolute !important; transform: none !important; }
+      .iphoto.ip-6, .iphoto.ip-7, .iphoto.ip-8 { display: none !important; }
+
+      /* manos dándose la mano — arriba; spacing de arriba a la mitad (6.1%→3.05%)
+         y alto reducido 20% (crop parejo arriba/abajo vía aspect-ratio forzado) */
+      .iphoto.ip-1 { left: 27.75%; top: 3.05%; width: 29.25%; aspect-ratio: 113 / 77.6; z-index: 1; }
+      /* pies vistos por debajo — versión recortada/alargada (no la proporción real) */
+      .iphoto.ip-3 { left: 0; top: 23.4%; width: 27%; height: 8.6%; z-index: 1; }
+      /* charla — pegada al borde derecho */
+      .iphoto.ip-5 { left: auto; right: 0; top: 22.72%; width: 35%; z-index: 1; }
+      /* abuela con el mapa — pegada al borde derecho, más abajo */
+      .iphoto.ip-4 { left: auto; right: 0; top: 56.8%; width: 23.4%; z-index: 1; }
+      /* girl phone — pegada al borde izquierdo; foto corrida para que recorte el costado izquierdo */
+      .iphoto.ip-9 { left: 0; top: 60.9%; width: 20.4%; z-index: 1; }
+      .iphoto.ip-9 img { object-position: 55% center; }
+      /* tacho de basura — abajo, centrado; recortado 10% de la parte de arriba */
+      .iphoto.ip-2 { left: 36.6%; top: 78.2%; width: 32%; aspect-ratio: 162 / 147.6; z-index: 1; }
+      .iphoto.ip-2 img { object-position: center bottom; }
+
+      .intro-statement {
+        position: absolute;
+        left: 50%;
+        top: 48%;
+        width: 84%;
+        transform: translate(-50%, -50%);
+        z-index: 2;
+        padding: 0;
+        font-size: clamp(26px, 7.2vw, 32px);
+      }
+
+      .intro-scroll-arrow {
+        position: absolute;
+        right: 6%;
+        bottom: 3%;
+        width: 46px;
+        height: 46px;
+        border: 1.5px solid var(--dark);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--dark);
+        text-decoration: none;
+        z-index: 2;
+      }
+    }
+    @media (min-width: 861px) {
+      .intro-scroll-arrow { display: none; }
     }
 
     /* ── SECCIÓN 2 — "quién soy / cómo trabajo" (ancla #s2). Sin rail/topbar todavía. ── */
@@ -252,14 +391,18 @@
       padding: 40px;
       scroll-snap-align: start;
     }
+    @media (max-width: 860px) {
+      /* ancla para la flechita de scroll — mismo tratamiento que la intro */
+      .s2-section { position: relative; }
+    }
     .s2-copy { max-width: 900px; width: 100%; }
     .s2-headline {
-      /* mismo tamaño que .intro-statement (sección 1), en negrita */
+      /* mismo estilo que .intro-statement/.hero-title (800 / -3px) — pedido explícito de Marti */
       font-size: clamp(24px, 3.6vw, 46px);
-      font-weight: 700;
+      font-weight: 800;
       line-height: 1.22;
-      letter-spacing: -1px;
-      margin-bottom: 28px;
+      letter-spacing: -3px;
+      margin-bottom: 14px;
     }
     .s2-subhead {
       font-size: clamp(18px, 2.2vw, 24px);
@@ -269,12 +412,39 @@
     }
     .s2-body {
       max-width: 760px;
-      font-size: clamp(16px, 1.7vw, 19px);
-      font-weight: 500;
-      line-height: 1.6;
+      font-size: clamp(17px, 1.8vw, 20px);
+      font-weight: 400;
+      letter-spacing: -0.2px;
+      line-height: 1.5;
       margin-bottom: 18px;
     }
     .s2-body:last-child { margin-bottom: 0; }
+    /* entrada secundaria del texto de #s2: más sutil que el reveal del título (sin blur, más rápida)
+       y arranca recién cuando el título YA TERMINÓ de aparecer, no antes — acá al revés que en la
+       intro 1 (ahí las fotos arrancan mientras el título todavía se revela): con sólo 2 elementos en
+       juego (título + un párrafo) se lee mejor un orden estricto, título primero del todo, texto
+       después. 2.1s cubre el reveal completo del título en los dos idiomas (ES 6 palabras termina a
+       los 1.95s, EN 8 palabras a los 2.05s — el delay/duración de `.reveal-word` está en el propio
+       IIFE de `#s2` más abajo; si cambia la cantidad de palabras del headline en cualquier idioma,
+       recalcular este delay). Gateado por prefers-reduced-motion: si el usuario lo pide, el texto
+       nunca pasa por opacity:0 y queda visible siempre.
+       `.s2-headline` también arranca en opacity:0 acá — es el estado inicial antes de que el JS corra
+       por primera vez. El blinkeo real (Marti: "se ve como que se carga la frase y luego hace su
+       animación") pasaba al REENTRAR a #s2: el título ya revelado de una vuelta anterior quedaba
+       visible, completo, hasta el instante en que el `IntersectionObserver` disparaba de nuevo y lo
+       reemplazaba por spans nuevos — ese reemplazo en sí no alcanzaba a ocultarlo antes. Fix en el JS
+       (más abajo): `splitIntoWords()` ahora hace `opacity:0` en el padre ANTES de tocar el `innerHTML`,
+       arma los spans nuevos, y recién ahí vuelve a poner `opacity:1` — así el swap completo (ocultar +
+       reconstruir) pasa siempre con el título invisible, nunca se ve el texto viejo de por medio. */
+    @media (prefers-reduced-motion: no-preference) {
+      .s2-headline { opacity: 0; }
+      .s2-body { opacity: 0; }
+      .s2-body.s2-reveal-play { animation: s2-body-reveal 0.6s 2.1s ease-out forwards; }
+      @keyframes s2-body-reveal {
+        from { opacity: 0; transform: translateY(12px); }
+        to   { opacity: 1; transform: translateY(0); }
+      }
+    }
     .s2-body strong { font-weight: 700; }
     .s2-aside { font-weight: 500; opacity: 0.7; }
     /* mismos colores que usamos para las labels de los proyectos */
@@ -587,6 +757,80 @@
       opacity: 0.9;
       flex: 0 0 auto;
     }
+
+    /* ══ NAV MOBILE — patrón nativo (un solo botón hamburguesa flotante) en vez del
+       rail vertical + topbar del desktop. Mismo #sideMenu de siempre; solo cambia
+       el disparador. Sigue apareciendo recién al llegar a #work (mismo observer). ══ */
+    .menu-trigger-mobile { display: none; }
+    /* oculto por default: en desktop el idioma se cambia desde la topbar, no desde el panel */
+    .side-menu .lang-switch { display: none; }
+    @media (max-width: 860px) {
+      /* sin topbar fija en mobile: el gap que dejaba scroll-margin-top (y el
+         offset del sticky de los filtros) para no esconderse bajo ella ya no
+         hace falta — si no, quedaba un hueco de 64px en el que se colaba la
+         cola de la sección anterior (ej. la flechita de #s2) al snapear a #work */
+      :root { --rail-w: 0px; --topbar-h: 0px; }
+      .left-rail, .topbar { display: none; }
+
+      .menu-trigger-mobile {
+        display: flex;
+        position: fixed;
+        top: 16px;
+        left: 16px;
+        z-index: 90;
+        background: #fff;
+        border: none;
+        border-radius: 100px;
+        padding: 13px;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.12);
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.35s ease;
+      }
+      .menu-trigger-mobile.is-visible { opacity: 1; pointer-events: auto; }
+
+      /* el lang-switch vivía solo en la topbar (ahora oculta) — se reubica arriba
+         a la derecha del panel, mismo lenguaje que el resto de las mobile del sitio */
+      .side-menu .lang-switch {
+        display: flex;
+        position: absolute;
+        top: 22px;
+        right: 24px;
+        background: none;
+        padding: 0;
+        gap: 10px;
+      }
+      .side-menu .lang-switch button {
+        padding: 4px 2px;
+        color: rgba(63, 63, 63, 0.5);
+      }
+      .side-menu .lang-switch button.active {
+        background: none;
+        box-shadow: none;
+        color: var(--line);
+        text-decoration: underline;
+        text-underline-offset: 4px;
+        text-decoration-thickness: 1.5px;
+      }
+
+      /* filtros: fila horizontal con scroll/slide táctil en vez de wrap.
+         top/padding-top dejan lugar al botón hamburguesa flotante (fixed,
+         46px), que si no queda pisando el primer filtro apenas se snapea a #work */
+      .filters {
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+        padding: 16px 20px;
+        padding-top: 76px;
+        top: 0;
+      }
+      .filters::-webkit-scrollbar { display: none; }
+      .filter-label { flex: 0 0 auto; }
+      .filter-tag { flex: 0 0 auto; white-space: nowrap; }
+    }
   </style>
 </head>
 <body>
@@ -601,6 +845,15 @@
     </button>
   </nav>
 
+  <!-- disparador mobile: un solo botón flotante en vez del rail + topbar del desktop -->
+  <button class="menu-trigger-mobile" id="menuBtnMobile" aria-label="Abrir menú" aria-expanded="false" aria-controls="sideMenu">
+    <svg width="18" height="13" viewBox="0 0 20 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M1 1.5H19" stroke="#3F3F3F" stroke-width="1.8" stroke-linecap="round"/>
+      <path d="M1 7.5H19" stroke="#3F3F3F" stroke-width="1.8" stroke-linecap="round"/>
+      <path d="M1 13.5H19" stroke="#3F3F3F" stroke-width="1.8" stroke-linecap="round"/>
+    </svg>
+  </button>
+
   <!-- ══ SIDE MENU ══ -->
   <div class="menu-backdrop" id="menuBackdrop" hidden></div>
 
@@ -610,6 +863,12 @@
         <path d="M2 2L20 20M20 2L2 20" stroke="#3F3F3F" stroke-width="1.8" stroke-linecap="round"/>
       </svg>
     </button>
+
+    <!-- solo visible en mobile (ver CSS) — en desktop el idioma se cambia desde la topbar -->
+    <div class="lang-switch" id="sideMenuLangSwitch" role="group" aria-label="Idioma">
+      <button type="button" data-lang="es">ES</button>
+      <button type="button" data-lang="en">EN</button>
+    </div>
 
     <nav class="menu-nav" aria-label="Secciones">
       <a class="menu-item" href="#intro">Intro</a>
@@ -663,7 +922,13 @@
             <figure class="iphoto ip-8"><img src="assets/intro-smartwatch-wrist.png" alt="Muñeca de una persona mayor con un smartwatch"></figure>
             <figure class="iphoto ip-9"><img src="assets/intro-girl-phone.png" alt="Persona recostada usando el celular"></figure>
           </div>
-          <p class="intro-statement" data-i18n="intro-statement">Sistemas que empiezan por entender personas.</p>
+          <p class="intro-statement" data-i18n="intro-statement">Entender lo humano para construir lo complejo.</p>
+          <a class="intro-scroll-arrow" href="#s2" aria-label="Scroll down">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <line x1="12" y1="4" x2="12" y2="20"/>
+              <polyline points="6 14 12 20 18 14"/>
+            </svg>
+          </a>
         </div>
       </div>
     </section>
@@ -674,6 +939,12 @@
         <h1 class="s2-headline" data-i18n="s2-headline">Ordeno el caos antes del diseño.</h1>
         <p class="s2-body" data-i18n="s2-body">Donde las personas, el negocio y las ideas necesitan alinearse, ahí entro yo, convirtiendo problemas complejos y perspectivas distintas en una estrategia compartida: un <span class="s2-word--product">producto</span>, un <span class="s2-word--system">sistema</span> o un <span class="s2-word--service">servicio</span>.</p>
       </div>
+      <a class="intro-scroll-arrow" href="#work" aria-label="Scroll down">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <line x1="12" y1="4" x2="12" y2="20"/>
+          <polyline points="6 14 12 20 18 14"/>
+        </svg>
+      </a>
     </section>
 
     <!-- ── SECCIÓN 3 — WORK ── -->
@@ -793,7 +1064,8 @@
   <script>
     /* ── MENÚ LATERAL ── */
     (function () {
-      var menuBtn   = document.getElementById('menuBtn');
+      var menuBtn      = document.getElementById('menuBtn');
+      var menuBtnMobile = document.getElementById('menuBtnMobile');
       var sideMenu  = document.getElementById('sideMenu');
       var backdrop  = document.getElementById('menuBackdrop');
       var menuClose = document.getElementById('menuClose');
@@ -807,6 +1079,7 @@
         backdrop.classList.add('is-open');
         sideMenu.setAttribute('aria-hidden', 'false');
         menuBtn.setAttribute('aria-expanded', 'true');
+        menuBtnMobile.setAttribute('aria-expanded', 'true');
         document.body.style.overflow = 'hidden';
       }
 
@@ -815,11 +1088,13 @@
         backdrop.classList.remove('is-open');
         sideMenu.setAttribute('aria-hidden', 'true');
         menuBtn.setAttribute('aria-expanded', 'false');
+        menuBtnMobile.setAttribute('aria-expanded', 'false');
         document.body.style.overflow = '';
         closeTimer = setTimeout(function () { backdrop.hidden = true; }, 400);
       }
 
       menuBtn.addEventListener('click', openMenu);
+      menuBtnMobile.addEventListener('click', openMenu);
       menuClose.addEventListener('click', closeMenu);
       backdrop.addEventListener('click', closeMenu);
       document.addEventListener('keydown', function (e) {
@@ -830,6 +1105,18 @@
       sideMenu.querySelectorAll('a').forEach(function (a) {
         a.addEventListener('click', closeMenu);
       });
+
+      /* lang-switch propio del panel (solo visible en mobile, ver CSS) — i18n.js
+         solo cablea automáticamente el primero que encuentra en el documento
+         (el de la topbar), así que este lo cableamos a mano. */
+      var sideMenuLangSwitch = document.getElementById('sideMenuLangSwitch');
+      if (sideMenuLangSwitch) {
+        sideMenuLangSwitch.querySelectorAll('button[data-lang]').forEach(function (btn) {
+          btn.addEventListener('click', function () {
+            if (window.setLang) window.setLang(btn.getAttribute('data-lang'));
+          });
+        });
+      }
     })();
 
     /* ── --doc-w: ancho real del documento (sin scrollbar), para anclar las 3 fotos de los bordes a la pantalla ── */
@@ -841,19 +1128,46 @@
       window.addEventListener('resize', setDocW);
     })();
 
-    /* ── TOPBAR + RAIL: ocultos en intro y sección 2; aparecen recién al llegar a #work ── */
+    /* ── TOPBAR + RAIL (desktop) / botón flotante (mobile): ocultos en intro y
+       sección 2; aparecen recién al llegar a #work ── */
     (function () {
       var topbar = document.getElementById('topbar');
       var rail   = document.querySelector('.left-rail');
+      var mobileTrigger = document.getElementById('menuBtnMobile');
       var work   = document.getElementById('work');
-      if (!('IntersectionObserver' in window)) { topbar.classList.add('is-visible'); rail.classList.add('is-visible'); return; }
+      if (!('IntersectionObserver' in window)) {
+        topbar.classList.add('is-visible');
+        rail.classList.add('is-visible');
+        mobileTrigger.classList.add('is-visible');
+        return;
+      }
       var io = new IntersectionObserver(function (entries) {
         entries.forEach(function (en) {
           topbar.classList.toggle('is-visible', en.isIntersecting);
           rail.classList.toggle('is-visible', en.isIntersecting);
+          mobileTrigger.classList.toggle('is-visible', en.isIntersecting);
         });
       }, { threshold: 0, rootMargin: '0px 0px -45% 0px' });   /* work tiene que subir ~45% del viewport para contar */
       io.observe(work);
+    })();
+
+    /* ── suelta la animación CSS de entrada de cada foto apenas termina (`animationend`) —
+       si se la deja "viva" (fill-mode:forwards sigue reteniendo el transform final en el cascade
+       de animación), compite con el `element.style.transform` que escribe en JS el scroll-scrub
+       de más abajo y le rompe el apilado. `style.animation = 'none'` la cancela del todo; como el
+       último frame de la animación es `translate(0,0)` (= sin offset), no hay salto visual.
+       OJO: `opacity:0` de `.iphoto` está en la MISMA regla que la animación (no sólo en el
+       keyframe) — al cancelarla con `animation:none` hay que fijar `opacity:1` a mano, si no la
+       foto queda invisible para siempre (nada más le pone opacity:1 una vez que se mata la animación). */
+    (function () {
+      document.querySelectorAll('.iphoto').forEach(function (p) {
+        p.addEventListener('animationend', function (e) {
+          if (e.animationName !== 'iphoto-slide-in') return;
+          p.style.animation = 'none';
+          p.style.opacity = '1';
+          p.style.transform = 'none'; /* handoff explícito, sin depender de que "translate(0,0)" y "none" rindan exactamente igual */
+        });
+      });
     })();
 
     /* ── INTRO: animación de apilado scrubbeada por el scroll ──
@@ -1123,6 +1437,19 @@
             document.documentElement.style.scrollBehavior = prev;
           });
         }
+      } else {
+        /* sin hash: tiene que arrancar en la intro sí o sí. `layout()` recién sabe el alto
+           real de la galería (masonry posicionado por JS) una vez que cargan las imágenes de
+           #work — ese cambio de alto, sumado al scroll-snap mandatory de mobile, podía hacer
+           que el navegador terminara "asentado" en otra sección al cargar. Forzamos scroll a
+           0 después de que todo (incluida la galería) ya midió su tamaño final. */
+        window.addEventListener('load', function () {
+          layout();
+          var prev = document.documentElement.style.scrollBehavior;
+          document.documentElement.style.scrollBehavior = 'auto';
+          window.scrollTo(0, 0);
+          document.documentElement.style.scrollBehavior = prev;
+        });
       }
 
       var filterBtns = document.querySelectorAll('.filter-tag');
@@ -1148,7 +1475,7 @@
   <script>
     window.I18N = {
       en: {
-        'intro-statement': 'Systems that start by understanding people.',
+        'intro-statement': 'People at the heart of complex systems.',
         's2-headline': 'I sort out the chaos before design begins.',
         's2-body': 'Where people, business, and ideas need to align, I step in, turning complex problems and different perspectives into a shared strategy: a <span class="s2-word--product">product</span>, a <span class="s2-word--system">system</span>, or a <span class="s2-word--service">service</span>.',
         'filter-label': 'FILTER BY',
@@ -1180,7 +1507,7 @@
         'footer-more': 'More projects'
       },
       es: {
-        'intro-statement': 'Sistemas que empiezan por entender personas.',
+        'intro-statement': 'Entender lo humano para construir lo complejo.',
         's2-headline': 'Ordeno el caos antes del diseño.',
         's2-body': 'Donde las personas, el negocio y las ideas necesitan alinearse, ahí entro yo, convirtiendo problemas complejos y perspectivas distintas en una estrategia compartida: un <span class="s2-word--product">producto</span>, un <span class="s2-word--system">sistema</span> o un <span class="s2-word--service">servicio</span>.',
         'filter-label': 'FILTRAR POR',
@@ -1214,5 +1541,62 @@
     };
   </script>
   <script src="i18n.js"></script>
+  <script>
+    // envuelve cada palabra del statement en un span para el reveal
+    // palabra por palabra (fade + blur); se re-ejecuta después de cada
+    // cambio de idioma porque i18n.js pisa el innerHTML del nodo.
+    (function () {
+      var el = document.querySelector('.intro-statement');
+      if (!el) return;
+      function splitIntoWords() {
+        el.style.opacity = '0'; // oculta el texto viejo (ya revelado, de una vuelta anterior) antes de tocarlo
+        var words = el.textContent.trim().split(/\s+/);
+        el.innerHTML = words.map(function (w, i) {
+          var delay = (0.3 + i * 0.05).toFixed(2);
+          return '<span class="reveal-word" style="--delay:' + delay + 's">' + w + '</span>';
+        }).join(' ');
+        el.style.opacity = '1'; // y recién ahí lo revela — ya con los spans nuevos (opacity:0) listos para su propio fade
+      }
+      // i18n.js aplica el texto (EN/ES) y dispara este evento en DOMContentLoaded
+      // y en cada cambio de idioma — cubre tanto la carga inicial como el toggle.
+      document.addEventListener('i18n:changed', splitIntoWords);
+    })();
+
+    // reveal de #s2: título protagonista (palabra por palabra, igual que .intro-statement) +
+    // texto secundario (fade + translateY sutil, arranca 0.25s después del título — no cuando
+    // termina). Este NO es visible al cargar la página (está una sección más abajo), así que
+    // además de reaccionar a i18n:changed se dispara con un IntersectionObserver la primera vez
+    // que entra en pantalla (si no, la animación "se gastaría" invisible en el load).
+    (function () {
+      var el = document.querySelector('.s2-headline');
+      var body = document.querySelector('.s2-body');
+      if (!el) return;
+      function splitIntoWords() {
+        el.style.opacity = '0'; // oculta el título viejo (ya revelado, de una vuelta anterior) antes de tocarlo
+        var words = el.textContent.trim().split(/\s+/);
+        el.innerHTML = words.map(function (w, i) {
+          var delay = (0.3 + i * 0.05).toFixed(2);
+          return '<span class="reveal-word" style="--delay:' + delay + 's">' + w + '</span>';
+        }).join(' ');
+        el.style.opacity = '1'; // y recién ahí lo revela — ya con los spans nuevos (opacity:0) listos para su propio fade
+      }
+      function playBodyReveal() {
+        if (!body) return;
+        body.classList.remove('s2-reveal-play');
+        void body.offsetWidth; // fuerza reflow para poder reiniciar la animación
+        body.classList.add('s2-reveal-play');
+      }
+      function reveal() { splitIntoWords(); playBodyReveal(); }
+      document.addEventListener('i18n:changed', reveal);
+      if ('IntersectionObserver' in window) {
+        var io = new IntersectionObserver(function (entries) {
+          entries.forEach(function (en) { if (en.isIntersecting) reveal(); });
+        }, { threshold: 0.4 });
+        io.observe(el);
+      } else {
+        reveal();
+      }
+    })();
+  </script>
 </body>
 </html>
